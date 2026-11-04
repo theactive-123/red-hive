@@ -108,7 +108,7 @@ export function VisualCards({ items, cols = 3 }: { items: { href: string; title:
         <li key={it.href} data-reveal>
           <Link href={it.href} data-cursor="Open" className="group block h-full">
             {it.photo ? (
-              <Photo src={it.photo.src} alt={it.photo.alt} className="cut-tl aspect-[16/10] [--cut:32px]" hoverZoom drift={false} />
+              <Photo src={it.photo.src} alt={it.photo.alt} className="cut-tl aspect-[6/5] [--cut:32px]" hoverZoom drift={false} />
             ) : (
               <div className="cut-tl relative overflow-hidden bg-card p-6 transition-colors duration-500 [--cut:32px] group-hover:bg-[#ebebef]">
                 <IllustrationSlot name={it.illus} className="h-auto w-full" />

@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-      <Showreel shots={caseStudies} />
+      <Showreel />
 
       <section className="wrap py-28 md:py-40">
         <SectionHead
@@ -73,13 +73,13 @@ export default function Home() {
       <section className="theme-dark py-28 md:py-40">
         <div className="wrap">
           <SectionHead title="Recent work" text="A few products we've designed and built for clients in health, finance and logistics." link={{ href: "/work", label: "All case studies" }} className="mb-16" />
-          <ProjectCard p={lead} aspect="aspect-[4/3] md:aspect-[21/9]" large />
+          <ProjectCard p={lead} aspect="aspect-[6/5] md:aspect-[2/1]" large />
           <div className="mt-20 grid gap-x-10 gap-y-20 md:grid-cols-12">
             <div className="md:col-span-7">
-              <ProjectCard p={rest[0]} aspect="aspect-[4/3]" />
+              <ProjectCard p={rest[0]} aspect="aspect-[6/5]" />
             </div>
             <div className="md:col-span-5 md:mt-40">
-              <ProjectCard p={rest[1]} aspect="aspect-[4/5]" />
+              <ProjectCard p={rest[1]} aspect="aspect-[6/5]" />
             </div>
           </div>
         </div>
@@ -98,12 +98,11 @@ export default function Home() {
             <p data-reveal className="mt-8">
               <ArrowLink href="/about">About the studio</ArrowLink>
             </p>
-            <Photo src={studio.sketch.src} alt={studio.sketch.alt} className="mt-14 hidden aspect-[4/3] md:block" sizes="35vw" />
+            <Photo src={studio.code.src} alt={studio.code.alt} className="mt-14 hidden aspect-[16/10] md:block" sizes="35vw" />
           </div>
           <div className="grid gap-6 md:col-span-7 md:grid-cols-2">
-            <Photo src={studio.team.src} alt={studio.team.alt} className="aspect-[4/5] md:col-span-2 md:aspect-[16/10]" sizes="(min-width: 768px) 55vw, 100vw" />
-            <Photo src={studio.whiteboard.src} alt={studio.whiteboard.alt} className="aspect-[4/5]" sizes="(min-width: 768px) 28vw, 100vw" />
-            <Photo src={studio.design.src} alt={studio.design.alt} className="aspect-[4/5] md:mt-16" sizes="(min-width: 768px) 28vw, 100vw" />
+            <Photo src={studio.design.src} alt={studio.design.alt} className="aspect-[16/10] md:col-span-2" sizes="(min-width: 768px) 55vw, 100vw" />
+            <Photo src={studio.board.src} alt={studio.board.alt} className="aspect-[16/10] md:col-span-2" sizes="(min-width: 768px) 55vw, 100vw" />
           </div>
         </div>
       </section>

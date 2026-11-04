@@ -17,7 +17,7 @@ export default function WorkPage() {
         <div className="grid gap-x-10 gap-y-20 md:grid-cols-2">
           {caseStudies.map((p, i) => (
             <div key={p.slug} className={i % 2 ? "md:mt-32" : ""}>
-              <ProjectCard p={p} aspect={i % 4 === 0 || i % 4 === 3 ? "aspect-[5/4]" : "aspect-[4/5]"} />
+              <ProjectCard p={p} aspect="aspect-[6/5]" />
             </div>
           ))}
         </div>

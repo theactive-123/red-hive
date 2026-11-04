@@ -1,56 +1,70 @@
-// PLACEHOLDER PHOTOS (Unsplash License, see public/images/CREDITS.md).
-// Swap any path for your own photo; keep roughly the same aspect ratio.
+// PLACEHOLDER MOCKUPS: product shots rendered for sample projects.
+// Replace any file in public/images/work/ with your own project shots (same names, same aspect ratio)
+// or point these paths at new files.
 type Img = { src: string; alt: string };
-const img = (name: string, alt: string): Img => ({ src: `/images/${name}.webp`, alt });
+const w = (name: string, alt: string): Img => ({ src: `/images/work/${name}.webp`, alt });
 
-export const caseImages: Record<string, Img> = {
-  "pulsecare-telehealth-app": img("work-pulsecare", "Doctor on a video consultation with a patient"),
-  "ledgerly-fintech-saas": img("work-ledgerly", "Analytics dashboard on a laptop"),
-  "dashly-delivery-marketplace": img("work-dashly", "Customer browsing an ordering app on a phone"),
-  "routewise-fleet-platform": img("work-routewise", "Warehouse with pallets ready for dispatch"),
-  "learnloop-elearning-saas": img("work-learnloop", "Student following an online course"),
-  "nestmind-ai-real-estate-assistant": img("work-nestmind", "Modern house with a pool"),
-};
-
-export const industryImages: Record<string, Img> = {
-  healthcare: img("ind-healthcare", "Doctor using a phone"),
-  fintech: img("ind-fintech", "Person checking finances on a phone and laptop"),
-  "ecommerce-retail": img("ind-retail", "Contactless payment at a card reader"),
-  education: img("ind-education", "Students working together on laptops"),
-  logistics: img("ind-logistics", "Workers walking through a warehouse aisle"),
-  "real-estate": img("ind-realestate", "Modern two-storey home"),
-  "on-demand": img("ind-ondemand", "Courier walking in the city"),
-  "travel-hospitality": img("ind-travel", "Traveller reading the departures board"),
-};
-
-export const serviceImages: Record<string, Img> = {
-  "web-application-development": img("svc-web", "Developer working at a desk with two screens"),
-  "mobile-app-development": img("svc-mobile", "Phone showing an app dashboard"),
-  "saas-development": img("svc-saas", "Laptop and phone showing financial data"),
-  "ui-ux-design": img("svc-design", "Designer sketching wireframes on a tablet"),
-  "mvp-development": img("svc-mvp", "Two people planning on a whiteboard"),
-  "enterprise-software-development": img("svc-enterprise", "Office with large monitors"),
-  "ecommerce-development": img("svc-commerce", "Paying online with a card and phone"),
-  "cloud-devops": img("svc-cloud", "Network cables in a server rack"),
-  "ai-development": img("svc-ai", "Code with syntax highlighting on a dark screen"),
-  "api-integration": img("svc-api", "Code editor showing React source"),
-  "maintenance-support": img("svc-support", "Two engineers reviewing code"),
-};
-
-export const postImages: Record<string, Img> = {
-  "adding-ai-to-your-app": serviceImages["ai-development"],
-  "nextjs-for-saas": img("post-code", "Laptop showing code"),
-  "saas-mvp-cost": serviceImages["saas-development"],
-  "flutter-vs-react-native": serviceImages["mobile-app-development"],
+const cover = {
+  pulsecare: w("pulsecare-telehealth-app-cover", "Pulsecare telehealth app screens"),
+  ledgerly: w("ledgerly-fintech-saas-cover", "Ledgerly cash-flow dashboard and mobile app"),
+  dashly: w("dashly-delivery-marketplace-cover", "Dashly delivery app screens"),
+  routewise: w("routewise-fleet-platform-cover", "Routewise fleet map dashboard"),
+  learnloop: w("learnloop-elearning-saas-cover", "LearnLoop course player"),
+  nestmind: w("nestmind-ai-real-estate-assistant-cover", "Nestmind AI property assistant"),
+  shopfront: w("shopfront-cover", "Shopfront retail app screens"),
+  wayfarer: w("wayfarer-cover", "Wayfarer travel booking app screens"),
 };
 
 export const studio = {
-  team: img("studio-team", "Team working together around a table"),
-  design: img("studio-design", "Design review around a table"),
-  sketch: img("studio-sketch", "Wireframe sketches on paper"),
-  whiteboard: img("studio-whiteboard", "Planning on a whiteboard"),
-  office: img("studio-office", "Open-plan office"),
-  ui: img("studio-ui", "Design system on a monitor"),
-  travel: img("device-travel", "Travel app on a phone"),
-  trading: img("device-trading", "Trading app on a phone"),
+  design: w("studio-design", "Design file with mobile app screens"),
+  board: w("studio-board", "Sprint board with tickets in progress"),
+  code: w("studio-code", "Code editor with tests passing in the terminal"),
 };
+
+export const caseImages: Record<string, Img> = {
+  "pulsecare-telehealth-app": cover.pulsecare,
+  "ledgerly-fintech-saas": cover.ledgerly,
+  "dashly-delivery-marketplace": cover.dashly,
+  "routewise-fleet-platform": cover.routewise,
+  "learnloop-elearning-saas": cover.learnloop,
+  "nestmind-ai-real-estate-assistant": cover.nestmind,
+};
+
+/** Wide 2:1 shots for the top of each case study page. */
+export const caseHeroes: Record<string, Img> = Object.fromEntries(
+  Object.keys(caseImages).map((slug) => [slug, w(`${slug}-hero`, caseImages[slug].alt)]),
+);
+
+export const industryImages: Record<string, Img> = {
+  healthcare: cover.pulsecare,
+  fintech: cover.ledgerly,
+  "ecommerce-retail": cover.shopfront,
+  education: cover.learnloop,
+  logistics: cover.routewise,
+  "real-estate": cover.nestmind,
+  "on-demand": cover.dashly,
+  "travel-hospitality": cover.wayfarer,
+};
+
+export const serviceImages: Record<string, Img> = {
+  "web-application-development": cover.routewise,
+  "mobile-app-development": cover.pulsecare,
+  "saas-development": cover.ledgerly,
+  "ui-ux-design": studio.design,
+  "mvp-development": cover.wayfarer,
+  "enterprise-software-development": cover.learnloop,
+  "ecommerce-development": cover.shopfront,
+  "cloud-devops": studio.code,
+  "ai-development": cover.nestmind,
+  "api-integration": cover.dashly,
+  "maintenance-support": studio.board,
+};
+
+export const postImages: Record<string, Img> = {
+  "adding-ai-to-your-app": cover.nestmind,
+  "nextjs-for-saas": studio.code,
+  "saas-mvp-cost": cover.ledgerly,
+  "flutter-vs-react-native": cover.pulsecare,
+};
+
+export const covers = cover;

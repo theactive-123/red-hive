@@ -5,7 +5,7 @@ import { Prose, Split, TechRow } from "@/components/sections/Blocks";
 import StickyStory from "@/components/sections/StickyStory";
 import ProjectVisual from "@/components/ui/ProjectVisual";
 import Photo from "@/components/ui/Photo";
-import { caseImages } from "@/data/images";
+import { caseHeroes, caseImages } from "@/data/images";
 import { caseStudies } from "@/data/work";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
@@ -62,7 +62,7 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
           </dl>
         </div>
         <div className="wrap pt-14">
-          {caseImages[c.slug] && <Photo src={caseImages[c.slug].src} alt={caseImages[c.slug].alt} priority className="aspect-[4/3] md:aspect-[21/10]" sizes="100vw" />}
+          {caseHeroes[c.slug] && <Photo src={caseHeroes[c.slug].src} alt={caseHeroes[c.slug].alt} priority className="aspect-[6/5] md:aspect-[2/1]" sizes="100vw" drift={false} />}
         </div>
       </section>
 
@@ -95,7 +95,7 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
           <div className="mt-6 grid items-end gap-10 md:grid-cols-2">
             <p className="display-lg transition-colors duration-500 group-hover:text-red">{next.name}</p>
             <div className="overflow-hidden rounded-xl">
-              {caseImages[next.slug] && <Photo src={caseImages[next.slug].src} alt={caseImages[next.slug].alt} className="aspect-[16/10]" hoverZoom drift={false} />}
+              {caseImages[next.slug] && <Photo src={caseImages[next.slug].src} alt={caseImages[next.slug].alt} className="aspect-[6/5]" hoverZoom drift={false} />}
             </div>
           </div>
         </Link>

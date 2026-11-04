@@ -33,7 +33,7 @@ export default function IndustriesPage() {
           {industries.map((ind, i) => (
             <li key={ind.slug} data-reveal className={i % 2 ? "md:mt-24" : ""}>
               <Link href={`/industries/${ind.slug}`} data-cursor="Explore" className="group block">
-                <Photo src={industryImages[ind.slug].src} alt={industryImages[ind.slug].alt} className="cut-tl aspect-[4/3] [--cut:36px]" hoverZoom />
+                <Photo src={industryImages[ind.slug].src} alt={industryImages[ind.slug].alt} className="cut-tl aspect-[6/5] [--cut:36px]" hoverZoom />
                 <div className="mt-6 flex items-start justify-between gap-6">
                   <div>
                     <h2 className="display-sm transition-colors group-hover:text-red">{ind.name}</h2>

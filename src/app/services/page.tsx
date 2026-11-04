@@ -33,7 +33,7 @@ export default function ServicesPage() {
         crumbs={[{ name: "Services", path: "/services" }]}
         title="Services"
         text="Design, engineering and hosting for web and mobile products. Hire us for one piece, like a mobile app or a design refresh, or for the whole thing."
-        visual={<LayeredVisual photo={studio.ui} illus="saas-development" priority />}
+        visual={<LayeredVisual photo={studio.design} illus="ui-ux-design" priority />}
         bare
       >
         <Button href="/contact" variant="red">
@@ -82,7 +82,7 @@ export default function ServicesPage() {
             {rest.map((s) => (
               <li key={s.slug} className="bg-navy">
                 <Link href={`/services/${s.slug}`} className="group flex h-full flex-col p-6 transition-colors duration-500 hover:bg-navy-2">
-                  <Photo src={serviceImages[s.slug].src} alt={serviceImages[s.slug].alt} className="aspect-[4/3]" hoverZoom drift={false} sizes="(min-width: 1024px) 25vw, 50vw" />
+                  <Photo src={serviceImages[s.slug].src} alt={serviceImages[s.slug].alt} className="aspect-[6/5]" hoverZoom drift={false} sizes="(min-width: 1024px) 25vw, 50vw" />
                   <h3 className="display-sm mt-6 transition-colors group-hover:text-red">{s.short}</h3>
                   <p className="mt-2 text-sm text-white/60">{s.tagline}</p>
                 </Link>

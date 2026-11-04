@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Photo from "@/components/ui/Photo";
-import { caseImages } from "@/data/images";
+import { caseHeroes, caseImages } from "@/data/images";
 import type { CaseStudy } from "@/data/work";
 
-export default function ProjectCard({ p, aspect = "aspect-[4/3]", large = false }: { p: CaseStudy; aspect?: string; large?: boolean }) {
-  const img = caseImages[p.slug];
+export default function ProjectCard({ p, aspect = "aspect-[6/5]", large = false }: { p: CaseStudy; aspect?: string; large?: boolean }) {
+  const img = large ? caseHeroes[p.slug] : caseImages[p.slug];
   return (
     <Link href={`/work/${p.slug}`} data-cursor="View" className="group block">
       <div className="relative">

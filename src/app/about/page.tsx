@@ -64,8 +64,8 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          <Photo src={studio.office.src} alt={studio.office.alt} className="aspect-[4/3]" sizes="(min-width: 768px) 30vw, 100vw" />
-          <Photo src={studio.whiteboard.src} alt={studio.whiteboard.alt} className="aspect-[4/3] sm:mt-12" sizes="(min-width: 768px) 30vw, 100vw" />
+          <Photo src={studio.board.src} alt={studio.board.alt} className="aspect-[16/10]" sizes="(min-width: 768px) 30vw, 100vw" />
+          <Photo src={studio.code.src} alt={studio.code.alt} className="aspect-[16/10] sm:mt-12" sizes="(min-width: 768px) 30vw, 100vw" />
         </div>
       </Split>
 
