@@ -11,7 +11,7 @@ export default function ProcessSteps() {
           <li key={s.n} data-reveal className="relative border-t border-line py-8 lg:border-t-0 lg:pt-10">
             <span className="absolute -top-[5px] left-0 hidden h-2.5 w-2.5 rounded-full bg-red lg:block" />
             <p className="text-sm text-muted">
-              {s.n} — {s.time}
+              <span className="font-semibold text-red">{s.n}</span>&nbsp;&nbsp;{s.time}
             </p>
             <h3 className="display-sm mt-4">{s.title}</h3>
             <p className="mt-4 text-[0.95rem] leading-relaxed text-muted">{s.text}</p>

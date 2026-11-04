@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from "@/lib/gsap";
+import { whenIntroDone } from "@/lib/intro";
 
 /**
  * Declarative scroll motion. Server components opt in with data attributes:
@@ -31,7 +32,7 @@ export default function Motion() {
       if (cancelled) return;
       ctx = gsap.context(() => {
         const reveals = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-        gsap.set(reveals, { opacity: 0, y: 28 });
+        gsap.set(reveals, { opacity: 0, y: 20 });
         ScrollTrigger.batch(reveals, {
           start: "top 90%",
           once: true,
@@ -126,7 +127,7 @@ export default function Motion() {
       ScrollTrigger.refresh();
     };
 
-    (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(run));
+    Promise.all([document.fonts?.ready ?? Promise.resolve(), whenIntroDone()]).then(() => requestAnimationFrame(run));
 
     return () => {
       cancelled = true;

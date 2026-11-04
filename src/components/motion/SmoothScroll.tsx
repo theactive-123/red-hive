@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { whenIntroDone } from "@/lib/intro";
 
 const LenisContext = createContext<Lenis | null>(null);
 export const useLenis = () => useContext(LenisContext);
@@ -27,6 +28,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const tick = (time: number) => instance.raf(time * 1000);
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
+    if (window.__rhIntroDone === false) {
+      instance.stop();
+      whenIntroDone().then(() => instance.start());
+    }
     // eslint-disable-next-line react-hooks/set-state-in-effect -- expose the instance once it exists
     setLenis(instance);
     return () => {

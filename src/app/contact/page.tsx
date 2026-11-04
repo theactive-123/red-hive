@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
 
 export const metadata = pageMetadata({
-  title: "Contact — Get a Free Project Estimate",
+  title: "Contact Us: Get a Free Project Estimate",
   description: "Tell us about your web app, mobile app or SaaS idea. Red Hive Digital replies within one business day with next steps and a free estimate.",
   path: "/contact",
 });

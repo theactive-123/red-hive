@@ -50,10 +50,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
       <section className="theme-dark py-24 md:py-32">
         <div className="wrap grid gap-10 md:grid-cols-12">
           <div className="md:col-span-4">
-            <p data-reveal className="tag">
-              <span className="text-fg">03</span> Deliverables
-            </p>
-            <h2 data-split className="display-md mt-6 max-w-[11ch]">
+            <h2 data-split className="display-md max-w-[11ch]">
               What you walk away with
             </h2>
           </div>
@@ -67,7 +64,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         <TechRow slugs={s.tech} />
       </Split>
 
-      <section className="theme-light bg-paper-2 py-24 md:py-32">
+      <section className="theme-light bg-card py-24 md:py-32">
         <div className="wrap">
           <SectionHead index="05" label="Process" title="How we deliver" className="mb-14" />
           <ProcessSteps />

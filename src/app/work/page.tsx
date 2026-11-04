@@ -4,7 +4,7 @@ import { caseStudies } from "@/data/work";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Work — Web App, Mobile App & SaaS Case Studies",
+  title: "Our Work: Web App, Mobile App & SaaS Case Studies",
   description: "Web applications, mobile apps, SaaS platforms and AI products designed and engineered by Red Hive Digital.",
   path: "/work",
 });
@@ -12,7 +12,7 @@ export const metadata = pageMetadata({
 export default function WorkPage() {
   return (
     <>
-      <PageHero crumbs={[{ name: "Work", path: "/work" }]} label="Selected work" title="Products built for real use" text="Telehealth, fintech, logistics, AI — a selection of platforms we’ve designed, engineered and scaled." />
+      <PageHero crumbs={[{ name: "Work", path: "/work" }]} title="Our work" text="A selection of web apps, mobile apps and SaaS platforms we’ve designed and built, from telehealth to fleet management." />
       <section className="wrap pb-32">
         <div className="grid gap-x-10 gap-y-20 md:grid-cols-2">
           {caseStudies.map((p, i) => (

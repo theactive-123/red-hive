@@ -4,7 +4,7 @@ import SectionHead from "@/components/ui/SectionHead";
 export default function Engagement() {
   return (
     <section className="wrap py-28 md:py-36">
-      <SectionHead label="Engagement" title="Ways to work together" text="Choose what fits your stage and budget — and switch when things change." className="mb-14" />
+      <SectionHead title="Ways to work with us" text="Pick the one that fits your budget and how settled your plans are. You can switch later." className="mb-14" />
       <div className="grid border-b border-line md:grid-cols-3">
         {engagementModels.map((m, i) => (
           <div key={m.title} data-reveal className={`border-t border-line py-10 md:px-8 ${i ? "md:border-l" : "md:pl-0"}`}>

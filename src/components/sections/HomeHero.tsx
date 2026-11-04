@@ -1,33 +1,41 @@
 import HiveLazy from "@/components/three/HiveLazy";
 import Button from "@/components/ui/Button";
+import { site } from "@/data/site";
 
 export default function HomeHero() {
   return (
     <section className="theme-dark relative flex min-h-[100svh] flex-col overflow-hidden">
       <div className="absolute inset-0">
         <HiveLazy className="absolute inset-0" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-ink/50" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#00020a_0%,rgba(0,2,10,0.85)_35%,rgba(0,2,10,0.1)_75%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy to-transparent" />
       </div>
 
-      <div className="wrap pointer-events-none relative flex flex-1 flex-col justify-end pb-10 pt-32">
-        <h1 data-split="hero" className="display-xl max-w-[11ch]">
-          Ideas in. Products out.
+      <div className="wrap pointer-events-none relative flex flex-1 flex-col justify-center pb-28 pt-36">
+        <h1 data-split="hero" className="display-xl max-w-[12ch]">
+          We build web apps, mobile apps and SaaS products.
         </h1>
-
-        <div className="mt-12 grid gap-10 border-t border-line pt-8 md:grid-cols-12">
-          <p data-reveal data-delay="0.5" className="lead text-fg/80 md:col-span-6 lg:col-span-5">
-            Red Hive Digital is a design and engineering studio. We build web applications, mobile apps and SaaS platforms for startups and growing
-            companies.
-          </p>
-          <div data-reveal data-delay="0.6" className="pointer-events-auto flex flex-wrap items-start gap-3 md:col-span-6 md:justify-end lg:col-span-7">
-            <Button href="/contact" variant="red">
-              Start a project
-            </Button>
-            <Button href="/work" variant="outline">
-              Selected work
-            </Button>
-          </div>
+        <p data-reveal className="lead mt-8 max-w-xl text-white/75">
+          Red Hive Digital is a small team of designers and engineers. We take products from a rough idea to launch, then keep improving them with
+          you.
+        </p>
+        <div data-reveal className="pointer-events-auto mt-10 flex flex-wrap gap-3">
+          <Button href="/contact" variant="red">
+            Start a project
+          </Button>
+          <Button href="/work" variant="outline">
+            See our work
+          </Button>
         </div>
+      </div>
+
+      <div className="wrap relative flex flex-wrap items-center justify-between gap-4 border-t border-line py-5 text-sm text-white/60">
+        <p>
+          Call us: <a href={site.phones[0].href} className="text-white hover:text-red">{site.phones[0].display}</a>
+        </p>
+        <p>
+          Email: <a href={`mailto:${site.email}`} className="text-white hover:text-red">{site.email}</a>
+        </p>
       </div>
     </section>
   );

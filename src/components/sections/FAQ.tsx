@@ -8,8 +8,7 @@ export default function FAQ({ faqs, title = "Questions, answered" }: { faqs: FAQ
       <JsonLd data={faqLd(faqs)} />
       <div className="grid gap-10 md:grid-cols-12">
         <div className="md:col-span-4">
-          <p data-reveal className="tag">FAQ</p>
-          <h2 data-split className="display-md mt-6 max-w-[12ch]">
+          <h2 data-split className="display-md max-w-[12ch]">
             {title}
           </h2>
         </div>

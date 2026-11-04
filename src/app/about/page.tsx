@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
 
 export const metadata = pageMetadata({
-  title: "About — A Design & Engineering Studio",
+  title: "About Us: A Design & Engineering Studio",
   description: "Red Hive Digital is a team of designers and engineers building custom web applications, mobile apps and SaaS products for startups and growing businesses.",
   path: "/about",
 });
@@ -28,7 +28,7 @@ export default function AboutPage() {
       <PageHero
         crumbs={[{ name: "About", path: "/about" }]}
         label="About"
-        title="A small studio with a big build log"
+        title="About Red Hive Digital"
         text={`${site.name} began as a design agency and grew into a product engineering studio. Today we help founders and companies turn ideas into web apps, mobile apps and SaaS platforms.`}
       >
         <Button href="/contact">Work with us</Button>
@@ -40,7 +40,7 @@ export default function AboutPage() {
       <section className="wrap">
         <div data-clip className="theme-dark relative h-[60vh] min-h-[420px] overflow-hidden rounded-xl">
           <HiveLazy className="absolute inset-0" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent" />
           <p className="pointer-events-none absolute bottom-8 left-8 right-8 max-w-2xl font-display text-[clamp(1.5rem,3vw,2.6rem)] font-medium leading-tight tracking-tight">
             Every cell has a purpose. Together, they build something stronger.
           </p>
@@ -55,7 +55,7 @@ export default function AboutPage() {
           </p>
           <p data-reveal>
             That’s how we build software and teams. Designers, engineers, QA and product managers work in small cross-functional pods, and each pod owns a
-            product end to end — from the first workshop through launch and long after.
+            product end to end, from the first workshop to launch and the updates after it.
           </p>
           <p data-reveal>
             We started out in logos, illustration and animation, and kept that eye for design as we moved into full-stack product engineering.

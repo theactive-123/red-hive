@@ -3,7 +3,7 @@
 export type CaseStudy = {
   slug: string;
   name: string;
-  /** Generic descriptor, e.g. "Telehealth startup, USA" — no real company names. */
+  /** Generic descriptor, e.g. "Telehealth startup, USA". No real company names. */
   client: string;
   category: "Web App" | "Mobile App" | "SaaS" | "AI";
   /** Industry slug from industries.ts */
@@ -23,6 +23,13 @@ export type CaseStudy = {
   tech: string[];
   platforms: string[];
   duration: string;
+  /** Text shown on the product's main screen in the drawn mockup. */
+  screen: {
+    title: string;
+    subtitle: string;
+    metric: { label: string; value: string };
+    rows: { name: string; meta: string; value: string }[];
+  };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -36,34 +43,44 @@ export const caseStudies: CaseStudy[] = [
     year: "2025",
     accent: "#E1013B",
     summary:
-      "A cross-platform telehealth app that lets patients book, join and follow up on video consultations from a single Flutter codebase.",
+      "A telehealth app for iOS and Android where patients book a doctor, join the video call and read their visit notes afterwards. One Flutter codebase covers both stores.",
     seoTitle: "Pulsecare: Flutter Telehealth App Case Study",
     seoDescription:
       "How Red Hive Digital built Pulsecare, a Flutter telehealth app for iOS and Android with video visits, secure messaging and appointment scheduling.",
     challenge: [
-      "The founding team had validated demand with a web prototype, but patients wanted a mobile-first experience: booking on the go, joining calls with one tap and getting reminders that actually arrived. Building separate native apps would have doubled the budget and the release cadence.",
-      "Healthcare data added a second layer of complexity. Messages, visit notes and attachments had to be encrypted in transit and at rest, access had to be auditable, and the video experience had to hold up on patchy mobile connections.",
+      "The founders had proved demand with a web prototype, but patients kept asking for an app. They wanted to book from their phone, join a call with one tap and get reminders that actually showed up. Two separate native apps would have doubled the budget and slowed every release.",
+      "It's healthcare, so the data rules were strict. Messages, visit notes and attachments had to be encrypted in transit and at rest, every access had to be logged, and video calls had to survive weak mobile signal.",
     ],
     solution: [
-      "We built a single Flutter app for iOS and Android with a shared design system, so every feature shipped to both stores at once. A clean architecture with BLoC state management kept the booking, video and messaging modules independent and testable.",
-      "On the backend, a Node.js API on AWS handles scheduling, notifications and role-based access, with PostgreSQL for records and audit logs. Video runs over a WebRTC provider with adaptive bitrate and automatic reconnects, and the whole stack was designed to support HIPAA requirements.",
+      "We built one Flutter app for iOS and Android on a shared design system, so each feature went out to both stores on the same day. BLoC state management kept booking, video and messaging in separate modules that we could test on their own.",
+      "The backend is a Node.js API on AWS that handles scheduling, notifications and role-based access, with PostgreSQL for records and audit logs. Video runs through a WebRTC provider with adaptive bitrate and automatic reconnects. The whole stack was set up to support HIPAA requirements.",
     ],
     features: [
-      { title: "One-tap video visits", text: "WebRTC calls with adaptive quality, reconnect handling and an in-call chat for links and files." },
-      { title: "Smart scheduling", text: "Real-time provider availability, time-zone aware slots and automatic reminders by push, SMS and email." },
-      { title: "Secure messaging", text: "End-to-end encrypted threads between patients and care teams, with attachment scanning." },
-      { title: "Visit summaries", text: "Providers publish notes and care plans that patients can review and download after each visit." },
-      { title: "Provider dashboard", text: "A companion web view for clinicians to manage queues, availability and patient history." },
-      { title: "Audit trail", text: "Every access to protected data is logged and reviewable for compliance checks." },
+      { title: "One-tap video visits", text: "WebRTC calls that drop quality before they drop the call, plus in-call chat for links and files." },
+      { title: "Scheduling", text: "Live provider availability, slots shown in the patient's time zone, and reminders by push, SMS and email." },
+      { title: "Secure messaging", text: "Encrypted threads between patients and their care team. Attachments are scanned before delivery." },
+      { title: "Visit summaries", text: "Doctors publish notes and care plans that patients can read and download after each visit." },
+      { title: "Provider dashboard", text: "A web view for clinicians to manage their queue, set availability and check patient history." },
+      { title: "Audit trail", text: "Every read of protected data is logged and can be reviewed during a compliance check." },
     ],
     results: [
-      { value: "2x", label: "faster release cadence vs. two native codebases" },
+      { value: "2x", label: "release pace compared with two native codebases" },
       { value: "4.7★", label: "average app store rating after launch" },
-      { value: "-35%", label: "no-show rate with automated reminders" },
+      { value: "-35%", label: "missed appointments once reminders went live" },
     ],
     tech: ["flutter", "firebase", "nodejs", "postgresql", "aws", "docker"],
     platforms: ["iOS", "Android", "Web"],
     duration: "18 weeks",
+    screen: {
+      title: "Good morning, Maya",
+      subtitle: "Next visit: Dr. Okafor, 10:30",
+      metric: { label: "Heart rate", value: "72 bpm" },
+      rows: [
+        { name: "Video consult", meta: "Today · 10:30", value: "Join" },
+        { name: "Lab results", meta: "Uploaded Mon", value: "View" },
+        { name: "Refill: Lisinopril", meta: "Ready Thu", value: "Track" },
+      ],
+    },
   },
   {
     slug: "ledgerly-fintech-saas",
@@ -75,34 +92,44 @@ export const caseStudies: CaseStudy[] = [
     year: "2025",
     accent: "#7C5CFF",
     summary:
-      "A multi-tenant cash-flow and invoicing dashboard that gives finance teams a real-time view of receivables, payables and forecasts.",
+      "A multi-tenant cash-flow and invoicing product. Finance teams see what's owed to them, what they owe and what the bank balance will look like over the next 13 weeks.",
     seoTitle: "Ledgerly: Fintech SaaS Dashboard Case Study",
     seoDescription:
       "How Red Hive Digital built Ledgerly, a multi-tenant fintech SaaS dashboard with Next.js and NestJS for real-time cash-flow forecasting and invoicing.",
     challenge: [
-      "Finance teams at small and mid-sized businesses were juggling spreadsheets, bank exports and accounting software to answer a simple question: how much cash will we have next month? The client wanted a SaaS product that pulled it all together.",
-      "The product had to serve many companies from one platform without ever leaking data between them, sync reliably with bank and accounting APIs, and stay fast with years of transaction history loaded into charts.",
+      "Finance teams at small and mid-sized companies were answering one question with spreadsheets, bank exports and their accounting software: how much cash will we have next month? The client wanted a product that pulled all of that into one place.",
+      "One platform would hold data for many companies, so tenant data could never leak. It also had to sync reliably with bank and accounting APIs and stay quick with years of transactions loaded into the charts.",
     ],
     solution: [
-      "We designed a multi-tenant architecture with tenant isolation enforced at the database layer using PostgreSQL row-level security. A NestJS API exposes typed, versioned endpoints, and background workers handle bank and accounting syncs with retries and idempotency.",
-      "The Next.js frontend uses server rendering for fast first loads and streams heavy reports progressively. Redis caches aggregates so dashboards stay responsive, and Stripe-based subscription billing with usage limits was built in from day one.",
+      "Tenant isolation is enforced in the database with PostgreSQL row-level security, so a bug in the app layer can't show one company another's data. A NestJS API exposes typed, versioned endpoints, and background workers run the bank and accounting syncs with retries and idempotency keys.",
+      "The Next.js front end renders on the server for quick first loads and streams heavier reports in as they're ready. Redis caches the aggregates behind each dashboard. Stripe subscription billing with seat and usage limits was part of the first release.",
     ],
     features: [
-      { title: "Cash-flow forecasting", text: "Rolling 13-week forecasts built from open invoices, recurring bills and historical patterns." },
-      { title: "Bank & ledger sync", text: "Scheduled, idempotent imports from bank feeds and accounting platforms with conflict resolution." },
-      { title: "Invoice automation", text: "Create, send and chase invoices with templated reminders and payment links." },
-      { title: "Role-based access", text: "Granular permissions for owners, accountants and approvers, with SSO for larger teams." },
+      { title: "Cash-flow forecast", text: "A rolling 13-week forecast built from open invoices, recurring bills and past payment patterns." },
+      { title: "Bank and ledger sync", text: "Scheduled imports from bank feeds and accounting platforms that are safe to re-run and flag conflicts." },
+      { title: "Invoice automation", text: "Create, send and chase invoices with reminder templates and payment links." },
+      { title: "Role-based access", text: "Separate permissions for owners, accountants and approvers, with SSO for larger teams." },
       { title: "Subscription billing", text: "Self-serve plans, trials, seat limits and usage-based upgrades." },
-      { title: "Exportable reports", text: "Board-ready PDF and CSV exports for P&L, aged receivables and forecasts." },
+      { title: "Report exports", text: "PDF and CSV exports of P&L, aged receivables and forecasts for board packs." },
     ],
     results: [
-      { value: "<1s", label: "dashboard load for typical tenants" },
+      { value: "<1s", label: "dashboard load for a typical tenant" },
       { value: "-60%", label: "time spent on month-end reconciliation" },
       { value: "99.9%", label: "uptime since launch" },
     ],
     tech: ["nextjs", "typescript", "nestjs", "postgresql", "redis", "aws", "docker"],
     platforms: ["Web"],
     duration: "22 weeks",
+    screen: {
+      title: "Cash position",
+      subtitle: "Forecast · next 13 weeks",
+      metric: { label: "Projected balance", value: "£184,200" },
+      rows: [
+        { name: "INV-2041 Harlow Ltd", meta: "Due in 3 days", value: "£12,400" },
+        { name: "Payroll run", meta: "28 Nov", value: "-£46,900" },
+        { name: "INV-2038 Brightway", meta: "7 days overdue", value: "£3,150" },
+      ],
+    },
   },
   {
     slug: "dashly-delivery-marketplace",
@@ -114,34 +141,44 @@ export const caseStudies: CaseStudy[] = [
     year: "2024",
     accent: "#FF6B35",
     summary:
-      "A three-sided on-demand delivery marketplace with customer, courier and merchant apps plus a live operations console.",
+      "A local delivery marketplace with three apps (customer, courier and merchant) and an operations console that shows every live order on one map.",
     seoTitle: "Dashly: On-Demand Delivery App Case Study",
     seoDescription:
       "How Red Hive Digital built Dashly, an on-demand delivery marketplace with React Native customer and courier apps, a Node.js backend and real-time tracking.",
     challenge: [
-      "The client wanted to launch a local delivery marketplace in a crowded market. That meant three different user groups, each with their own app, all depending on accurate real-time location and order state.",
-      "Dispatch had to be fast and fair, payments had to split cleanly between merchants, couriers and the platform, and the whole system needed to cope with lunch- and dinner-time spikes without slowing down.",
+      "The client was entering a crowded local delivery market. Customers, couriers and merchants each needed their own app, and all three depended on accurate live locations and order status.",
+      "Dispatch had to be quick and fair to couriers. Payments had to split cleanly between merchant, courier and platform. And the system had to hold up during the lunch and dinner rush, when order volume jumps several times over.",
     ],
     solution: [
-      "We built customer and courier apps in React Native, sharing most of their UI components and business logic, and a React web portal for merchants. A Node.js backend with WebSockets streams courier locations and order updates in real time.",
-      "A dispatch service scores nearby couriers by distance, load and rating, and MongoDB with geospatial indexes keeps location queries fast. Redis queues absorb traffic spikes, and payment splitting is handled through marketplace payouts.",
+      "The customer and courier apps are built in React Native and share most of their components and logic. Merchants use a React web portal. A Node.js backend pushes courier locations and order updates over WebSockets.",
+      "The dispatch service ranks nearby couriers by distance, current load and acceptance rate. MongoDB geospatial indexes keep location lookups fast, Redis queues absorb the rush-hour spikes, and payouts are split automatically through marketplace payments.",
     ],
     features: [
-      { title: "Live order tracking", text: "Real-time courier location and ETA updates on a map, from pickup to doorstep." },
-      { title: "Smart dispatch", text: "Automatic courier assignment based on proximity, current load and acceptance rate." },
-      { title: "Courier app", text: "Shift management, turn-by-turn navigation handoff, proof of delivery and earnings." },
-      { title: "Merchant portal", text: "Menu and inventory management, order queues and payout reports." },
-      { title: "Split payments", text: "Card and wallet payments with automatic merchant and courier payouts." },
-      { title: "Ops console", text: "A live map of active orders, couriers and exceptions for the support team." },
+      { title: "Live order tracking", text: "The courier's position and an updated ETA on a map, from pickup to the door." },
+      { title: "Dispatch", text: "Couriers are assigned automatically based on distance, how busy they are and how often they accept jobs." },
+      { title: "Courier app", text: "Shifts, navigation handoff to Google Maps or Waze, proof of delivery photos and earnings." },
+      { title: "Merchant portal", text: "Menus, stock levels, the incoming order queue and payout reports." },
+      { title: "Split payments", text: "Card and wallet payments, with merchant and courier payouts calculated per order." },
+      { title: "Ops console", text: "A live map of active orders and couriers, with problems flagged for the support team." },
     ],
     results: [
-      { value: "3", label: "apps shipped from one shared codebase" },
-      { value: "-25%", label: "average delivery time after dispatch tuning" },
-      { value: "10x", label: "peak-hour order volume handled in load tests" },
+      { value: "3", label: "apps built on one shared codebase" },
+      { value: "-25%", label: "average delivery time after tuning dispatch" },
+      { value: "10x", label: "normal peak-hour volume handled in load tests" },
     ],
     tech: ["react-native", "react", "nodejs", "mongodb", "redis", "google-cloud"],
     platforms: ["iOS", "Android", "Web"],
     duration: "20 weeks",
+    screen: {
+      title: "Order on the way",
+      subtitle: "Omar is 4 min away",
+      metric: { label: "Arriving", value: "12:48" },
+      rows: [
+        { name: "Chicken shawarma x2", meta: "Al Reef Grill", value: "AED 46" },
+        { name: "Fresh mint lemonade", meta: "Al Reef Grill", value: "AED 14" },
+        { name: "Delivery fee", meta: "2.1 km", value: "AED 7" },
+      ],
+    },
   },
   {
     slug: "routewise-fleet-platform",
@@ -153,34 +190,44 @@ export const caseStudies: CaseStudy[] = [
     year: "2024",
     accent: "#00C2A8",
     summary:
-      "A fleet management web platform that replaced spreadsheets and phone calls with live vehicle tracking, route planning and maintenance alerts.",
+      "A fleet management web app that replaced spreadsheets and phone calls with live vehicle tracking, route planning and maintenance alerts.",
     seoTitle: "Routewise: Fleet Management Platform Case Study",
     seoDescription:
       "How Red Hive Digital built Routewise, a fleet management web app with React, Go and AWS for live GPS tracking, route planning and maintenance scheduling.",
     challenge: [
-      "The operator was running a growing fleet with spreadsheets, a legacy GPS portal and a lot of phone calls. Dispatchers had no single view of where vehicles were, which loads were late or which trucks were due for service.",
-      "Telematics devices send a constant stream of position and sensor data. The new platform had to ingest that stream reliably, keep the map live for dozens of dispatchers at once and still be cost-effective to run.",
+      "The operator ran a growing fleet on spreadsheets, an old GPS portal and a lot of phone calls. Dispatchers couldn't see in one place where trucks were, which loads were running late or which vehicles were due for service.",
+      "Telematics devices send a steady stream of position and sensor readings. The new system had to take in that stream without dropping data, keep the map live for dozens of dispatchers at once, and stay affordable to run.",
     ],
     solution: [
-      "We built a high-throughput ingestion service in Go that receives telematics events, validates them and writes them to PostgreSQL with time-partitioned tables. The service runs on AWS with autoscaling containers and a managed message queue between stages.",
-      "The React frontend gives dispatchers a live map, route planner and exception feed, with WebSocket updates instead of polling. Maintenance rules trigger alerts from mileage and engine data, and reports export straight into the operator's existing tools.",
+      "A Go ingestion service receives telematics events, validates them and writes them to time-partitioned PostgreSQL tables. It runs in autoscaling containers on AWS, with a managed queue between each stage so a slow step never blocks the next.",
+      "Dispatchers work in a React app with a live map, a route planner and a feed of exceptions. Updates arrive over WebSockets instead of polling. Maintenance rules raise alerts from mileage and engine data, and reports export straight into the tools the operator already used.",
     ],
     features: [
-      { title: "Live fleet map", text: "Every vehicle's position, speed and status on one map, updated in seconds." },
-      { title: "Route planning", text: "Multi-stop route optimisation with time windows and driver hours constraints." },
-      { title: "Exception alerts", text: "Automatic flags for late deliveries, route deviations and long idle times." },
-      { title: "Maintenance scheduling", text: "Service reminders based on mileage, engine hours and fault codes." },
-      { title: "Driver performance", text: "Scorecards for harsh braking, speeding and on-time performance." },
+      { title: "Live fleet map", text: "Position, speed and status for every vehicle on one map, refreshed every few seconds." },
+      { title: "Route planning", text: "Multi-stop routes that respect delivery windows and driver hours rules." },
+      { title: "Exception alerts", text: "Late deliveries, route deviations and long idle times flagged automatically." },
+      { title: "Maintenance scheduling", text: "Service reminders driven by mileage, engine hours and fault codes." },
+      { title: "Driver scorecards", text: "Harsh braking, speeding and on-time performance tracked per driver." },
       { title: "Data exports", text: "Scheduled CSV and API exports for billing, payroll and BI tools." },
     ],
     results: [
-      { value: "-18%", label: "fuel cost from optimised routes" },
-      { value: "2.5x", label: "more vehicles managed per dispatcher" },
+      { value: "-18%", label: "fuel cost after route optimization" },
+      { value: "2.5x", label: "vehicles managed per dispatcher" },
       { value: "-40%", label: "unplanned vehicle downtime" },
     ],
     tech: ["react", "typescript", "golang", "postgresql", "aws", "docker", "kubernetes"],
     platforms: ["Web"],
     duration: "24 weeks",
+    screen: {
+      title: "Fleet overview",
+      subtitle: "Dallas depot · 64 vehicles",
+      metric: { label: "On time today", value: "93%" },
+      rows: [
+        { name: "Truck 218", meta: "I-35 N · 58 mph", value: "On time" },
+        { name: "Truck 104", meta: "Idle 22 min", value: "Check" },
+        { name: "Van 37", meta: "Service due", value: "4 days" },
+      ],
+    },
   },
   {
     slug: "learnloop-elearning-saas",
@@ -192,25 +239,25 @@ export const caseStudies: CaseStudy[] = [
     year: "2025",
     accent: "#F5B700",
     summary:
-      "A white-label e-learning SaaS that lets training companies launch branded academies with courses, cohorts, quizzes and certificates.",
+      "A white-label e-learning platform. Training companies use it to run their own branded academy with courses, live cohorts, quizzes and certificates.",
     seoTitle: "LearnLoop: E-learning SaaS Platform Case Study",
     seoDescription:
       "How Red Hive Digital built LearnLoop, a white-label e-learning SaaS with Next.js and Django for courses, live cohorts, assessments and certificates.",
     challenge: [
-      "The client served training providers who were stitching together video hosting, forms and payment links to sell courses. They wanted a single platform each provider could brand as their own academy.",
-      "Every academy needed its own domain, branding and pricing, while the client needed one codebase to maintain. Learners expected a smooth, mobile-friendly experience with progress that synced across devices.",
+      "The client works with training providers who were selling courses through a patchwork of video hosting, form builders and payment links. They wanted one platform that each provider could brand as its own academy.",
+      "Each academy needed its own domain, branding and pricing, while the client wanted a single codebase to maintain. Learners expected it to work well on a phone and to pick up where they left off on any device.",
     ],
     solution: [
-      "We built a multi-tenant Django backend with a clean REST API and an admin experience tailored to course creators. Tenants are resolved by custom domain, and each academy controls its own theme, catalogue and pricing.",
-      "The learner-facing app is built in Next.js with static generation for public course pages, which keeps them fast and indexable, and an authenticated app for lessons, quizzes and discussions. Video is streamed through a CDN with signed URLs.",
+      "The backend is a multi-tenant Django app with a REST API and an admin area designed for course creators. Requests are matched to a tenant by custom domain, and each academy sets its own theme, catalog and prices.",
+      "Learners use a Next.js app. Public course pages are statically generated so they load fast and rank in search, while lessons, quizzes and discussions sit behind login. Video streams through a CDN with signed URLs so it can't be hotlinked.",
     ],
     features: [
-      { title: "White-label academies", text: "Custom domains, logos, colours and email templates for every tenant." },
+      { title: "White-label academies", text: "Custom domain, logo, colors and email templates for each tenant." },
       { title: "Course builder", text: "Drag-and-drop modules with video, text, downloads and embedded quizzes." },
-      { title: "Live cohorts", text: "Scheduled sessions, calendar invites and recordings attached to each cohort." },
-      { title: "Assessments", text: "Quizzes, assignments and auto-graded tests with configurable pass marks." },
-      { title: "Certificates", text: "Automatically issued, verifiable certificates on course completion." },
-      { title: "Payments & coupons", text: "One-off purchases, subscriptions, bundles and discount codes." },
+      { title: "Live cohorts", text: "Scheduled sessions with calendar invites and recordings attached afterwards." },
+      { title: "Assessments", text: "Quizzes, assignments and auto-graded tests with a pass mark set per course." },
+      { title: "Certificates", text: "Issued automatically on completion, with a public link anyone can verify." },
+      { title: "Payments and coupons", text: "One-off purchases, subscriptions, bundles and discount codes." },
     ],
     results: [
       { value: "<2 days", label: "to launch a new branded academy" },
@@ -220,6 +267,16 @@ export const caseStudies: CaseStudy[] = [
     tech: ["nextjs", "typescript", "django", "python", "postgresql", "aws"],
     platforms: ["Web", "Mobile web"],
     duration: "20 weeks",
+    screen: {
+      title: "Welcome back, Priya",
+      subtitle: "Project Management Basics",
+      metric: { label: "Course progress", value: "68%" },
+      rows: [
+        { name: "Module 4: Risk logs", meta: "12 min video", value: "Resume" },
+        { name: "Quiz: Scheduling", meta: "10 questions", value: "Start" },
+        { name: "Live cohort call", meta: "Thu · 6:00 PM", value: "Join" },
+      ],
+    },
   },
   {
     slug: "nestmind-ai-real-estate-assistant",
@@ -231,34 +288,44 @@ export const caseStudies: CaseStudy[] = [
     year: "2025",
     accent: "#3DA9FC",
     summary:
-      "An AI property assistant that answers buyer questions in plain language, recommends listings and books viewings around the clock.",
+      "An AI assistant on a brokerage's website that answers buyer questions about listings, suggests homes that fit and books inspections, at any hour.",
     seoTitle: "Nestmind: AI Real Estate Assistant Case Study",
     seoDescription:
       "How Red Hive Digital built Nestmind, an AI real estate assistant using OpenAI, LangChain and Next.js to search listings, answer questions and book viewings.",
     challenge: [
-      "The brokerage's agents were spending hours each day answering the same questions about listings, suburbs and inspection times, often outside business hours. Leads that waited too long for a reply went elsewhere.",
-      "A generic chatbot wasn't good enough. Answers had to be grounded in the brokerage's own listings and documents, never invent details about a property, and hand over to a human agent at the right moment.",
+      "Agents at the brokerage spent hours a day answering the same questions about listings, suburbs and inspection times, often in the evening. Buyers who waited too long for a reply moved on to another agency.",
+      "A generic chatbot wouldn't do. Answers had to come from the brokerage's own listings and documents, it could never make up details about a property, and it had to hand the conversation to a real agent at the right point.",
     ],
     solution: [
-      "We built a retrieval-augmented assistant with LangChain and OpenAI models. Listings, strata reports and suburb guides are embedded into a PostgreSQL vector store, and every answer cites the listing or document it came from.",
-      "Tool calls let the assistant filter listings by budget, location and features, check agent calendars and book viewings directly. The Next.js chat widget embeds on the brokerage website, and qualified leads are pushed into the CRM with a conversation summary.",
+      "We built a retrieval-augmented assistant with LangChain and OpenAI models. Listings, strata reports and suburb guides are stored as embeddings in PostgreSQL with pgvector, and every answer cites the listing or document it came from.",
+      "Tool calls let the assistant filter listings by budget, suburb and features, check agent calendars and book inspections in the chat. The Next.js widget sits on the brokerage's website, and qualified leads go into the CRM with a short summary of the conversation.",
     ],
     features: [
-      { title: "Natural-language search", text: "Buyers describe what they want and get matching listings with reasons for each match." },
-      { title: "Grounded answers", text: "Responses are drawn from listings and documents, with sources shown to the user." },
-      { title: "Viewing bookings", text: "The assistant checks agent availability and books inspections in the chat." },
-      { title: "Lead qualification", text: "Budget, timeline and finance status captured and scored automatically." },
-      { title: "CRM handoff", text: "Qualified leads and chat summaries pushed to the CRM for agent follow-up." },
-      { title: "Guardrails & analytics", text: "Topic limits, PII redaction and a dashboard of common questions and gaps." },
+      { title: "Plain-language search", text: "Buyers describe what they want and get matching listings, each with a reason it fits." },
+      { title: "Sourced answers", text: "Replies come from listings and documents, and the source is shown under each answer." },
+      { title: "Inspection bookings", text: "The assistant checks agent availability and books inspections inside the chat." },
+      { title: "Lead qualification", text: "Budget, timeline and finance status are captured and scored automatically." },
+      { title: "CRM handoff", text: "Qualified leads arrive in the CRM with a chat summary for the agent." },
+      { title: "Guardrails and analytics", text: "Topic limits, personal data redaction and a report of the questions it couldn't answer." },
     ],
     results: [
-      { value: "24/7", label: "instant responses to buyer enquiries" },
-      { value: "-50%", label: "repetitive questions handled by agents" },
-      { value: "+20%", label: "enquiries converted to booked viewings" },
+      { value: "24/7", label: "replies to buyer questions" },
+      { value: "-50%", label: "repeat questions reaching agents" },
+      { value: "+20%", label: "enquiries that became booked inspections" },
     ],
     tech: ["openai", "langchain", "nextjs", "python", "fastapi", "postgresql", "azure"],
     platforms: ["Web"],
     duration: "12 weeks",
+    screen: {
+      title: "Ask Nestmind",
+      subtitle: "3-bed near good schools, under $1.2M",
+      metric: { label: "Matches found", value: "14" },
+      rows: [
+        { name: "12 Wattle St, Ryde", meta: "3 bed · 2 bath", value: "$1.15M" },
+        { name: "4/88 Pittwater Rd", meta: "3 bed · 1 bath", value: "$985K" },
+        { name: "Inspection booked", meta: "Sat · 11:15 AM", value: "Done" },
+      ],
+    },
   },
 ];
 

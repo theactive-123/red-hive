@@ -27,7 +27,7 @@ export default function Testimonials() {
   return (
     <div className="grid gap-10 md:grid-cols-12">
       <div className="flex items-start justify-between md:col-span-3 md:flex-col md:justify-between">
-        <p className="tag">Kind words</p>
+        <p className="display-sm">What clients say</p>
         <div className="flex items-center gap-3">
           <button type="button" onClick={() => go(-1)} aria-label="Previous testimonial" className="grid h-12 w-12 place-items-center rounded-full border border-line transition-colors hover:bg-fg hover:text-bg">
             ←
@@ -41,11 +41,11 @@ export default function Testimonials() {
         </div>
       </div>
       <figure ref={quote} className="md:col-span-9" aria-live="polite">
-        <blockquote className="font-display text-[clamp(1.6rem,3.2vw,3rem)] font-medium leading-[1.15] tracking-[-0.025em] [font-stretch:104%]">
+        <blockquote className="font-display text-[clamp(1.6rem,3vw,2.8rem)] font-bold leading-[1.15] tracking-[-0.02em]">
           “{t.quote}”
         </blockquote>
         <figcaption className="mt-10 flex items-center gap-4">
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-red text-sm font-semibold text-white">
+          <span className="cut grid h-12 w-12 place-items-center bg-red text-sm font-semibold text-white [--cut:10px]">
             {t.name
               .split(" ")
               .map((n) => n[0])

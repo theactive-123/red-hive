@@ -10,9 +10,9 @@ import { pageMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
 
 export const metadata = pageMetadata({
-  title: "Software Development Services — Web, Mobile, SaaS & AI",
+  title: "Software Development Services: Web, Mobile, SaaS & AI",
   description:
-    "Custom web applications, iOS & Android apps, SaaS products, UI/UX design, MVPs, cloud, AI and ongoing support — Red Hive Digital’s software development services.",
+    "Custom web applications, iOS & Android apps, SaaS products, UI/UX design, MVPs, cloud, AI and ongoing support from Red Hive Digital.",
   path: "/services",
 });
 
@@ -29,15 +29,15 @@ export default function ServicesPage() {
       <PageHero
         crumbs={[{ name: "Services", path: "/services" }]}
         label="Services"
-        title="Everything it takes to ship great software"
-        text="Strategy, design, engineering and cloud under one roof. Bring us in for a single piece or the whole product."
+        title="Services"
+        text="Design, engineering and hosting for web and mobile products. Hire us for one piece, like a mobile app or a design refresh, or for the whole thing."
       >
         <Button href="/contact">Discuss your project</Button>
       </PageHero>
       <section className="wrap pb-28">
         <ServicesList items={services.map((s) => ({ slug: s.slug, name: s.name, tagline: s.tagline, icon: s.icon, tags: s.capabilities.map((c) => c.title) }))} />
       </section>
-      <section className="theme-light bg-paper-2 py-28 md:py-36">
+      <section className="theme-light bg-card py-28 md:py-36">
         <div className="wrap">
           <SectionHead label="Process" title="How a project runs" link={{ href: "/process", label: "Read more" }} className="mb-16" />
           <ProcessSteps />

@@ -78,23 +78,6 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
         <NumberedList items={c.features} />
       </Split>
 
-      <section className="theme-dark py-24 md:py-32">
-        <div className="wrap">
-          <p data-reveal className="tag">
-            <span className="text-fg">04</span> Results
-          </p>
-          <dl className="mt-12 grid gap-12 border-t border-line pt-12 md:grid-cols-3">
-            {c.results.map((r) => (
-              <div key={r.label} data-reveal>
-                <dd className="display-lg" style={{ color: c.accent }}>
-                  {r.value}
-                </dd>
-                <dt className="mt-4 max-w-xs text-muted">{r.label}</dt>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
 
       <Split index="05" label="Technology" title="Under the hood">
         <TechRow slugs={c.tech} />
@@ -102,7 +85,7 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
 
       <section className="wrap pb-28">
         <Link href={`/work/${next.slug}`} data-cursor="Next" className="group block border-t border-line pt-10">
-          <p className="tag">Next project</p>
+          <p className="text-sm font-semibold text-muted">Next project</p>
           <div className="mt-6 grid items-end gap-10 md:grid-cols-2">
             <p className="display-lg transition-colors duration-500 group-hover:text-red">{next.name}</p>
             <div className="overflow-hidden rounded-xl">

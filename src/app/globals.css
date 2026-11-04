@@ -1,23 +1,25 @@
 @import "tailwindcss";
 
-/* ───────────── Red Hive Digital — design tokens ───────────── */
+/* ───────────── Red Hive Digital ─────────────
+   Colours come from the brand: logo red (#E1013B) and the navy-black of the
+   original site (#00020A) on white. The angled cut and small red triangle in
+   the logo are reused as the site's only decorative motifs. */
 @theme {
-  --color-paper: #f4f2ee;
-  --color-paper-2: #ebe8e2;
-  --color-ink: #0e0e10;
-  --color-ink-2: #161619;
+  --color-white: #ffffff;
+  --color-snow: #f3f3f5;
+  --color-navy: #00020a;
+  --color-navy-2: #0a0d19;
   --color-red: #e1013b;
   --color-red-hot: #f40040;
   --color-red-deep: #8b0002;
 
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-/* Section-aware colours: wrap a section in .theme-dark / .theme-light */
 @theme inline {
   --color-bg: var(--bg);
   --color-fg: var(--fg);
@@ -28,133 +30,136 @@
 
 :root,
 .theme-light {
-  --bg: #f4f2ee;
-  --fg: #0e0e10;
-  --muted: #6c6b70;
-  --line: rgb(14 14 16 / 0.13);
-  --card: #e9e6e0;
+  --bg: #ffffff;
+  --fg: #00020a;
+  --muted: #5d606c;
+  --line: rgb(0 2 10 / 0.1);
+  --card: #f3f3f5;
 }
 .theme-dark {
-  --bg: #0e0e10;
-  --fg: #f1efea;
-  --muted: #8e8d94;
-  --line: rgb(255 255 255 / 0.13);
-  --card: #19191c;
+  --bg: #00020a;
+  --fg: #ffffff;
+  --muted: #9093a1;
+  --line: rgb(255 255 255 / 0.12);
+  --card: #0d1020;
 }
 
 @layer base {
   .theme-light, .theme-dark { background-color: var(--bg); color: var(--fg); }
   html {
-    background: var(--color-paper);
-    color: var(--color-ink);
+    background: #fff;
+    color: var(--color-navy);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
   }
   body {
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 1.0625rem;
     line-height: 1.6;
+    font-weight: 450;
     overflow-x: clip;
   }
   ::selection { background: var(--color-red); color: #fff; }
-  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 800; }
   :focus-visible { outline: 2px solid var(--color-red); outline-offset: 3px; }
   img { max-width: 100%; height: auto; }
 }
 
-/* Lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
 .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
 
-/* ───────────── Layout & type ───────────── */
 @utility wrap {
   width: 100%;
-  max-width: 1480px;
+  max-width: 1440px;
   margin-inline: auto;
   padding-inline: 1.25rem;
   @media (width >= 48rem) { padding-inline: 2.5rem; }
-  @media (width >= 90rem) { padding-inline: 3.5rem; }
+  @media (width >= 90rem) { padding-inline: 3rem; }
 }
 
+/* Type scale */
 @utility display-xl {
   font-family: var(--font-display);
-  font-stretch: 112%;
-  font-weight: 600;
-  font-size: clamp(3.1rem, 9.6vw, 10.5rem);
-  line-height: 0.88;
-  letter-spacing: -0.045em;
+  font-weight: 800;
+  font-size: clamp(3rem, 8.4vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
 }
 @utility display-lg {
   font-family: var(--font-display);
-  font-stretch: 110%;
-  font-weight: 600;
-  font-size: clamp(2.6rem, 6.6vw, 7rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5.6vw, 5.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 @utility display-md {
   font-family: var(--font-display);
-  font-stretch: 108%;
-  font-weight: 600;
-  font-size: clamp(2.1rem, 4.4vw, 4.4rem);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  font-weight: 800;
+  font-size: clamp(2rem, 3.8vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
 }
 @utility display-sm {
   font-family: var(--font-display);
-  font-stretch: 105%;
-  font-weight: 600;
-  font-size: clamp(1.6rem, 2.6vw, 2.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  font-size: clamp(1.45rem, 2.1vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
 }
 @utility lead {
-  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
   line-height: 1.5;
-  letter-spacing: -0.01em;
-}
-@utility tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--muted);
 }
 
-/* Underline that draws in on hover */
+/* Logo motifs */
+@utility cut {
+  /* the logo's angled corner, bottom-right */
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut, 14px)), calc(100% - var(--cut, 14px)) 100%, 0 100%);
+}
+@utility cut-tl {
+  clip-path: polygon(var(--cut, 28px) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut, 28px));
+}
+@utility tri {
+  /* the small red triangle after "Digital" in the logo */
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  background: var(--color-red);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
 @utility link-line {
   background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1px;
+  background-size: 0% 1.5px;
   background-repeat: no-repeat;
   background-position: 0 100%;
-  transition: background-size 0.5s var(--ease-out-expo);
-  &:hover { background-size: 100% 1px; }
+  transition: background-size 0.45s var(--ease-out-expo);
+  &:hover { background-size: 100% 1.5px; }
 }
 
-/* Article / legal prose */
-.prose-rh { font-size: 1.125rem; line-height: 1.75; color: #2b2b30; }
-.prose-rh h2 { font-family: var(--font-display); font-stretch: 105%; font-size: clamp(1.6rem, 2.6vw, 2.2rem); letter-spacing: -0.03em; line-height: 1.1; color: var(--color-ink); margin: 2.4em 0 0.7em; }
-.prose-rh h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-ink); margin: 1.8em 0 0.5em; }
+.prose-rh { font-size: 1.125rem; line-height: 1.75; color: #2a2c35; }
+.prose-rh h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 2.6vw, 2.2rem); letter-spacing: -0.02em; line-height: 1.1; color: var(--color-navy); margin: 2.2em 0 0.6em; }
+.prose-rh h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; color: var(--color-navy); margin: 1.8em 0 0.5em; }
 .prose-rh p { margin: 0 0 1.2em; }
 .prose-rh ul { margin: 0 0 1.4em; padding-left: 1.2em; list-style: disc; }
 .prose-rh li { margin: 0.4em 0; padding-left: 0.3em; }
 .prose-rh li::marker { color: var(--color-red); }
-.prose-rh a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-red); text-underline-offset: 3px; }
-.prose-rh strong { color: var(--color-ink); }
+.prose-rh a { color: var(--color-navy); text-decoration: underline; text-decoration-color: var(--color-red); text-underline-offset: 3px; }
+.prose-rh strong { color: var(--color-navy); font-weight: 600; }
 .prose-rh table { width: 100%; border-collapse: collapse; margin: 1.8em 0; font-size: 0.95rem; }
-.prose-rh th, .prose-rh td { border-bottom: 1px solid rgb(14 14 16 / 0.13); padding: 0.85em 1em 0.85em 0; text-align: left; vertical-align: top; }
-.prose-rh th { font-weight: 600; color: var(--color-ink); }
+.prose-rh th, .prose-rh td { padding: 0.8em 1em; text-align: left; vertical-align: top; }
+.prose-rh thead th { background: var(--color-navy); color: #fff; font-weight: 600; }
+.prose-rh tbody tr:nth-child(even) td { background: var(--color-snow); }
 
-/* JS-driven reveal initial states (only when JS + motion are available) */
+/* Motion initial states (JS + motion allowed only) */
 html.js-motion [data-reveal] { opacity: 0; }
 html.js-motion [data-split] { visibility: hidden; }
-html.js-motion [data-clip] { clip-path: inset(100% 0 0 0); }
+html.js-motion [data-clip] { clip-path: inset(0 0 100% 0); }
+.split-line { display: block; overflow: clip; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 
-.split-line { display: block; overflow: clip; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+/* Preloader: hide page content until intro has played (first visit only) */
+html.is-loading body { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -162,3 +167,9 @@ html.js-motion [data-clip] { clip-path: inset(100% 0 0 0); }
 
 html.has-cursor, html.has-cursor a, html.has-cursor button, html.has-cursor summary { cursor: none; }
 html.has-cursor input, html.has-cursor textarea { cursor: text; }
+
+@utility tag {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+}

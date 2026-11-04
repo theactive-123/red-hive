@@ -49,7 +49,7 @@ export default function Header() {
       const y = scrollY;
       const under = document
         .elementsFromPoint(24, 36)
-        .find((el) => !headerRef.current?.contains(el))
+        .find((el) => !headerRef.current?.contains(el) && !el.closest(".rh-preloader"))
         ?.closest(".theme-dark, .theme-light");
       setDark(!!under?.classList.contains("theme-dark"));
       setSolid(y > 40);
@@ -60,9 +60,11 @@ export default function Header() {
     const onScroll = () => (raf ||= requestAnimationFrame(check));
     check();
     addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("rh:intro-done", check);
     const t = setTimeout(check, 300);
     return () => {
       removeEventListener("scroll", onScroll);
+      removeEventListener("rh:intro-done", check);
       clearTimeout(t);
       cancelAnimationFrame(raf);
     };
@@ -70,7 +72,7 @@ export default function Header() {
 
   useEffect(() => {
     if (mobile) lenis?.stop();
-    else lenis?.start();
+    else if (window.__rhIntroDone !== false) lenis?.start();
     if (mobile && mobileRef.current) {
       gsap.fromTo(mobileRef.current.querySelectorAll("[data-m]"), { yPercent: 100 }, { yPercent: 0, stagger: 0.05, duration: 1, ease: "expo.out", delay: 0.2 });
     }
@@ -108,7 +110,7 @@ export default function Header() {
           } ${mobile ? "!bg-transparent border-transparent" : ""}`}
         >
           <div className="wrap flex h-[4.5rem] items-center justify-between gap-8">
-            <Link href="/" aria-label={`${site.name} — home`} className="relative z-10 shrink-0">
+            <Link href="/" aria-label={`${site.name} home`} className="relative z-10 shrink-0">
               <Image src={onDark ? "/logo.png" : "/logo-dark.png"} alt={site.name} width={257} height={58} priority className="h-8 w-auto md:h-9" />
             </Link>
 
@@ -120,7 +122,7 @@ export default function Header() {
                       href={l.href}
                       onFocus={() => enter(l.key)}
                       aria-expanded={l.key ? open === l.key : undefined}
-                      className={`relative py-2 text-[0.95rem] transition-opacity hover:opacity-100 ${active(l.href) || (l.key && open === l.key) ? "opacity-100" : "opacity-70"}`}
+                      className={`relative py-2 text-[0.95rem] font-medium transition-opacity hover:opacity-100 ${active(l.href) || (l.key && open === l.key) ? "opacity-100" : "opacity-70"}`}
                     >
                       {l.label}
                       <span
@@ -138,10 +140,10 @@ export default function Header() {
               <Magnetic strength={0.25} className="hidden sm:inline-block">
                 <Link
                   href="/contact"
-                  className="group relative inline-flex h-11 items-center overflow-hidden rounded-full bg-fg px-5 text-sm font-medium text-bg transition-colors duration-500 hover:text-white"
+                  className="cut group relative inline-flex h-11 items-center overflow-hidden bg-red px-5 text-sm font-semibold text-white [--cut:10px]"
                 >
-                  <span className="absolute inset-0 translate-y-[101%] rounded-full bg-red transition-transform duration-500 ease-out-expo group-hover:translate-y-0" />
-                  <span className="relative">Let’s talk</span>
+                  <span className="absolute inset-0 -translate-x-[101%] bg-fg transition-transform duration-500 ease-out-expo group-hover:translate-x-0" />
+                  <span className="relative transition-colors duration-300 group-hover:text-bg">Start a project</span>
                 </Link>
               </Magnetic>
               <button
@@ -174,7 +176,7 @@ export default function Header() {
                             <span className="block text-[0.95rem] font-medium">{s.name}</span>
                             <span className="block text-sm text-muted">{s.desc}</span>
                           </span>
-                          <span className="text-red opacity-0 transition-opacity group-hover:opacity-100">→</span>
+                          <span className="tri text-[0.8rem] opacity-0 transition-opacity group-hover:opacity-100" />
                         </Link>
                       </li>
                     ))}
@@ -210,7 +212,7 @@ export default function Header() {
                       <li key={slug} className="border-t border-line">
                         <Link href={`/industries/${slug}`} className="group flex items-center justify-between py-3.5 text-lg">
                           {name}
-                          <span className="text-red opacity-0 transition-opacity group-hover:opacity-100">→</span>
+                          <span className="tri text-[0.8rem] opacity-0 transition-opacity group-hover:opacity-100" />
                         </Link>
                       </li>
                     ))}
@@ -235,7 +237,7 @@ export default function Header() {
           <ul>
             {[...links.map((l) => [l.href, l.label] as const), ["/process", "Process"] as const, ["/contact", "Contact"] as const].map(([href, label]) => (
               <li key={href} className="overflow-hidden border-b border-line">
-                <Link data-m href={href} className="block py-3 font-display text-[2.4rem] font-semibold leading-tight tracking-tight [font-stretch:110%]">
+                <Link data-m href={href} className="block py-3 font-display text-[2.5rem] font-extrabold leading-tight tracking-tight">
                   {label}
                 </Link>
               </li>
@@ -261,7 +263,7 @@ function MenuIntro({ title, text, href }: { title: string; text: string; href: s
       <p className="display-sm">{title}</p>
       <p className="mt-3 max-w-[16rem] text-sm leading-relaxed text-muted">{text}</p>
       <Link href={href} className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
-        <span className="link-line">View all</span> →
+        <span className="underline decoration-red decoration-2 underline-offset-4">View all</span>
       </Link>
     </div>
   );

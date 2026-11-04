@@ -1,22 +1,22 @@
 export const processSteps = [
-  { n: "01", title: "Discover", time: "Week 1", text: "Workshops with your team to map users, goals and constraints. We turn ideas into a prioritized backlog, architecture sketch and a fixed estimate." },
-  { n: "02", title: "Design", time: "Weeks 2–4", text: "UX flows, wireframes and a polished UI system in Figma. Clickable prototypes get validated with real users before a line of code ships." },
-  { n: "03", title: "Build", time: "Sprints", text: "Two-week sprints with demos, a staging environment from day one and automated tests. You see working software every sprint — never a black box." },
-  { n: "04", title: "Launch", time: "Go-live", text: "Security review, performance tuning, App Store / Play Store submission and a zero-downtime production rollout with monitoring in place." },
-  { n: "05", title: "Scale", time: "Ongoing", text: "Analytics-driven iteration, new features, SLAs and 24/7 monitoring. We stay on as your product team for as long as you need us." },
+  { n: "01", title: "Discover", time: "Week 1", text: "A couple of workshops with your team. We map the users, the must-haves and the risks, then send a written scope with a fixed estimate." },
+  { n: "02", title: "Design", time: "Weeks 2 to 4", text: "User flows, wireframes and the visual design in Figma. You click through a prototype, and we test it with a few real users before any code." },
+  { n: "03", title: "Build", time: "2-week sprints", text: "Code, tests and a staging site you can open any time. Every sprint ends with a demo, so you always see what changed." },
+  { n: "04", title: "Launch", time: "Go-live", text: "Security checks, load testing, App Store and Play Store submission, then a production release with monitoring switched on." },
+  { n: "05", title: "Improve", time: "After launch", text: "We watch the analytics, fix what users trip over and keep shipping features. Most clients keep us on after launch." },
 ];
 
 export const engagementModels = [
-  { title: "Fixed scope", tag: "Best for MVPs", text: "A clear scope, timeline and price agreed up front. Ideal for MVPs and well-defined projects.", points: ["Fixed budget & deadline", "Milestone-based payments", "Detailed specification"] },
-  { title: "Dedicated team", tag: "Most popular", text: "A cross-functional squad — PM, designers, engineers, QA — working as an extension of your company.", points: ["Full-time team, your roadmap", "Scale up or down monthly", "Direct Slack access"] },
-  { title: "Time & materials", tag: "Max flexibility", text: "Pay for the hours you use. Perfect for evolving products, R&D and ongoing improvements.", points: ["Change priorities anytime", "Weekly reporting", "No long-term lock-in"] },
+  { title: "Fixed scope", tag: "Good for MVPs", text: "We agree the scope, timeline and price before we start. Works best when you know what the first version needs to do.", points: ["Fixed budget and deadline", "Paid by milestone", "Written specification"] },
+  { title: "Dedicated team", tag: "Most common", text: "A product manager, designers, engineers and QA working on your roadmap as if they were in-house.", points: ["Full-time team on your product", "Resize month to month", "Shared Slack channel"] },
+  { title: "Time and materials", tag: "For changing plans", text: "You pay for the hours used. Useful for products that are still finding their shape or need ongoing work.", points: ["Change priorities any week", "Weekly time reports", "No long contract"] },
 ];
 
 export const whyUs = [
-  { title: "Senior engineers only", text: "Every project is led by engineers with years of production experience — no juniors learning on your budget." },
-  { title: "Transparent by default", text: "Shared boards, weekly demos and a staging link from day one. You always know exactly where things stand." },
-  { title: "You own everything", text: "Full IP and source code ownership, documented and in your repositories from the first commit." },
-  { title: "Built to scale", text: "Clean architecture, automated tests and CI/CD so your product grows without a costly rewrite." },
-  { title: "Security first", text: "OWASP practices, encrypted data, least-privilege access and NDAs as standard on every engagement." },
-  { title: "Post-launch partner", text: "Maintenance, monitoring and iteration plans so your product keeps getting better after launch." },
+  { title: "Senior people on your project", text: "Your product is led by engineers who've shipped production apps before, not by someone learning on your budget." },
+  { title: "You can see everything", text: "Shared board, weekly demo, staging link from the first week. You never have to ask where things are." },
+  { title: "You own the code", text: "Code, designs and infrastructure live in your accounts from day one, with documentation." },
+  { title: "Built to keep growing", text: "Clean structure, tests and automated deployments, so adding features next year doesn't mean a rewrite." },
+  { title: "Security as standard", text: "Encrypted data, least-privilege access, dependency checks and an NDA on every project." },
+  { title: "Here after launch", text: "Maintenance plans, monitoring and a team that already knows your codebase." },
 ];

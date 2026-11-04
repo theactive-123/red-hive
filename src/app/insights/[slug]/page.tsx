@@ -43,7 +43,7 @@ function renderBlock(b: Block, i: number) {
       );
     case "quote":
       return (
-        <blockquote key={i} className="my-10 border-l-2 border-red pl-6 font-display text-2xl leading-snug text-ink">
+        <blockquote key={i} className="my-10 border-l-2 border-red pl-6 font-display text-2xl leading-snug text-navy">
           {b.text}
         </blockquote>
       );

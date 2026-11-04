@@ -6,7 +6,7 @@ import { techCategories, technologies } from "@/data/technologies";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Technologies — React, Next.js, Flutter, React Native, Node.js & More",
+  title: "Technologies We Use: React, Next.js, Flutter, React Native, Node.js & More",
   description:
     "The stack behind our web, mobile and SaaS products: React, Next.js, Flutter, React Native, Swift, Kotlin, Node.js, Python, Laravel, PostgreSQL, AWS, AI and more.",
   path: "/technologies",
@@ -18,23 +18,20 @@ export default function TechnologiesPage() {
       <PageHero
         crumbs={[{ name: "Technologies", path: "/technologies" }]}
         label="Technologies"
-        title="The tools behind the work"
-        text="Framework-fluent, not framework-loyal. Here’s what our engineers build with — and when we reach for each one."
+        title="Technologies"
+        text="The languages, frameworks and platforms our team works in every week. Each page explains what we build with it and when we’d pick something else."
       >
         <Button href="/contact">Hire developers</Button>
       </PageHero>
 
       <div className="wrap pb-28">
-        {techCategories.map((c, ci) => {
+        {techCategories.map((c) => {
           const list = technologies.filter((t) => t.category === c.key);
           if (!list.length) return null;
           return (
             <section key={c.key} id={c.key} className="grid scroll-mt-28 gap-8 border-t border-line py-14 md:grid-cols-12">
               <div className="md:col-span-4">
-                <p data-reveal className="tag">
-                  <span className="text-fg">{String(ci + 1).padStart(2, "0")}</span> {list.length} technologies
-                </p>
-                <h2 data-split className="display-md mt-5">
+                <h2 data-split className="display-md">
                   {c.label}
                 </h2>
                 <p data-reveal className="mt-4 max-w-xs text-muted">
@@ -52,7 +49,7 @@ export default function TechnologiesPage() {
                         <span className="block text-lg font-semibold tracking-tight">{t.name}</span>
                         <span className="block truncate text-sm text-muted">{t.tagline}</span>
                       </span>
-                      <span className="text-muted transition-all duration-500 group-hover:translate-x-1 group-hover:text-red">→</span>
+                      <span className="tri text-xs opacity-0 transition-opacity group-hover:opacity-100" />
                     </Link>
                   </li>
                 ))}

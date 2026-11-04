@@ -1,4 +1,4 @@
-// From the current redhivedigital.com site — swap in newer client quotes as they come in.
+// From the current redhivedigital.com site. Swap in newer client quotes as they come in.
 export const testimonials = [
   {
     name: "Jessica Turner",

@@ -34,7 +34,7 @@ export default function ContactForm({ email }: { email: string }) {
     return (
       <div className="flex min-h-[420px] flex-col items-start justify-center border-t border-line pt-10">
         <span className="grid h-14 w-14 place-items-center rounded-full bg-red text-xl text-white">✓</span>
-        <h2 className="display-md mt-8">Thanks — we’re on it.</h2>
+        <h2 className="display-md mt-8">Thanks, we’ve got it.</h2>
         <p className="mt-4 max-w-md text-lg text-muted">Someone from the team will review your project and reply within one business day.</p>
       </div>
     );
@@ -121,10 +121,9 @@ export default function ContactForm({ email }: { email: string }) {
         <button
           type="submit"
           disabled={state === "sending"}
-          className="group inline-flex h-14 items-center gap-3 rounded-full bg-red px-8 font-medium text-white transition-colors hover:bg-ink disabled:opacity-60"
+          className="cut inline-flex h-14 items-center bg-red px-8 font-semibold text-white transition-colors hover:bg-navy disabled:opacity-60"
         >
           {state === "sending" ? "Sending…" : "Send project brief"}
-          <span className="transition-transform group-hover:translate-x-1">→</span>
         </button>
         <p className="text-sm text-muted">We’ll never share your details. NDA available on request.</p>
       </div>

@@ -46,7 +46,9 @@ and a web manifest. All pages are statically pre-rendered.
 
 ## Design & motion
 
-Light editorial base (`theme-light`) with dark sections (`theme-dark`); the header adapts to whichever is beneath it.
+White base with navy-black (#00020A) sections from the brand; the header adapts to whichever is beneath it.
+Fonts: Cabinet Grotesk + General Sans (ITF Free Font License, self-hosted in `src/app/fonts`). The logo's angled cut (`cut`)
+and red triangle (`tri`) are the only decorative motifs. The first-visit preloader is `src/components/motion/Preloader.tsx`.
 
 - `src/components/three/HiveScene.tsx` — interactive 3D honeycomb (home hero, about banner)
 - `src/components/motion/Motion.tsx` — scroll motion via data attributes: `data-reveal`, `data-split`, `data-clip`,

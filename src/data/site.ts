@@ -3,7 +3,7 @@ export const site = {
   shortName: "Red Hive",
   legalName: "Red Hive Digital Inc",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://redhivedigital.com").replace(/\/$/, ""),
-  tagline: "Custom web apps, mobile apps & SaaS — engineered to scale.",
+  tagline: "Custom web apps, mobile apps and SaaS products.",
   description:
     "Red Hive Digital is a custom software development company building web applications, iOS & Android apps and SaaS products with React, Next.js, Flutter, React Native, Node.js and the cloud.",
   email: "redhivedigital@gmail.com",
@@ -16,7 +16,7 @@ export const site = {
     instagram: "https://www.instagram.com/",
     linkedin: "https://www.linkedin.com/",
   },
-  // PLACEHOLDER figures — replace with your real numbers before launch.
+  // PLACEHOLDER figures (not shown on the site yet): replace with your real numbers before launch.
   stats: [
     { value: 150, suffix: "+", label: "Products shipped" },
     { value: 98, suffix: "%", label: "Client satisfaction" },

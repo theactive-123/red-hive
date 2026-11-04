@@ -73,16 +73,16 @@ export default async function TechPage({ params }: PageProps<"/technologies/[slu
           ))}
         </ul>
         <div className="mt-14">
-          <p data-reveal className="tag mb-5">
-            Toolkit
-          </p>
+          <h3 data-reveal className="display-sm mb-4">
+            Libraries we pair with it
+          </h3>
           <p data-reveal className="lead">
             {t.toolkit.join(" · ")}
           </p>
         </div>
       </Split>
 
-      <section className="theme-light bg-paper-2 py-24 md:py-32">
+      <section className="theme-light bg-card py-24 md:py-32">
         <div className="wrap">
           <SectionHead index="05" label="Process" title="How we deliver" className="mb-14" />
           <ProcessSteps />
