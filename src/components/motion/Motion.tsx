@@ -5,24 +5,21 @@ import { useEffect } from "react";
 import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from "@/lib/gsap";
 
 /**
- * Declarative scroll animations. Server components opt in with data attributes:
- *  data-reveal="up|fade|left|right|scale"   (+ data-delay="0.2")
- *  data-split="lines|words|hero"           headline mask reveal (hero = no scroll trigger)
- *  data-scrub-text                          words light up while scrolling
- *  data-parallax="0.15"                     vertical parallax amount (fraction of viewport)
- *  data-counter="150"                       count-up number (+ data-suffix)
- *  data-draw="x|y"                          line grows while scrolling through its parent
+ * Declarative scroll motion. Server components opt in with data attributes:
+ *  data-reveal            fade + rise when scrolled into view (data-delay="0.2")
+ *  data-split / ="hero"   headline revealed line by line (hero = on load)
+ *  data-clip              media wipes up into view (child [data-clip-inner] de-zooms)
+ *  data-parallax="0.1"    vertical drift while scrolling
+ *  data-scrub-text        words brighten as you read
+ *  data-counter="150"     count up (+ data-suffix)
+ *  data-draw="x|y"        line grows with scroll
  */
 export default function Motion() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const root = document.documentElement;
     if (prefersReducedMotion()) {
-      root.classList.remove("js-motion");
-      document.querySelectorAll<HTMLElement>("[data-counter]").forEach((el) => {
-        el.textContent = (el.dataset.counter ?? "") + (el.dataset.suffix ?? "");
-      });
+      document.documentElement.classList.remove("js-motion");
       return;
     }
 
@@ -33,109 +30,95 @@ export default function Motion() {
     const run = () => {
       if (cancelled) return;
       ctx = gsap.context(() => {
-        // Generic reveals, batched so siblings stagger nicely.
-        const from: Record<string, gsap.TweenVars> = {
-          up: { y: 48 },
-          fade: {},
-          left: { x: -60 },
-          right: { x: 60 },
-          scale: { scale: 0.92, y: 24 },
-        };
         const reveals = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-        reveals.forEach((el) => gsap.set(el, { opacity: 0, ...from[el.dataset.reveal || "up"] }));
+        gsap.set(reveals, { opacity: 0, y: 28 });
         ScrollTrigger.batch(reveals, {
-          start: "top 88%",
+          start: "top 90%",
           once: true,
           onEnter: (batch) =>
             gsap.to(batch, {
               opacity: 1,
-              x: 0,
               y: 0,
-              scale: 1,
               duration: 1.1,
-              stagger: 0.09,
+              ease: "power3.out",
+              stagger: 0.08,
               delay: Number((batch[0] as HTMLElement).dataset.delay || 0),
               overwrite: true,
             }),
         });
 
-        // Headline mask reveals.
         gsap.utils.toArray<HTMLElement>("[data-split]").forEach((el) => {
-          const mode = el.dataset.split;
+          const hero = el.dataset.split === "hero";
           const split = SplitText.create(el, {
-            type: "lines,words",
+            type: "lines",
             mask: "lines",
             linesClass: "split-line",
-            wordsClass: "split-word",
             autoSplit: true,
             onSplit(self) {
               gsap.set(el, { visibility: "visible" });
-              return gsap.from(self.words, {
-                yPercent: 115,
-                rotate: 4,
-                duration: 1.25,
-                stagger: mode === "lines" ? 0.03 : 0.045,
-                delay: mode === "hero" ? 0.25 : 0,
-                scrollTrigger: mode === "hero" ? undefined : { trigger: el, start: "top 88%", once: true },
+              return gsap.from(self.lines, {
+                yPercent: 105,
+                duration: 1.3,
+                ease: "expo.out",
+                stagger: 0.09,
+                delay: hero ? 0.15 : 0,
+                scrollTrigger: hero ? undefined : { trigger: el, start: "top 88%", once: true },
               });
             },
           });
           splits.push(split);
         });
 
-        // Words that light up as you scroll.
+        gsap.utils.toArray<HTMLElement>("[data-clip]").forEach((el) => {
+          const inner = el.querySelector("[data-clip-inner]");
+          const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 88%", once: true } });
+          tl.to(el, { clipPath: "inset(0% 0 0 0)", duration: 1.4, ease: "expo.inOut" });
+          if (inner) tl.from(inner, { scale: 1.18, duration: 1.8, ease: "expo.out" }, 0.1);
+        });
+
+        gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
+          const amount = Number(el.dataset.parallax || 0.1);
+          gsap.fromTo(
+            el,
+            { yPercent: -amount * 100 },
+            { yPercent: amount * 100, ease: "none", scrollTrigger: { trigger: el.parentElement || el, start: "top bottom", end: "bottom top", scrub: true } },
+          );
+        });
+
         gsap.utils.toArray<HTMLElement>("[data-scrub-text]").forEach((el) => {
           const split = SplitText.create(el, { type: "words" });
           splits.push(split);
           gsap.fromTo(
             split.words,
-            { opacity: 0.14 },
-            {
-              opacity: 1,
-              ease: "none",
-              stagger: 0.1,
-              scrollTrigger: { trigger: el, start: "top 80%", end: "bottom 45%", scrub: true },
-            },
-          );
-        });
-
-        gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
-          const amount = Number(el.dataset.parallax || 0.15);
-          gsap.fromTo(
-            el,
-            { yPercent: -amount * 100 },
-            {
-              yPercent: amount * 100,
-              ease: "none",
-              scrollTrigger: { trigger: el.parentElement || el, start: "top bottom", end: "bottom top", scrub: true },
-            },
+            { opacity: 0.18 },
+            { opacity: 1, ease: "none", stagger: 0.1, scrollTrigger: { trigger: el, start: "top 78%", end: "bottom 50%", scrub: true } },
           );
         });
 
         gsap.utils.toArray<HTMLElement>("[data-counter]").forEach((el) => {
           const target = Number(el.dataset.counter);
           const suffix = el.dataset.suffix ?? "";
-          const obj = { v: 0 };
-          el.textContent = "0" + suffix;
-          gsap.to(obj, {
+          const o = { v: 0 };
+          gsap.to(o, {
             v: target,
-            duration: 2.2,
+            duration: 2,
             ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 90%", once: true },
-            onUpdate: () => (el.textContent = Math.round(obj.v) + suffix),
+            scrollTrigger: { trigger: el, start: "top 92%", once: true },
+            onStart: () => void (el.textContent = "0" + suffix),
+            onUpdate: () => void (el.textContent = Math.round(o.v) + suffix),
           });
         });
 
         gsap.utils.toArray<HTMLElement>("[data-draw]").forEach((el) => {
-          const axis = el.dataset.draw === "x" ? "scaleX" : "scaleY";
+          const x = el.dataset.draw === "x";
           gsap.fromTo(
             el,
-            { [axis]: 0 },
+            { [x ? "scaleX" : "scaleY"]: 0 },
             {
-              [axis]: 1,
+              [x ? "scaleX" : "scaleY"]: 1,
               ease: "none",
-              transformOrigin: axis === "scaleX" ? "left center" : "center top",
-              scrollTrigger: { trigger: el.parentElement || el, start: "top 70%", end: "bottom 60%", scrub: 0.6 },
+              transformOrigin: x ? "left center" : "center top",
+              scrollTrigger: { trigger: el.parentElement || el, start: "top 75%", end: "bottom 55%", scrub: 0.5 },
             },
           );
         });
@@ -143,9 +126,7 @@ export default function Motion() {
       ScrollTrigger.refresh();
     };
 
-    // Wait for fonts so split lines are measured correctly.
-    const fontsReady = document.fonts?.ready ?? Promise.resolve();
-    fontsReady.then(() => requestAnimationFrame(run));
+    (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(run));
 
     return () => {
       cancelled = true;

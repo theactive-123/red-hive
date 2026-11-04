@@ -3,80 +3,64 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 
-/** Dot + lagging ring cursor. Elements with data-cursor="Label" expand the ring and show the label. */
+/** Small blend-mode dot; grows into a labelled red disc over [data-cursor] elements. */
 export default function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
-  const ring = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduce || !dot.current || !ring.current) return;
-
+    const el = dot.current;
+    if (!el || !matchMedia("(pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const html = document.documentElement;
     html.classList.add("has-cursor");
-    const dx = gsap.quickTo(dot.current, "x", { duration: 0.12, ease: "power3" });
-    const dy = gsap.quickTo(dot.current, "y", { duration: 0.12, ease: "power3" });
-    const rx = gsap.quickTo(ring.current, "x", { duration: 0.55, ease: "power3" });
-    const ry = gsap.quickTo(ring.current, "y", { duration: 0.55, ease: "power3" });
-    gsap.set([dot.current, ring.current], { xPercent: -50, yPercent: -50, opacity: 0 });
+    gsap.set(el, { xPercent: -50, yPercent: -50, opacity: 0 });
+    const x = gsap.quickTo(el, "x", { duration: 0.35, ease: "power3" });
+    const y = gsap.quickTo(el, "y", { duration: 0.35, ease: "power3" });
+    let mode = "";
 
-    let shown = false;
     const move = (e: PointerEvent) => {
-      if (!shown) {
-        shown = true;
-        gsap.to([dot.current, ring.current], { opacity: 1, duration: 0.3 });
-      }
-      dx(e.clientX);
-      dy(e.clientY);
-      rx(e.clientX);
-      ry(e.clientY);
+      gsap.to(el, { opacity: 1, duration: 0.2, overwrite: "auto" });
+      x(e.clientX);
+      y(e.clientY);
     };
-
     const over = (e: PointerEvent) => {
-      const t = (e.target as HTMLElement).closest<HTMLElement>("[data-cursor], a, button, [role=tab], summary");
-      const text = t?.dataset.cursor ?? "";
-      if (label.current) label.current.textContent = text;
-      gsap.to(ring.current, {
-        width: text ? 96 : t ? 58 : 34,
-        height: text ? 96 : t ? 58 : 34,
-        backgroundColor: text ? "rgba(225,1,59,0.92)" : t ? "rgba(225,1,59,0.12)" : "rgba(225,1,59,0)",
-        borderColor: text ? "rgba(225,1,59,0)" : "rgba(255,255,255,0.45)",
-        duration: 0.4,
+      const t = e.target as HTMLElement;
+      const labelled = t.closest<HTMLElement>("[data-cursor]");
+      const link = t.closest("a, button, summary, [role=tab]");
+      const next = labelled ? "label" : link ? "link" : "";
+      if (next === mode && (!labelled || label.current?.textContent === labelled.dataset.cursor)) return;
+      mode = next;
+      if (label.current) label.current.textContent = labelled?.dataset.cursor ?? "";
+      gsap.to(el, {
+        width: labelled ? 92 : link ? 44 : 10,
+        height: labelled ? 92 : link ? 44 : 10,
+        backgroundColor: labelled ? "#e1013b" : "#ffffff",
+        mixBlendMode: labelled ? "normal" : "difference",
+        duration: 0.45,
         ease: "expo.out",
       });
-      gsap.to(dot.current, { scale: t ? 0 : 1, duration: 0.25 });
+      gsap.to(label.current, { opacity: labelled ? 1 : 0, duration: 0.25 });
     };
+    const leave = () => gsap.to(el, { opacity: 0, duration: 0.2 });
 
-    const leave = () => gsap.to([dot.current, ring.current], { opacity: 0, duration: 0.3, onComplete: () => void (shown = false) });
-    const down = () => gsap.to(ring.current, { scale: 0.82, duration: 0.2 });
-    const up = () => gsap.to(ring.current, { scale: 1, duration: 0.35 });
-
-    window.addEventListener("pointermove", move, { passive: true });
+    addEventListener("pointermove", move, { passive: true });
     document.addEventListener("pointerover", over, { passive: true });
-    document.documentElement.addEventListener("pointerleave", leave);
-    window.addEventListener("pointerdown", down);
-    window.addEventListener("pointerup", up);
+    html.addEventListener("pointerleave", leave);
     return () => {
       html.classList.remove("has-cursor");
-      window.removeEventListener("pointermove", move);
+      removeEventListener("pointermove", move);
       document.removeEventListener("pointerover", over);
-      document.documentElement.removeEventListener("pointerleave", leave);
-      window.removeEventListener("pointerdown", down);
-      window.removeEventListener("pointerup", up);
+      html.removeEventListener("pointerleave", leave);
     };
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] hidden [@media(pointer:fine)]:block">
-      <div ref={dot} className="fixed left-0 top-0 h-2 w-2 rounded-full bg-red-hot" />
-      <div
-        ref={ring}
-        className="fixed left-0 top-0 flex h-[34px] w-[34px] items-center justify-center rounded-full border border-white/45"
-      >
-        <span ref={label} className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-white" />
-      </div>
+    <div
+      ref={dot}
+      aria-hidden
+      className="pointer-events-none fixed left-0 top-0 z-[200] hidden h-2.5 w-2.5 items-center justify-center rounded-full bg-white mix-blend-difference [@media(pointer:fine)]:flex"
+    >
+      <span ref={label} className="text-[12px] font-medium text-white opacity-0" />
     </div>
   );
 }

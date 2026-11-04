@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/sections/Breadcrumbs";
-import CTA from "@/components/sections/CTA";
+import InsightsList from "@/components/sections/InsightsList";
 import TechIcon from "@/components/ui/TechIcon";
 import JsonLd from "@/components/seo/JsonLd";
 import { posts, type Block } from "@/data/posts";
@@ -43,7 +43,7 @@ function renderBlock(b: Block, i: number) {
       );
     case "quote":
       return (
-        <blockquote key={i} className="my-10 border-l-2 border-red pl-6 font-display text-2xl leading-snug text-white">
+        <blockquote key={i} className="my-10 border-l-2 border-red pl-6 font-display text-2xl leading-snug text-ink">
           {b.text}
         </blockquote>
       );
@@ -79,7 +79,6 @@ export default async function PostPage({ params }: PageProps<"/insights/[slug]">
   if (!p) notFound();
   const techs = getTechs(p.relatedTech);
   const service = services.find((s) => s.slug === p.relatedService);
-  const more = posts.filter((x) => x.slug !== p.slug).slice(0, 2);
 
   return (
     <>
@@ -99,71 +98,51 @@ export default async function PostPage({ params }: PageProps<"/insights/[slug]">
         }}
       />
       <article>
-        <header className="relative overflow-hidden pb-14 pt-36 sm:pt-44">
-          <div className="bg-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
-          <div className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-red/20 blur-[140px]" />
-          <div className="container-x relative max-w-4xl">
-            <Breadcrumbs items={[{ name: "Insights", path: "/insights" }, { name: p.category, path: `/insights/${p.slug}` }]} />
-            <p data-reveal="fade" className="mt-10 font-mono text-xs uppercase tracking-[0.2em] text-red-hot">
-              {p.category} · {fmt(p.date)} · {p.readMinutes} min read
-            </p>
-            <h1 data-split="hero" className="mt-6 text-[clamp(2.3rem,5.5vw,4.6rem)] font-semibold text-white">
-              {p.title}
-            </h1>
-            <p data-reveal="up" className="mt-8 text-xl leading-relaxed text-muted">
-              {p.excerpt}
-            </p>
-          </div>
+        <header className="wrap pt-32 md:pt-44">
+          <Breadcrumbs items={[{ name: "Insights", path: "/insights" }, { name: p.category, path: `/insights/${p.slug}` }]} />
+          <p data-reveal className="tag mt-12">
+            {p.category} · {fmt(p.date)} · {p.readMinutes} min read
+          </p>
+          <h1 data-split="hero" className="display-lg mt-6 max-w-[18ch]">
+            {p.title}
+          </h1>
+          <p data-reveal className="lead mt-10 max-w-3xl text-fg/80">
+            {p.excerpt}
+          </p>
         </header>
-        <div className="container-x grid max-w-6xl gap-14 pb-20 lg:grid-cols-[1fr_260px]">
-          <div className="prose-rh max-w-3xl">{p.body.map(renderBlock)}</div>
-          <aside className="space-y-6 lg:sticky lg:top-32 lg:self-start">
+        <div className="wrap mt-16 grid gap-14 border-t border-line pt-14 pb-24 md:grid-cols-12">
+          <aside className="order-2 space-y-10 md:order-1 md:col-span-3 md:sticky md:top-28 md:self-start">
+            {service && (
+              <div>
+                <p className="tag mb-3">Related service</p>
+                <Link href={`/services/${service.slug}`} className="link-line text-lg font-medium">
+                  {service.short}
+                </Link>
+              </div>
+            )}
             {techs.length > 0 && (
-              <div className="rounded-3xl border border-line bg-surface p-6">
-                <p className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-white/45">Mentioned tech</p>
-                <ul className="space-y-3">
+              <div>
+                <p className="tag mb-3">Mentioned</p>
+                <ul className="space-y-2">
                   {techs.map((t) => (
                     <li key={t.slug}>
-                      <Link href={`/technologies/${t.slug}`} className="flex items-center gap-3 text-sm text-white/80 hover:text-white">
-                        <TechIcon icon={t.icon} name={t.name} className="h-5 w-5" />
-                        {t.name}
+                      <Link href={`/technologies/${t.slug}`} className="inline-flex items-center gap-2.5">
+                        <TechIcon icon={t.icon} name={t.name} className="h-4 w-4" />
+                        <span className="link-line">{t.name}</span>
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-            {service && (
-              <Link href={`/services/${service.slug}`} className="block rounded-3xl border border-red/40 bg-red/10 p-6 transition-colors hover:bg-red/20">
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-red-hot">Related service</p>
-                <p className="mt-3 font-display text-xl font-semibold text-white">{service.short}</p>
-                <p className="mt-2 text-sm text-white/70">{service.tagline}</p>
-              </Link>
-            )}
-            <div className="flex flex-wrap gap-2">
-              {p.tags.map((t) => (
-                <span key={t} className="rounded-full border border-line px-3 py-1 text-xs text-white/60">
-                  {t}
-                </span>
-              ))}
-            </div>
           </aside>
+          <div className="prose-rh order-1 md:order-2 md:col-span-8 md:col-start-5">{p.body.map(renderBlock)}</div>
         </div>
       </article>
-      <section className="container-x pb-12">
-        <p className="eyebrow mb-8">Keep reading</p>
-        <ul className="grid gap-6 md:grid-cols-2">
-          {more.map((m) => (
-            <li key={m.slug}>
-              <Link href={`/insights/${m.slug}`} className="group block h-full rounded-3xl border border-line bg-surface p-8 transition-colors hover:border-red/50">
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-red-hot">{m.category}</p>
-                <p className="mt-3 font-display text-2xl font-semibold text-white">{m.title}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <section className="wrap pb-24">
+        <p className="tag mb-8">Keep reading</p>
+        <InsightsList limit={2} exclude={p.slug} />
       </section>
-      <CTA />
     </>
   );
 }

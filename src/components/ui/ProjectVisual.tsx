@@ -1,71 +1,79 @@
 import type { CaseStudy } from "@/data/work";
 
-/** Code-drawn product mock (no stock imagery): a browser or phone frame with an abstract UI in the project's accent. */
+/** Product shot drawn in code: flat brand-colour backdrop with a light-UI device mock. */
 export default function ProjectVisual({ project, className = "" }: { project: Pick<CaseStudy, "accent" | "name" | "category">; className?: string }) {
   const a = project.accent;
   const mobile = project.category === "Mobile App";
   return (
-    <div className={`relative overflow-hidden ${className}`} style={{ background: `radial-gradient(120% 90% at 80% 10%, ${a}55 0%, transparent 55%), radial-gradient(90% 70% at 0% 100%, ${a}30 0%, transparent 60%), #070912` }}>
-      <div className="bg-grid absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+    <div className={`relative overflow-hidden ${className}`} style={{ background: a }}>
+      <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_120%,rgba(0,0,0,0.28),transparent_60%)]" />
       {mobile ? (
-        <div className="absolute inset-0 flex items-center justify-center gap-6">
+        <div className="absolute inset-0 flex items-center justify-center gap-[5%]">
           {[0, 1].map((p) => (
-            <div key={p} className={`relative w-[34%] max-w-[210px] rounded-[2rem] border border-white/15 bg-[#0b0d16] p-2 shadow-2xl ${p ? "translate-y-10 rotate-[6deg]" : "-translate-y-4 -rotate-[4deg]"}`}>
-              <div className="aspect-[9/19] overflow-hidden rounded-[1.6rem] bg-[#10131f] p-3">
-                <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-white/15" />
-                <div className="h-[28%] rounded-xl" style={{ background: `linear-gradient(135deg, ${a}, ${a}55)` }} />
-                <div className="mt-3 space-y-2">
-                  {[80, 60, 70].map((w, i) => (
-                    <div key={i} className="flex items-center gap-2 rounded-lg bg-white/5 p-2">
-                      <div className="h-5 w-5 rounded-md" style={{ background: i === 0 ? a : "rgba(255,255,255,.15)" }} />
-                      <div className="h-1.5 rounded bg-white/20" style={{ width: `${w}%` }} />
+            <div key={p} className={`w-[27%] max-w-[230px] rounded-[2.1rem] bg-[#0e0e10] p-[0.45rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] ${p ? "translate-y-[12%]" : "-translate-y-[6%]"}`}>
+              <div className="aspect-[9/19.5] overflow-hidden rounded-[1.75rem] bg-[#f6f5f2] px-[9%] pt-[12%]">
+                <div className="flex items-center justify-between">
+                  <div className="h-2 w-[40%] rounded-full bg-[#0e0e10]" />
+                  <div className="h-5 w-5 rounded-full" style={{ background: a }} />
+                </div>
+                {p === 0 ? (
+                  <>
+                    <div className="mt-[14%] rounded-xl p-[9%] text-white" style={{ background: a }}>
+                      <div className="h-1.5 w-1/3 rounded-full bg-white/60" />
+                      <div className="mt-3 h-3 w-2/3 rounded-full bg-white" />
+                      <div className="mt-6 h-6 w-1/2 rounded-full bg-white/25" />
                     </div>
-                  ))}
-                </div>
-                <div className="mt-3 grid grid-cols-2 gap-2">
-                  <div className="aspect-square rounded-lg bg-white/5" />
-                  <div className="aspect-square rounded-lg" style={{ background: `${a}33` }} />
-                </div>
+                    {[0, 1, 2].map((i) => (
+                      <div key={i} className="mt-[9%] flex items-center gap-2.5">
+                        <div className="h-7 w-7 shrink-0 rounded-full bg-[#e3e1db]" />
+                        <div className="flex-1 space-y-1.5">
+                          <div className="h-1.5 w-3/4 rounded-full bg-[#0e0e10]/80" />
+                          <div className="h-1.5 w-1/2 rounded-full bg-[#0e0e10]/20" />
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <div className="mt-[14%] aspect-square rounded-xl bg-[#e3e1db]" />
+                    <div className="mt-[9%] h-2 w-2/3 rounded-full bg-[#0e0e10]/80" />
+                    <div className="mt-2 h-1.5 w-1/2 rounded-full bg-[#0e0e10]/25" />
+                    <div className="mt-[12%] h-8 rounded-full" style={{ background: a }} />
+                  </>
+                )}
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="absolute inset-x-[8%] top-[14%] bottom-[-6%] rounded-t-2xl border border-white/15 bg-[#0b0d16] shadow-2xl">
-          <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="h-2.5 w-2.5 rounded-full" style={{ background: a }} />
-            <span className="ml-4 h-4 w-1/3 rounded-full bg-white/5" />
+        <div className="absolute inset-x-[9%] bottom-0 top-[13%] overflow-hidden rounded-t-xl bg-[#f6f5f2] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.45)]">
+          <div className="flex items-center gap-1.5 border-b border-black/[0.07] px-4 py-2.5">
+            <span className="h-2 w-2 rounded-full bg-black/15" />
+            <span className="h-2 w-2 rounded-full bg-black/15" />
+            <span className="h-2 w-2 rounded-full bg-black/15" />
           </div>
-          <div className="grid h-full grid-cols-[22%_1fr] gap-4 p-4">
-            <div className="space-y-2.5">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-3 rounded" style={{ background: i === 1 ? a : "rgba(255,255,255,.08)", width: `${90 - i * 8}%` }} />
+          <div className="grid h-full grid-cols-[20%_1fr]">
+            <div className="space-y-3 border-r border-black/[0.07] p-[8%]">
+              <div className="mb-5 h-4 w-4 rounded" style={{ background: a }} />
+              {[70, 55, 62, 48, 58].map((w, i) => (
+                <div key={i} className="h-1.5 rounded-full" style={{ width: `${w}%`, background: i === 1 ? "#0e0e10" : "rgba(14,14,16,.18)" }} />
               ))}
             </div>
-            <div className="space-y-4">
-              <div className="grid grid-cols-3 gap-3">
+            <div className="p-[4%]">
+              <div className="h-2.5 w-1/4 rounded-full bg-[#0e0e10]" />
+              <div className="mt-[4%] grid grid-cols-3 gap-[3%]">
                 {[0, 1, 2].map((i) => (
-                  <div key={i} className="rounded-lg bg-white/5 p-3">
-                    <div className="h-1.5 w-1/2 rounded bg-white/20" />
-                    <div className="mt-2 h-3 w-3/4 rounded" style={{ background: i === 0 ? a : "rgba(255,255,255,.25)" }} />
+                  <div key={i} className="rounded-lg border border-black/[0.07] bg-white p-[8%]">
+                    <div className="h-1.5 w-1/2 rounded-full bg-black/20" />
+                    <div className="mt-2.5 h-3 w-2/3 rounded-full" style={{ background: i === 0 ? a : "#0e0e10" }} />
                   </div>
                 ))}
               </div>
-              <svg viewBox="0 0 300 90" className="w-full" preserveAspectRatio="none" aria-hidden>
-                <defs>
-                  <linearGradient id={`g-${project.name}`} x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0" stopColor={a} stopOpacity="0.5" />
-                    <stop offset="1" stopColor={a} stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <path d="M0 70 C30 60 50 72 80 50 S130 30 160 42 S220 10 250 22 S290 8 300 6 V90 H0Z" fill={`url(#g-${project.name})`} />
-                <path d="M0 70 C30 60 50 72 80 50 S130 30 160 42 S220 10 250 22 S290 8 300 6" fill="none" stroke={a} strokeWidth="2" />
-              </svg>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="h-16 rounded-lg bg-white/5" />
-                <div className="h-16 rounded-lg bg-white/5" />
+              <div className="mt-[4%] rounded-lg border border-black/[0.07] bg-white p-[4%]">
+                <svg viewBox="0 0 300 80" className="w-full" preserveAspectRatio="none" aria-hidden>
+                  <path d="M0 64 C30 58 50 66 80 46 S130 28 160 38 S220 10 250 20 S290 8 300 6" fill="none" stroke={a} strokeWidth="2.5" />
+                  <path d="M0 70 C40 68 70 60 100 62 S170 50 200 54 S260 40 300 42" fill="none" stroke="rgba(14,14,16,.2)" strokeWidth="2" />
+                </svg>
               </div>
             </div>
           </div>

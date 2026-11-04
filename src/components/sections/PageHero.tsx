@@ -1,53 +1,53 @@
 import Breadcrumbs from "./Breadcrumbs";
-import HexField from "@/components/ui/HexField";
 
+/** Inner-page opener: breadcrumb, large headline, intro on the right, optional media below. */
 export default function PageHero({
   crumbs,
-  eyebrow,
+  label,
   title,
   text,
   children,
-  aside,
+  media,
+  dark = false,
 }: {
   crumbs: { name: string; path: string }[];
-  eyebrow?: string;
+  label?: string;
   title: React.ReactNode;
   text?: React.ReactNode;
   children?: React.ReactNode;
-  aside?: React.ReactNode;
+  media?: React.ReactNode;
+  dark?: boolean;
 }) {
   return (
-    <section className="noise relative overflow-hidden pb-20 pt-36 sm:pt-44">
-      <div className="bg-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[620px] w-[620px] rounded-full bg-red/20 blur-[140px]" />
-      <HexField className="pointer-events-none absolute right-0 top-24 hidden w-[46%] opacity-70 lg:block" />
-      <div className="container-x relative">
+    <section className={`${dark ? "theme-dark" : "theme-light"} pt-32 md:pt-44`}>
+      <div className="wrap">
         <Breadcrumbs items={crumbs} />
-        <div className={`mt-10 grid gap-12 ${aside ? "lg:grid-cols-[1.25fr_0.75fr] lg:items-end" : ""}`}>
-          <div>
-            {eyebrow && (
-              <p data-reveal="fade" className="eyebrow mb-6 flex items-center gap-3">
-                <span className="inline-block h-2 w-2 bg-red clip-hex" />
-                {eyebrow}
-              </p>
-            )}
-            <h1 data-split="hero" className="max-w-5xl text-[clamp(2.6rem,6.4vw,5.6rem)] font-semibold text-white">
-              {title}
-            </h1>
-            {text && (
-              <p data-reveal="up" className="mt-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-                {text}
-              </p>
-            )}
-            {children && (
-              <div data-reveal="up" className="mt-10 flex flex-wrap items-center gap-4">
-                {children}
-              </div>
-            )}
+        {label && (
+          <p data-reveal className="tag mt-12">
+            {label}
+          </p>
+        )}
+        <h1 data-split="hero" className={`display-lg max-w-[15ch] ${label ? "mt-6" : "mt-12"}`}>
+          {title}
+        </h1>
+        {(text || children) && (
+          <div className="mt-14 grid gap-8 border-t border-line pt-8 md:grid-cols-12">
+            <div className="md:col-span-6 md:col-start-7">
+              {text && (
+                <p data-reveal className="lead text-fg/80">
+                  {text}
+                </p>
+              )}
+              {children && (
+                <div data-reveal className="mt-8 flex flex-wrap gap-3">
+                  {children}
+                </div>
+              )}
+            </div>
           </div>
-          {aside && <div data-reveal="right">{aside}</div>}
-        </div>
+        )}
       </div>
+      {media ? <div className="wrap pb-6 pt-16">{media}</div> : <div className="pb-20 md:pb-28" />}
     </section>
   );
 }

@@ -2,83 +2,100 @@ import Image from "next/image";
 import Link from "next/link";
 import { navCompany, navIndustries, navServices, navTechGroups } from "@/data/nav";
 import { site } from "@/data/site";
-import { ArrowUpRight } from "@/components/ui/Icon";
+import Magnetic from "@/components/motion/Magnetic";
 
 export default function Footer() {
-  const topTech = navTechGroups.flatMap((g) => g.items).slice(0, 14);
+  const tech = navTechGroups.flatMap((g) => g.items).slice(0, 12);
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-ink-2">
-      <div className="bg-hex pointer-events-none absolute inset-0 opacity-40" />
-      <div className="container-x relative pt-20">
-        <div className="grid gap-12 border-b border-line pb-16 lg:grid-cols-[1.3fr_1fr]">
-          <div>
-            <p className="eyebrow mb-6">Have a product in mind?</p>
-            <Link href="/contact" data-cursor="Let’s talk" className="group inline-block">
-              <span className="block font-display text-[clamp(2.6rem,7vw,6.5rem)] font-semibold leading-[0.95] tracking-tight text-white">
-                Let’s build
-                <br />
-                <span className="text-gradient-red">something real.</span>
-              </span>
-            </Link>
-          </div>
-          <div className="flex flex-col justify-end gap-6">
-            <a href={`mailto:${site.email}`} className="group flex items-center justify-between border-b border-line pb-4 text-xl text-white transition-colors hover:text-red-hot sm:text-2xl">
-              {site.email}
-              <ArrowUpRight className="h-6 w-6 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-            </a>
-            {site.phones.map((p) => (
-              <a key={p.href} href={p.href} className="group flex items-center justify-between border-b border-line pb-4 text-xl text-white transition-colors hover:text-red-hot sm:text-2xl">
-                <span>
-                  <span className="mr-3 font-mono text-xs uppercase tracking-widest text-muted">{p.label}</span>
-                  {p.display}
+    <footer className="theme-dark relative overflow-hidden">
+      {/* Closing CTA */}
+      <section className="wrap pb-24 pt-28 md:pt-40">
+        <p data-reveal className="tag">Have a project in mind?</p>
+        <div className="mt-8 grid items-end gap-12 lg:grid-cols-12">
+          <h2 data-split className="display-xl lg:col-span-9">
+            Let’s make it <span className="text-red">real.</span>
+          </h2>
+          <div data-reveal className="lg:col-span-3 lg:justify-self-end">
+            <Magnetic strength={0.35}>
+              <Link
+                href="/contact"
+                data-cursor="Start"
+                className="group relative grid h-40 w-40 place-items-center overflow-hidden rounded-full bg-red text-center text-[1.05rem] font-medium text-white md:h-48 md:w-48"
+              >
+                <span className="absolute inset-0 scale-0 rounded-full bg-white transition-transform duration-700 ease-out-expo group-hover:scale-100" />
+                <span className="relative transition-colors duration-500 group-hover:text-ink">
+                  Start a<br />project
                 </span>
-                <ArrowUpRight className="h-6 w-6 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+              </Link>
+            </Magnetic>
+          </div>
+        </div>
+        <div className="mt-20 grid gap-8 border-t border-line pt-10 md:grid-cols-3">
+          <ContactLine label="New business" value={site.email} href={`mailto:${site.email}`} />
+          {site.phones.map((p) => (
+            <ContactLine key={p.href} label={p.label} value={p.display} href={p.href} />
+          ))}
+        </div>
+      </section>
+
+      <div className="wrap grid grid-cols-2 gap-x-8 gap-y-12 border-t border-line py-16 md:grid-cols-12">
+        <div className="col-span-2 md:col-span-4">
+          <Image src="/logo.png" alt={site.name} width={257} height={58} className="h-9 w-auto" />
+          <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">
+            A design and engineering studio building web applications, mobile apps and SaaS products.
+          </p>
+        </div>
+        <Col className="md:col-span-2" title="Services" links={navServices.slice(0, 8).map((s) => [`/services/${s.slug}`, s.name])} />
+        <Col className="md:col-span-2" title="Technologies" links={[...tech.map(([s, n]) => [`/technologies/${s}`, n] as const)]} />
+        <Col className="md:col-span-2" title="Industries" links={navIndustries.map(([s, n]) => [`/industries/${s}`, n])} />
+        <Col className="md:col-span-2" title="Studio" links={[...navCompany]} />
+      </div>
+
+      <div className="wrap flex flex-col gap-4 border-t border-line py-8 text-sm text-muted md:flex-row md:items-center md:justify-between">
+        <p>© {new Date().getFullYear()} {site.legalName}</p>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2">
+          {Object.entries(site.social).map(([k, href]) => (
+            <li key={k}>
+              <a href={href} target="_blank" rel="noopener noreferrer" className="link-line capitalize">
+                {k}
               </a>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-10 py-16 md:grid-cols-4 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
-          <div className="col-span-2 md:col-span-4 lg:col-span-1">
-            <Image src="/logo.png" alt={site.name} width={257} height={58} className="h-10 w-auto" />
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">{site.tagline}</p>
-            <div className="mt-6 flex gap-3">
-              {Object.entries(site.social).map(([k, href]) => (
-                <a key={k} href={href} target="_blank" rel="noopener noreferrer" aria-label={k} className="grid h-10 w-10 place-items-center rounded-full border border-line-strong text-xs uppercase text-white/70 transition-colors hover:border-red hover:bg-red hover:text-white">
-                  {k.slice(0, 2)}
-                </a>
-              ))}
-            </div>
-          </div>
-          <FooterCol title="Services" links={navServices.map((s) => [`/services/${s.slug}`, s.name])} />
-          <FooterCol title="Technologies" links={[...topTech.map(([s, n]) => [`/technologies/${s}`, n] as const), ["/technologies", "All technologies →"]]} />
-          <FooterCol title="Industries" links={navIndustries.map(([s, n]) => [`/industries/${s}`, n])} />
-          <FooterCol title="Company" links={[...navCompany, ["/privacy-policy", "Privacy policy"], ["/terms-conditions", "Terms & conditions"]]} />
-        </div>
-      </div>
-
-      <div className="relative select-none overflow-hidden" aria-hidden>
-        <p className="text-outline whitespace-nowrap text-center font-display text-[18vw] font-bold leading-[0.8] tracking-tighter">RED HIVE</p>
-      </div>
-
-      <div className="relative border-t border-line">
-        <div className="container-x flex flex-col items-center justify-between gap-3 py-6 text-xs text-dim sm:flex-row">
-          <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
-          <p className="font-mono uppercase tracking-widest">Web · Mobile · SaaS · AI</p>
-        </div>
+            </li>
+          ))}
+          <li>
+            <Link href="/privacy-policy" className="link-line">
+              Privacy
+            </Link>
+          </li>
+          <li>
+            <Link href="/terms-conditions" className="link-line">
+              Terms
+            </Link>
+          </li>
+        </ul>
       </div>
     </footer>
   );
 }
 
-function FooterCol({ title, links }: { title: string; links: readonly (readonly [string, string])[] }) {
+function ContactLine({ label, value, href }: { label: string; value: string; href: string }) {
   return (
-    <div>
-      <p className="mb-5 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-white/40">{title}</p>
+    <a href={href} data-reveal className="group block">
+      <span className="block text-sm text-muted">{label}</span>
+      <span className="mt-2 inline-block text-xl md:text-2xl">
+        <span className="link-line">{value}</span>
+      </span>
+    </a>
+  );
+}
+
+function Col({ title, links, className = "" }: { title: string; links: readonly (readonly [string, string])[]; className?: string }) {
+  return (
+    <div className={className}>
+      <p className="mb-5 text-sm text-muted">{title}</p>
       <ul className="space-y-2.5">
         {links.map(([href, name]) => (
           <li key={href}>
-            <Link href={href} className="text-sm text-white/70 transition-colors hover:text-white">
+            <Link href={href} className="link-line text-[0.92rem]">
               {name}
             </Link>
           </li>

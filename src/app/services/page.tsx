@@ -1,9 +1,8 @@
-import Icon from "@/components/ui/Icon";
 import PageHero from "@/components/sections/PageHero";
-import { LinkCards } from "@/components/sections/Blocks";
-import Process from "@/components/sections/Process";
+import ServicesList from "@/components/sections/ServicesList";
+import ProcessSteps from "@/components/sections/ProcessSteps";
 import Engagement from "@/components/sections/Engagement";
-import CTA from "@/components/sections/CTA";
+import SectionHead from "@/components/ui/SectionHead";
 import Button from "@/components/ui/Button";
 import JsonLd from "@/components/seo/JsonLd";
 import { services } from "@/data/services";
@@ -13,7 +12,7 @@ import { site } from "@/data/site";
 export const metadata = pageMetadata({
   title: "Software Development Services — Web, Mobile, SaaS & AI",
   description:
-    "Explore Red Hive Digital’s software development services: custom web applications, iOS & Android apps, SaaS products, UI/UX design, MVPs, cloud, AI and ongoing support.",
+    "Custom web applications, iOS & Android apps, SaaS products, UI/UX design, MVPs, cloud, AI and ongoing support — Red Hive Digital’s software development services.",
   path: "/services",
 });
 
@@ -29,29 +28,22 @@ export default function ServicesPage() {
       />
       <PageHero
         crumbs={[{ name: "Services", path: "/services" }]}
-        eyebrow="Services"
-        title={<>Everything you need to build, launch &amp; scale software</>}
-        text="Strategy, design, engineering and cloud — under one roof. Engage us for a single service or a full product team."
+        label="Services"
+        title="Everything it takes to ship great software"
+        text="Strategy, design, engineering and cloud under one roof. Bring us in for a single piece or the whole product."
       >
         <Button href="/contact">Discuss your project</Button>
       </PageHero>
-      <section className="container-x pb-24">
-        <LinkCards
-          items={services.map((s) => ({
-            href: `/services/${s.slug}`,
-            title: s.name,
-            text: s.tagline,
-            badge: (
-              <span className="grid h-12 w-12 place-items-center rounded-2xl border border-line-strong bg-ink text-red-hot">
-                <Icon name={s.icon} className="h-6 w-6" />
-              </span>
-            ),
-          }))}
-        />
+      <section className="wrap pb-28">
+        <ServicesList items={services.map((s) => ({ slug: s.slug, name: s.name, tagline: s.tagline, icon: s.icon, tags: s.capabilities.map((c) => c.title) }))} />
       </section>
-      <Process />
+      <section className="theme-light bg-paper-2 py-28 md:py-36">
+        <div className="wrap">
+          <SectionHead label="Process" title="How a project runs" link={{ href: "/process", label: "Read more" }} className="mb-16" />
+          <ProcessSteps />
+        </div>
+      </section>
       <Engagement />
-      <CTA />
     </>
   );
 }

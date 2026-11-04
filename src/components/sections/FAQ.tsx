@@ -1,27 +1,29 @@
 import JsonLd from "@/components/seo/JsonLd";
 import { faqLd } from "@/lib/seo";
 import type { FAQ as FAQType } from "@/data/types";
-import SectionHeading from "@/components/ui/SectionHeading";
 
-export default function FAQ({ faqs, title = "Frequently asked questions", eyebrow = "FAQ" }: { faqs: FAQType[]; title?: string; eyebrow?: string }) {
+export default function FAQ({ faqs, title = "Questions, answered" }: { faqs: FAQType[]; title?: string }) {
   return (
-    <section className="container-x py-24 sm:py-32">
+    <section className="wrap py-24 md:py-36">
       <JsonLd data={faqLd(faqs)} />
-      <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-        <div className="lg:sticky lg:top-32 lg:self-start">
-          <SectionHeading eyebrow={eyebrow} title={title} text="Can’t find what you’re looking for? Reach out — a real engineer will reply within one business day." />
+      <div className="grid gap-10 md:grid-cols-12">
+        <div className="md:col-span-4">
+          <p data-reveal className="tag">FAQ</p>
+          <h2 data-split className="display-md mt-6 max-w-[12ch]">
+            {title}
+          </h2>
         </div>
-        <div className="divide-y divide-line border-y border-line">
+        <div className="border-b border-line md:col-span-8">
           {faqs.map((f, i) => (
-            <details key={i} data-reveal="up" className="group py-2" open={i === 0}>
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left text-lg font-medium text-white [&::-webkit-details-marker]:hidden">
-                <span>{f.q}</span>
-                <span className="relative mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line-strong transition-colors group-open:border-red group-open:bg-red">
-                  <span className="absolute h-[1.5px] w-3 bg-white" />
-                  <span className="absolute h-3 w-[1.5px] bg-white transition-transform duration-300 group-open:rotate-90 group-open:scale-0" />
+            <details key={i} data-reveal className="group border-t border-line">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-8 py-6 text-lg font-medium md:text-xl [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <span className="relative mt-2 h-3.5 w-3.5 shrink-0">
+                  <span className="absolute left-0 top-1/2 h-px w-full bg-current" />
+                  <span className="absolute left-1/2 top-0 h-full w-px bg-current transition-transform duration-300 group-open:scale-y-0" />
                 </span>
               </summary>
-              <p className="max-w-2xl pb-6 pr-12 leading-relaxed text-muted">{f.a}</p>
+              <p className="max-w-2xl pb-8 leading-relaxed text-muted">{f.a}</p>
             </details>
           ))}
         </div>

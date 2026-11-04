@@ -44,12 +44,15 @@ Per-page titles/descriptions/canonicals, Open Graph + Twitter cards (`public/og.
 (Organization, WebSite, Service, BreadcrumbList, FAQPage, BlogPosting), `sitemap.xml`, `robots.txt`
 and a web manifest. All pages are statically pre-rendered.
 
-## Motion
+## Design & motion
 
-- `src/components/three/HiveScene.tsx` — interactive 3D honeycomb hero
-- `src/components/three/ParticleOrb.tsx` — shader particle orb in CTAs
-- `src/components/motion/Motion.tsx` — declarative scroll animations via `data-reveal`, `data-split`,
+Light editorial base (`theme-light`) with dark sections (`theme-dark`); the header adapts to whichever is beneath it.
+
+- `src/components/three/HiveScene.tsx` — interactive 3D honeycomb (home hero, about banner)
+- `src/components/motion/Motion.tsx` — scroll motion via data attributes: `data-reveal`, `data-split`, `data-clip`,
   `data-scrub-text`, `data-parallax`, `data-counter`, `data-draw`
-- `SmoothScroll.tsx` (Lenis + ScrollTrigger), `Cursor.tsx`, `Magnetic.tsx`, `TiltCard.tsx`
+- `SmoothScroll.tsx` (Lenis + ScrollTrigger), `Cursor.tsx`, `Magnetic.tsx`, `VelocityMarquee.tsx`
+- `ServicesList.tsx` — typographic list with cursor-following preview
 
-All motion respects `prefers-reduced-motion`.
+All motion respects `prefers-reduced-motion`. Replace `public/logo.png` / `public/logo-dark.png` with higher-resolution
+(or SVG) versions of the logo when available.

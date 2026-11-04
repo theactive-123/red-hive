@@ -23,7 +23,7 @@ export default function HiveScene({ className = "" }: { className?: string }) {
     } catch {
       return; // No WebGL: the CSS background behind the canvas still shows.
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, small ? 1.25 : 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, small ? 1.25 : 1.5));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -32,7 +32,7 @@ export default function HiveScene({ className = "" }: { className?: string }) {
     renderer.domElement.style.cssText = "width:100%;height:100%;display:block";
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x00020a, 10, 26);
+    scene.fog = new THREE.Fog(0x0e0e10, 10, 25);
 
     const camera = new THREE.PerspectiveCamera(42, mount.clientWidth / mount.clientHeight, 0.1, 100);
     const camBase = new THREE.Vector3(0, 9.5, 11.5);
@@ -40,7 +40,7 @@ export default function HiveScene({ className = "" }: { className?: string }) {
     camera.lookAt(0, 0, 0);
 
     // Lights
-    scene.add(new THREE.AmbientLight(0x2a1020, 1.4));
+    scene.add(new THREE.AmbientLight(0x222226, 1.6));
     const key = new THREE.DirectionalLight(0xffffff, 1.3);
     key.position.set(-6, 12, 6);
     scene.add(key);
@@ -53,8 +53,8 @@ export default function HiveScene({ className = "" }: { className?: string }) {
 
     // Hex grid
     const R = 0.5;
-    const cols = small ? 20 : 36;
-    const rows = small ? 26 : 24;
+    const cols = small ? 18 : 32;
+    const rows = small ? 22 : 22;
     const count = cols * rows;
     const geo = new THREE.CylinderGeometry(R * 0.9, R * 0.9, 1, 6, 1);
     geo.translate(0, 0.5, 0); // grow from the floor
@@ -76,8 +76,8 @@ export default function HiveScene({ className = "" }: { className?: string }) {
     }
 
     const dummy = new THREE.Object3D();
-    const cDark = new THREE.Color(0x161a2a);
-    const cMid = new THREE.Color(0x4a0819);
+    const cDark = new THREE.Color(0x1d1d22);
+    const cMid = new THREE.Color(0x4a0a18);
     const cRed = new THREE.Color(0xe1013b);
     const cHot = new THREE.Color(0xff2a5f);
     const tmp = new THREE.Color();

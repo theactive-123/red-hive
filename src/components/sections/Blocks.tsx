@@ -1,33 +1,64 @@
 import Link from "next/link";
 import TechIcon from "@/components/ui/TechIcon";
-import { Check, ArrowUpRight } from "@/components/ui/Icon";
 import { getTechs } from "@/data/technologies";
-import SectionHeading from "@/components/ui/SectionHeading";
 
-/** Numbered feature cards. */
-export function FeatureGrid({ items, cols = 3 }: { items: { title: string; text: string }[]; cols?: 2 | 3 }) {
+/** Two-column section: label + title on the left rail, content on the right. */
+export function Split({ index, label, title, children, className = "" }: { index?: string; label: string; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
-    <ul data-reveal="up" className={`grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 ${cols === 3 ? "lg:grid-cols-3" : ""}`}>
-      {items.map((it, i) => (
-        <li key={it.title} className="group relative overflow-hidden bg-ink p-8 transition-colors duration-500 hover:bg-surface">
-          <span className="absolute right-6 top-6 font-mono text-xs text-white/25 transition-colors group-hover:text-red-hot">{String(i + 1).padStart(2, "0")}</span>
-          <span className="mb-6 block h-3 w-3 bg-red clip-hex transition-transform duration-500 group-hover:scale-150" />
-          <h3 className="text-xl font-semibold text-white">{it.title}</h3>
-          <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{it.text}</p>
-        </li>
-      ))}
-    </ul>
+    <section className={`wrap py-20 md:py-28 ${className}`}>
+      <div className="grid gap-10 md:grid-cols-12">
+        <div className="md:col-span-4">
+          <p data-reveal className="tag">
+            {index && <span className="text-fg">{index}</span>}
+            {label}
+          </p>
+          {title && (
+            <h2 data-split className="display-md mt-6 max-w-[12ch]">
+              {title}
+            </h2>
+          )}
+        </div>
+        <div className="md:col-span-8">{children}</div>
+      </div>
+    </section>
   );
 }
 
-export function Checklist({ items, className = "" }: { items: string[]; className?: string }) {
+export function Prose({ paragraphs }: { paragraphs: string[] }) {
   return (
-    <ul className={`grid gap-3 ${className}`}>
+    <div className="space-y-6">
+      {paragraphs.map((p, i) => (
+        <p key={i} data-reveal className={i === 0 ? "lead" : "text-lg leading-relaxed text-muted"}>
+          {p}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+/** Numbered rows — the clean alternative to a card grid. */
+export function NumberedList({ items, cols = 2 }: { items: { title: string; text: string }[]; cols?: 1 | 2 }) {
+  return (
+    <ol className={`grid border-b border-line ${cols === 2 ? "md:grid-cols-2 md:gap-x-12" : ""}`}>
+      {items.map((it, i) => (
+        <li key={it.title} data-reveal className="flex gap-6 border-t border-line py-8">
+          <span className="w-8 shrink-0 pt-1 text-sm text-muted">{String(i + 1).padStart(2, "0")}</span>
+          <div>
+            <h3 className="text-xl font-semibold tracking-tight md:text-[1.4rem]">{it.title}</h3>
+            <p className="mt-3 leading-relaxed text-muted">{it.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+export function Checklist({ items }: { items: string[] }) {
+  return (
+    <ul className="border-b border-line">
       {items.map((d) => (
-        <li key={d} data-reveal="up" className="flex items-start gap-4 rounded-2xl border border-line bg-surface/60 p-5 text-white/85">
-          <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-red text-white">
-            <Check className="h-3.5 w-3.5" />
-          </span>
+        <li key={d} data-reveal className="flex items-start gap-5 border-t border-line py-5 text-lg">
+          <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-red" />
           {d}
         </li>
       ))}
@@ -35,41 +66,17 @@ export function Checklist({ items, className = "" }: { items: string[]; classNam
   );
 }
 
-/** Technology chips linking to their pages. */
-export function TechChips({ slugs, title = "Technologies we use", eyebrow = "Stack" }: { slugs: readonly string[]; title?: string; eyebrow?: string }) {
-  const techs = getTechs(slugs);
+export function TechRow({ slugs }: { slugs: readonly string[] }) {
   return (
-    <section className="container-x py-20">
-      <SectionHeading eyebrow={eyebrow} title={title} />
-      <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {techs.map((t) => (
-          <li key={t.slug} data-reveal="up">
-            <Link href={`/technologies/${t.slug}`} className="group flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-red/50">
-              <TechIcon icon={t.icon} name={t.name} className="h-7 w-7 shrink-0 text-white/80 group-hover:text-white" />
-              <span className="text-sm font-medium text-white">{t.name}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-export function LinkCards({ items }: { items: { href: string; title: string; text: string; badge?: React.ReactNode }[] }) {
-  return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((it) => (
-        <li key={it.href} data-reveal="up">
-          <Link href={it.href} data-cursor="Open" className="group relative flex h-full flex-col justify-between gap-10 overflow-hidden rounded-3xl border border-line bg-surface p-7 transition-colors duration-500 hover:border-red/50">
-            <span className="absolute inset-0 bg-gradient-to-br from-red/0 to-transparent transition-colors duration-700 group-hover:from-red/15" />
-            <span className="relative flex items-start justify-between gap-4">
-              {it.badge}
-              <ArrowUpRight className="h-5 w-5 shrink-0 text-white/40 transition-all duration-500 group-hover:rotate-45 group-hover:text-red-hot" />
-            </span>
-            <span className="relative">
-              <span className="block font-display text-2xl font-semibold text-white">{it.title}</span>
-              <span className="mt-2 block text-sm leading-relaxed text-muted">{it.text}</span>
-            </span>
+    <ul className="flex flex-wrap gap-2">
+      {getTechs(slugs).map((t) => (
+        <li key={t.slug} data-reveal>
+          <Link
+            href={`/technologies/${t.slug}`}
+            className="inline-flex h-12 items-center gap-2.5 rounded-full border border-line pl-3 pr-5 transition-colors duration-300 hover:border-fg hover:bg-fg hover:text-bg"
+          >
+            <TechIcon icon={t.icon} name={t.name} className="h-5 w-5" />
+            {t.name}
           </Link>
         </li>
       ))}
@@ -77,14 +84,21 @@ export function LinkCards({ items }: { items: { href: string; title: string; tex
   );
 }
 
-export function Prose({ paragraphs, lead = false }: { paragraphs: string[]; lead?: boolean }) {
+/** Simple list of related links with a title and a one-liner. */
+export function LinkRows({ items }: { items: { href: string; title: string; text?: string }[] }) {
   return (
-    <div className="space-y-6">
-      {paragraphs.map((p, i) => (
-        <p key={i} data-reveal="up" className={i === 0 && lead ? "text-xl leading-relaxed text-white/85" : "text-lg leading-relaxed text-muted"}>
-          {p}
-        </p>
+    <ul className="border-b border-line">
+      {items.map((it) => (
+        <li key={it.href} data-reveal className="border-t border-line">
+          <Link href={it.href} className="group flex items-center justify-between gap-6 py-6">
+            <span>
+              <span className="block text-xl font-semibold tracking-tight transition-colors group-hover:text-red md:text-2xl">{it.title}</span>
+              {it.text && <span className="mt-1 block text-muted">{it.text}</span>}
+            </span>
+            <span className="text-xl text-muted transition-all duration-500 ease-out-expo group-hover:translate-x-1 group-hover:text-red">→</span>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
