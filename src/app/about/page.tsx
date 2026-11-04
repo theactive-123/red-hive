@@ -5,6 +5,8 @@ import ProcessScroller from "@/components/sections/ProcessScroller";
 import Testimonials from "@/components/sections/Testimonials";
 import Button from "@/components/ui/Button";
 import HiveLazy from "@/components/three/HiveLazy";
+import Photo from "@/components/ui/Photo";
+import { studio } from "@/data/images";
 import { whyUs } from "@/data/process";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
@@ -60,6 +62,10 @@ export default function AboutPage() {
           <p data-reveal>
             We started out in logos, illustration and animation, and kept that eye for design as we moved into full-stack product engineering.
           </p>
+        </div>
+        <div className="mt-14 grid gap-6 sm:grid-cols-2">
+          <Photo src={studio.office.src} alt={studio.office.alt} className="aspect-[4/3]" sizes="(min-width: 768px) 30vw, 100vw" />
+          <Photo src={studio.whiteboard.src} alt={studio.whiteboard.alt} className="aspect-[4/3] sm:mt-12" sizes="(min-width: 768px) 30vw, 100vw" />
         </div>
       </Split>
 

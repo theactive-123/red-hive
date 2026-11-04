@@ -7,7 +7,8 @@ import FAQ from "@/components/sections/FAQ";
 import SectionHead from "@/components/ui/SectionHead";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
-import Illustration from "@/components/illustrations/Illustration";
+import LayeredVisual from "@/components/ui/LayeredVisual";
+import { industryImages } from "@/data/images";
 import JsonLd from "@/components/seo/JsonLd";
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/work";
@@ -38,7 +39,8 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
         crumbs={[{ name: "Industries", path: "/industries" }, { name: ind.name, path: `/industries/${ind.slug}` }]}
         title={`${ind.name} software development`}
         text={ind.tagline}
-        visual={<Illustration name={ind.slug} className="h-auto w-full" />}
+        visual={<LayeredVisual photo={industryImages[ind.slug]} illus={ind.slug} priority />}
+        bare
       >
         <Button href="/contact" variant="red">
           Discuss your project

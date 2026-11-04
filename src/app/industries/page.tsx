@@ -1,6 +1,8 @@
 import Link from "next/link";
 import PageHero from "@/components/sections/PageHero";
-import Illustration from "@/components/illustrations/Illustration";
+import Photo from "@/components/ui/Photo";
+import LayeredVisual from "@/components/ui/LayeredVisual";
+import { industryImages } from "@/data/images";
 import Button from "@/components/ui/Button";
 import { industries } from "@/data/industries";
 import { pageMetadata } from "@/lib/seo";
@@ -19,7 +21,8 @@ export default function IndustriesPage() {
         crumbs={[{ name: "Industries", path: "/industries" }]}
         title="Software for the industry you’re in"
         text="Healthcare has HIPAA, fintech has PCI and audits, logistics has drivers on bad mobile signal. We’ve built for these constraints before, so you don’t pay for us to learn them."
-        visual={<Illustration name="logistics" className="h-auto w-full" />}
+        visual={<LayeredVisual photo={industryImages.logistics} illus="logistics" priority />}
+        bare
       >
         <Button href="/contact" variant="red">
           Talk to us
@@ -30,9 +33,7 @@ export default function IndustriesPage() {
           {industries.map((ind, i) => (
             <li key={ind.slug} data-reveal className={i % 2 ? "md:mt-24" : ""}>
               <Link href={`/industries/${ind.slug}`} data-cursor="Explore" className="group block">
-                <div className="cut-tl bg-card p-6 transition-colors duration-500 [--cut:36px] group-hover:bg-[#ebebef] md:p-10">
-                  <Illustration name={ind.slug} className="h-auto w-full" />
-                </div>
+                <Photo src={industryImages[ind.slug].src} alt={industryImages[ind.slug].alt} className="cut-tl aspect-[4/3] [--cut:36px]" hoverZoom />
                 <div className="mt-6 flex items-start justify-between gap-6">
                   <div>
                     <h2 className="display-sm transition-colors group-hover:text-red">{ind.name}</h2>

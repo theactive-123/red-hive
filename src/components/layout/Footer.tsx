@@ -20,7 +20,7 @@ export default function Footer() {
       <Link href="/contact" data-cursor="Let’s talk" className="group block border-b border-line py-10 md:py-14" aria-label="Start a project">
         <VelocityMarquee speed={70}>
           {["Start a project", "Get an estimate", "Book a call"].map((t) => (
-            <span key={t} className="flex items-center whitespace-nowrap font-display text-[clamp(3rem,9vw,8.5rem)] font-extrabold leading-none tracking-[-0.035em] transition-colors duration-300 group-hover:text-red">
+            <span key={t} className="flex items-center whitespace-nowrap font-display text-[clamp(2.4rem,6.5vw,6rem)] font-extrabold leading-none tracking-[-0.035em] transition-colors duration-300 group-hover:text-red">
               {t}
               <span className="tri mx-[0.45em] text-[0.42em]" />
             </span>

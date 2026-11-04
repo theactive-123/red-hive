@@ -2,7 +2,9 @@ import Link from "next/link";
 import PageHero from "@/components/sections/PageHero";
 import ProcessScroller from "@/components/sections/ProcessScroller";
 import Engagement from "@/components/sections/Engagement";
-import Illustration from "@/components/illustrations/Illustration";
+import LayeredVisual from "@/components/ui/LayeredVisual";
+import Photo from "@/components/ui/Photo";
+import { serviceImages, studio } from "@/data/images";
 import Button from "@/components/ui/Button";
 import JsonLd from "@/components/seo/JsonLd";
 import { services } from "@/data/services";
@@ -31,7 +33,8 @@ export default function ServicesPage() {
         crumbs={[{ name: "Services", path: "/services" }]}
         title="Services"
         text="Design, engineering and hosting for web and mobile products. Hire us for one piece, like a mobile app or a design refresh, or for the whole thing."
-        visual={<Illustration name="saas-development" className="h-auto w-full" />}
+        visual={<LayeredVisual photo={studio.ui} illus="saas-development" priority />}
+        bare
       >
         <Button href="/contact" variant="red">
           Discuss your project
@@ -43,11 +46,7 @@ export default function ServicesPage() {
         {[a, b, c].map((s, i) => (
           <Link key={s.slug} href={`/services/${s.slug}`} data-cursor="Open" className="group grid items-center gap-10 md:grid-cols-12">
             <div className={`md:col-span-6 ${i % 2 ? "md:order-2" : ""}`}>
-              <div data-clip className="cut-tl bg-card p-6 [--cut:40px] md:p-10">
-                <div data-clip-inner>
-                  <Illustration name={s.slug} className="h-auto w-full" />
-                </div>
-              </div>
+              <LayeredVisual photo={serviceImages[s.slug]} illus={s.slug} flip={i % 2 === 1} />
             </div>
             <div className={`md:col-span-5 ${i % 2 ? "md:order-1" : "md:col-start-8"}`}>
               <p className="text-sm font-semibold text-red">0{i + 1}</p>
@@ -83,9 +82,7 @@ export default function ServicesPage() {
             {rest.map((s) => (
               <li key={s.slug} className="bg-navy">
                 <Link href={`/services/${s.slug}`} className="group flex h-full flex-col p-6 transition-colors duration-500 hover:bg-navy-2">
-                  <div className="bg-white p-4 transition-transform duration-700 ease-out-expo group-hover:scale-[1.02]">
-                    <Illustration name={s.slug} className="h-auto w-full" />
-                  </div>
+                  <Photo src={serviceImages[s.slug].src} alt={serviceImages[s.slug].alt} className="aspect-[4/3]" hoverZoom drift={false} sizes="(min-width: 1024px) 25vw, 50vw" />
                   <h3 className="display-sm mt-6 transition-colors group-hover:text-red">{s.short}</h3>
                   <p className="mt-2 text-sm text-white/60">{s.tagline}</p>
                 </Link>

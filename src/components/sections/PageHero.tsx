@@ -8,6 +8,7 @@ export default function PageHero({
   children,
   media,
   visual,
+  bare = false,
 }: {
   crumbs: { name: string; path: string }[];
   label?: string;
@@ -16,6 +17,7 @@ export default function PageHero({
   children?: React.ReactNode;
   media?: React.ReactNode;
   visual?: React.ReactNode;
+  bare?: boolean;
   dark?: boolean;
 }) {
   if (visual) {
@@ -39,9 +41,13 @@ export default function PageHero({
             )}
           </div>
           <div className="lg:col-span-6">
-            <div data-clip className="cut-tl relative bg-card p-6 [--cut:48px] md:p-10">
-              <div data-clip-inner>{visual}</div>
-            </div>
+            {bare ? (
+              visual
+            ) : (
+              <div data-clip className="cut-tl relative bg-card p-6 [--cut:48px] md:p-10">
+                <div data-clip-inner>{visual}</div>
+              </div>
+            )}
           </div>
         </div>
       </section>

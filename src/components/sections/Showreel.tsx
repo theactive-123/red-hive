@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import ProjectVisual from "@/components/ui/ProjectVisual";
+import { studio } from "@/data/images";
 import type { CaseStudy } from "@/data/work";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
@@ -28,7 +30,14 @@ export default function Showreel({ shots }: { shots: CaseStudy[] }) {
     return () => ctx.revert();
   }, []);
 
-  const cols = [shots.slice(0, 2), shots.slice(2, 4), shots.slice(4, 6)];
+  type Tile = { kind: "shot"; p: CaseStudy } | { kind: "photo"; src: string; alt: string };
+  const P = (x: { src: string; alt: string }): Tile => ({ kind: "photo", ...x });
+  const S = (p: CaseStudy): Tile => ({ kind: "shot", p });
+  const cols: Tile[][] = [
+    [S(shots[0]), P(studio.trading), S(shots[3])],
+    [P(studio.ui), S(shots[2]), P(studio.sketch)],
+    [S(shots[1]), P(studio.travel), S(shots[4])],
+  ];
 
   return (
     <section ref={root} className="theme-dark relative h-[100svh] overflow-hidden" aria-label="Product screens we've built">
@@ -36,9 +45,15 @@ export default function Showreel({ shots }: { shots: CaseStudy[] }) {
         <div className="absolute inset-0 grid grid-cols-3 gap-4 p-4 md:gap-6 md:p-6">
           {cols.map((col, ci) => (
             <div key={ci} data-reel-col={ci} className="flex flex-col gap-4 md:gap-6">
-              {col.map((p) => (
-                <ProjectVisual key={p.slug} project={p} className="aspect-[4/5] w-full shrink-0" />
-              ))}
+              {col.map((t, i) =>
+                t.kind === "shot" ? (
+                  <ProjectVisual key={t.p.slug} project={t.p} className="aspect-[4/5] w-full shrink-0" />
+                ) : (
+                  <div key={t.src + i} className="relative aspect-[4/5] w-full shrink-0 overflow-hidden">
+                    <Image src={t.src} alt={t.alt} fill sizes="33vw" className="object-cover" />
+                  </div>
+                ),
+              )}
             </div>
           ))}
         </div>

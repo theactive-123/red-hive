@@ -9,7 +9,8 @@ import SectionHead from "@/components/ui/SectionHead";
 import Button from "@/components/ui/Button";
 import CodeWindow from "@/components/ui/CodeWindow";
 import ProjectVisual from "@/components/ui/ProjectVisual";
-import Illustration from "@/components/illustrations/Illustration";
+import LayeredVisual from "@/components/ui/LayeredVisual";
+import { serviceImages } from "@/data/images";
 import JsonLd from "@/components/seo/JsonLd";
 import { services } from "@/data/services";
 import { caseStudies } from "@/data/work";
@@ -43,7 +44,8 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         crumbs={[{ name: "Services", path: "/services" }, { name: s.short, path: `/services/${s.slug}` }]}
         title={s.name}
         text={s.tagline}
-        visual={<Illustration name={s.slug} className="h-auto w-full" />}
+        visual={<LayeredVisual photo={serviceImages[s.slug]} illus={s.slug} priority />}
+        bare
       >
         <Button href="/contact" variant="red">
           Get an estimate

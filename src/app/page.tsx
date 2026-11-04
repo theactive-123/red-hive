@@ -17,6 +17,9 @@ import { caseStudies } from "@/data/work";
 import { site } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
+import Photo from "@/components/ui/Photo";
+import { studio } from "@/data/images";
+import { ArrowLink } from "@/components/ui/Button";
 
 export const metadata = pageMetadata({
   title: `${site.name} | Web App, Mobile App & SaaS Development Company`,
@@ -82,10 +85,33 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="wrap py-28 md:py-36">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-5 md:pt-10">
+            <h2 data-split className="display-md max-w-[13ch]">
+              A small team. Senior people only.
+            </h2>
+            <p data-reveal className="mt-6 max-w-md text-lg leading-relaxed text-muted">
+              Every project is run by the people who design and write it. No account managers in between, no hand-off to a junior team after the
+              sales call.
+            </p>
+            <p data-reveal className="mt-8">
+              <ArrowLink href="/about">About the studio</ArrowLink>
+            </p>
+            <Photo src={studio.sketch.src} alt={studio.sketch.alt} className="mt-14 hidden aspect-[4/3] md:block" sizes="35vw" />
+          </div>
+          <div className="grid gap-6 md:col-span-7 md:grid-cols-2">
+            <Photo src={studio.team.src} alt={studio.team.alt} className="aspect-[4/5] md:col-span-2 md:aspect-[16/10]" sizes="(min-width: 768px) 55vw, 100vw" />
+            <Photo src={studio.whiteboard.src} alt={studio.whiteboard.alt} className="aspect-[4/5]" sizes="(min-width: 768px) 28vw, 100vw" />
+            <Photo src={studio.design.src} alt={studio.design.alt} className="aspect-[4/5] md:mt-16" sizes="(min-width: 768px) 28vw, 100vw" />
+          </div>
+        </div>
+      </section>
+
       <section aria-hidden className="overflow-hidden py-10 md:py-14">
         <VelocityMarquee speed={45}>
           {["Web apps", "Mobile apps", "SaaS products", "AI features"].map((w) => (
-            <span key={w} className="flex items-center whitespace-nowrap font-display text-[clamp(3rem,8.5vw,8rem)] font-extrabold leading-none tracking-[-0.035em]">
+            <span key={w} className="flex items-center whitespace-nowrap font-display text-[clamp(2.4rem,6vw,5.5rem)] font-extrabold leading-none tracking-[-0.035em]">
               {w}
               <span className="tri mx-[0.4em] text-[0.45em]" />
             </span>

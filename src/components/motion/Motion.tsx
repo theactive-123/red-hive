@@ -72,9 +72,9 @@ export default function Motion() {
 
         gsap.utils.toArray<HTMLElement>("[data-clip]").forEach((el) => {
           const inner = el.querySelector("[data-clip-inner]");
-          const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 88%", once: true } });
-          tl.to(el, { clipPath: "inset(0% 0 0 0)", duration: 1.4, ease: "expo.inOut" });
-          if (inner) tl.from(inner, { scale: 1.18, duration: 1.8, ease: "expo.out" }, 0.1);
+          const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 96%", once: true } });
+          tl.fromTo(el, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.05, ease: "expo.out" });
+          if (inner) tl.from(inner, { scale: 1.12, duration: 1.4, ease: "expo.out" }, 0);
         });
 
         gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {

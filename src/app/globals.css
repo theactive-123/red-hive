@@ -82,34 +82,34 @@ html.lenis, html.lenis body { height: auto; }
 @utility display-xl {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(3rem, 8.4vw, 9rem);
-  line-height: 0.9;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.5rem, 5.8vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
 }
 @utility display-lg {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(2.5rem, 5.6vw, 5.75rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.15rem, 4.2vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
 }
 @utility display-md {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(2rem, 3.8vw, 3.75rem);
-  line-height: 1;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.75rem, 2.8vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
 }
 @utility display-sm {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.45rem, 2.1vw, 2rem);
-  line-height: 1.1;
-  letter-spacing: -0.015em;
+  font-size: clamp(1.25rem, 1.6vw, 1.55rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 @utility lead {
-  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
-  line-height: 1.5;
+  font-size: clamp(1.1rem, 1.35vw, 1.25rem);
+  line-height: 1.55;
 }
 
 /* Logo motifs */
@@ -155,7 +155,7 @@ html.lenis, html.lenis body { height: auto; }
 /* Motion initial states (JS + motion allowed only) */
 html.js-motion [data-reveal] { opacity: 0; }
 html.js-motion [data-split] { visibility: hidden; }
-html.js-motion [data-clip] { clip-path: inset(0 0 100% 0); }
+html.js-motion [data-clip] { clip-path: inset(0% 0% 100% 0%); }
 .split-line { display: block; overflow: clip; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 
 /* Preloader: hide page content until intro has played (first visit only) */

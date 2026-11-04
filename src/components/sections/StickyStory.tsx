@@ -36,7 +36,7 @@ export default function StickyStory({ title, intro, items, dark = false }: { tit
             )}
             <div className="mt-14 hidden md:block" aria-hidden>
               <div className="flex items-end gap-4">
-                <span className="font-display text-[8rem] font-extrabold leading-[0.8] tracking-[-0.04em] tabular-nums text-red">
+                <span className="font-display text-[5.5rem] font-extrabold leading-[0.8] tracking-[-0.04em] tabular-nums text-red">
                   {String(active + 1).padStart(2, "0")}
                 </span>
                 <span className="pb-3 text-muted">/ {String(items.length).padStart(2, "0")}</span>

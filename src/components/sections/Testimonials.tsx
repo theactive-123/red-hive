@@ -41,7 +41,7 @@ export default function Testimonials() {
         </div>
       </div>
       <figure ref={quote} className="md:col-span-9" aria-live="polite">
-        <blockquote className="font-display text-[clamp(1.6rem,3vw,2.8rem)] font-bold leading-[1.15] tracking-[-0.02em]">
+        <blockquote className="font-display text-[clamp(1.4rem,2.3vw,2.1rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
           “{t.quote}”
         </blockquote>
         <figcaption className="mt-10 flex items-center gap-4">

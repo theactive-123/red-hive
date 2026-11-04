@@ -4,6 +4,8 @@ import Breadcrumbs from "@/components/sections/Breadcrumbs";
 import { Prose, Split, TechRow } from "@/components/sections/Blocks";
 import StickyStory from "@/components/sections/StickyStory";
 import ProjectVisual from "@/components/ui/ProjectVisual";
+import Photo from "@/components/ui/Photo";
+import { caseImages } from "@/data/images";
 import { caseStudies } from "@/data/work";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
@@ -60,11 +62,7 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
           </dl>
         </div>
         <div className="wrap pt-14">
-          <div data-clip className="relative aspect-[4/3] overflow-hidden rounded-xl md:aspect-[21/10]">
-            <div data-clip-inner className="absolute inset-0">
-              <ProjectVisual project={c} className="h-full w-full" />
-            </div>
-          </div>
+          {caseImages[c.slug] && <Photo src={caseImages[c.slug].src} alt={caseImages[c.slug].alt} priority className="aspect-[4/3] md:aspect-[21/10]" sizes="100vw" />}
         </div>
       </section>
 
@@ -74,6 +72,15 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
       <Split title="What we built" className="!pt-0">
         <Prose paragraphs={c.solution} />
       </Split>
+
+      <section className="wrap py-10">
+        <div data-clip className="relative aspect-[4/3] overflow-hidden md:aspect-[16/8]">
+          <div data-clip-inner className="absolute inset-0">
+            <ProjectVisual project={c} className="h-full w-full" />
+          </div>
+        </div>
+        <p className="mt-3 text-sm text-muted">{c.name}: main screen</p>
+      </section>
 
       <StickyStory title="Inside the product" items={c.features} dark />
 
@@ -88,7 +95,7 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
           <div className="mt-6 grid items-end gap-10 md:grid-cols-2">
             <p className="display-lg transition-colors duration-500 group-hover:text-red">{next.name}</p>
             <div className="overflow-hidden rounded-xl">
-              <ProjectVisual project={next} className="aspect-[16/10] transition-transform duration-[1.4s] ease-out-expo group-hover:scale-105" />
+              {caseImages[next.slug] && <Photo src={caseImages[next.slug].src} alt={caseImages[next.slug].alt} className="aspect-[16/10]" hoverZoom drift={false} />}
             </div>
           </div>
         </Link>

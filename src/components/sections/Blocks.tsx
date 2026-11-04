@@ -2,6 +2,7 @@ import Link from "next/link";
 import TechIcon from "@/components/ui/TechIcon";
 import { getTechs } from "@/data/technologies";
 import IllustrationSlot from "@/components/illustrations/Illustration";
+import Photo from "@/components/ui/Photo";
 
 /** Two-column section: title on the left, content on the right. */
 export function Split({ title, children, className = "" }: { index?: string; label?: string; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
@@ -100,15 +101,19 @@ export function LinkRows({ items }: { items: { href: string; title: string; text
 }
 
 /** Card with an animated illustration on top. */
-export function VisualCards({ items, cols = 3 }: { items: { href: string; title: string; text: string; illus: string }[]; cols?: 2 | 3 }) {
+export function VisualCards({ items, cols = 3 }: { items: { href: string; title: string; text: string; illus: string; photo?: { src: string; alt: string } }[]; cols?: 2 | 3 }) {
   return (
     <ul className={`grid gap-6 sm:grid-cols-2 ${cols === 3 ? "lg:grid-cols-3" : ""}`}>
       {items.map((it) => (
         <li key={it.href} data-reveal>
           <Link href={it.href} data-cursor="Open" className="group block h-full">
-            <div className="cut-tl relative overflow-hidden bg-card p-6 transition-colors duration-500 [--cut:32px] group-hover:bg-[#ebebef]">
-              <IllustrationSlot name={it.illus} className="h-auto w-full" />
-            </div>
+            {it.photo ? (
+              <Photo src={it.photo.src} alt={it.photo.alt} className="cut-tl aspect-[16/10] [--cut:32px]" hoverZoom drift={false} />
+            ) : (
+              <div className="cut-tl relative overflow-hidden bg-card p-6 transition-colors duration-500 [--cut:32px] group-hover:bg-[#ebebef]">
+                <IllustrationSlot name={it.illus} className="h-auto w-full" />
+              </div>
+            )}
             <h3 className="display-sm mt-5 transition-colors group-hover:text-red">{it.title}</h3>
             <p className="mt-2 text-muted">{it.text}</p>
           </Link>
@@ -123,7 +128,7 @@ export function Intro({ paragraphs }: { paragraphs: string[] }) {
   const [first, ...rest] = paragraphs;
   return (
     <section className="wrap py-20 md:py-28">
-      <p data-scrub-text className="max-w-5xl font-display text-[clamp(1.6rem,3vw,2.75rem)] font-bold leading-[1.15] tracking-[-0.02em]">
+      <p data-scrub-text className="max-w-5xl font-display text-[clamp(1.35rem,2.2vw,2rem)] font-semibold leading-[1.3] tracking-[-0.02em]">
         {first}
       </p>
       {rest.length > 0 && (
