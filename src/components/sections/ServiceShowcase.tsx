@@ -1,5 +1,6 @@
 import Link from "next/link";
-import ProjectVisual from "@/components/ui/ProjectVisual";
+import Photo from "@/components/ui/Photo";
+import { caseImages } from "@/data/images";
 import { ArrowLink } from "@/components/ui/Button";
 import { getCase } from "@/data/work";
 
@@ -54,11 +55,7 @@ export default function ServiceShowcase() {
               </p>
             </div>
             <Link href={shot ? `/work/${shot.slug}` : r.href} data-cursor="View" className={`group block md:col-span-7 ${i % 2 ? "md:order-1" : ""}`}>
-              <div data-clip className="cut-tl relative aspect-[4/3] overflow-hidden [--cut:40px]">
-                <div data-clip-inner className="absolute inset-0">
-                  {shot && <ProjectVisual project={shot} className="h-full w-full transition-transform duration-[1.4s] ease-out-expo group-hover:scale-[1.03]" />}
-                </div>
-              </div>
+              {shot && <Photo src={caseImages[shot.slug].src} alt={caseImages[shot.slug].alt} className="cut-tl aspect-[6/5] [--cut:40px]" hoverZoom drift={false} sizes="(min-width: 768px) 58vw, 100vw" />}
               {shot && <p className="mt-3 text-sm text-muted">{shot.name}, {shot.client}</p>}
             </Link>
           </div>

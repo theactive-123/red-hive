@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/sections/Breadcrumbs";
 import { Prose, Split, TechRow } from "@/components/sections/Blocks";
 import StickyStory from "@/components/sections/StickyStory";
-import ProjectVisual from "@/components/ui/ProjectVisual";
 import Photo from "@/components/ui/Photo";
 import { caseHeroes, caseImages } from "@/data/images";
 import { caseStudies } from "@/data/work";
@@ -74,12 +73,7 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
       </Split>
 
       <section className="wrap py-10">
-        <div data-clip className="relative aspect-[4/3] overflow-hidden md:aspect-[16/8]">
-          <div data-clip-inner className="absolute inset-0">
-            <ProjectVisual project={c} className="h-full w-full" />
-          </div>
-        </div>
-        <p className="mt-3 text-sm text-muted">{c.name}: main screen</p>
+        {caseImages[c.slug] && <Photo src={caseImages[c.slug].src} alt={caseImages[c.slug].alt} className="mx-auto aspect-[6/5] max-w-4xl" drift={false} />}
       </section>
 
       <StickyStory title="Inside the product" items={c.features} dark />

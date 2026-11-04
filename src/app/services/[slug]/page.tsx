@@ -8,9 +8,9 @@ import FAQ from "@/components/sections/FAQ";
 import SectionHead from "@/components/ui/SectionHead";
 import Button from "@/components/ui/Button";
 import CodeWindow from "@/components/ui/CodeWindow";
-import ProjectVisual from "@/components/ui/ProjectVisual";
+import Photo from "@/components/ui/Photo";
 import LayeredVisual from "@/components/ui/LayeredVisual";
-import { serviceImages } from "@/data/images";
+import { caseImages, serviceImages } from "@/data/images";
 import JsonLd from "@/components/seo/JsonLd";
 import { services } from "@/data/services";
 import { caseStudies } from "@/data/work";
@@ -70,11 +70,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             </div>
           </div>
           <div className="md:col-span-7">
-            <div data-clip className="relative aspect-[4/3] overflow-hidden">
-              <div data-clip-inner className="absolute inset-0">
-                <ProjectVisual project={shot} className="h-full w-full" />
-              </div>
-            </div>
+            <Photo src={caseImages[shot.slug].src} alt={caseImages[shot.slug].alt} className="aspect-[6/5]" drift={false} />
             <p className="mt-3 text-sm text-white/55">
               {shot.name}, {shot.client}
             </p>

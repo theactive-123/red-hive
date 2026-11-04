@@ -33,7 +33,7 @@ Copy `.env.example` to `.env` (or set the variables in your hosting panel):
 | Case studies (**placeholders** — replace with real projects) | `src/data/work.ts` |
 | Blog articles | `src/data/posts.ts` |
 | Testimonials | `src/data/testimonials.ts` |
-| Photos (**placeholders**, Unsplash License) | `public/images/` + `src/data/images.ts` (see `public/images/CREDITS.md`) |
+| Product mockups (**placeholders** for sample projects) | `public/images/work/` + `src/data/images.ts` |
 | Process, engagement models, "why us" | `src/data/process.ts` |
 | Menus | `src/data/nav.ts` |
 
