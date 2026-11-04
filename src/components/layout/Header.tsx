@@ -9,6 +9,7 @@ import { site } from "@/data/site";
 import { useLenis } from "@/components/motion/SmoothScroll";
 import { gsap } from "@/lib/gsap";
 import Magnetic from "@/components/motion/Magnetic";
+import Illustration from "@/components/illustrations/Illustration";
 
 type MenuKey = "services" | "technologies" | "industries" | null;
 
@@ -29,6 +30,7 @@ export default function Header() {
   const [dark, setDark] = useState(false);
   const [solid, setSolid] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [preview, setPreview] = useState<string>(navServices[0].slug);
   const headerRef = useRef<HTMLElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -48,7 +50,7 @@ export default function Header() {
       raf = 0;
       const y = scrollY;
       const under = document
-        .elementsFromPoint(24, 36)
+        .elementsFromPoint(24, y > 40 ? 40 : 76)
         .find((el) => !headerRef.current?.contains(el) && !el.closest(".rh-preloader"))
         ?.closest(".theme-dark, .theme-light");
       setDark(!!under?.classList.contains("theme-dark"));
@@ -86,6 +88,7 @@ export default function Header() {
 
   const enter = (k: MenuKey) => {
     if (timer.current) clearTimeout(timer.current);
+    if (k && k !== open) setPreview(k === "industries" ? navIndustries[0][0] : navServices[0].slug);
     setOpen(k);
   };
   const leave = () => (timer.current = setTimeout(() => setOpen(null), 150));
@@ -93,6 +96,11 @@ export default function Header() {
 
   const onDark = (dark && !open) || mobile;
   const theme = onDark ? "theme-dark" : "theme-light";
+
+  const previewText =
+    open === "industries"
+      ? navIndustries.find(([s]) => s === preview)?.[1]
+      : navServices.find((s) => s.slug === preview)?.desc;
 
   return (
     <>
@@ -104,39 +112,58 @@ export default function Header() {
         onMouseLeave={leave}
         className={`fixed inset-x-0 top-0 z-50 transition-transform duration-700 ease-out-expo ${hidden && !open && !mobile ? "-translate-y-full" : ""}`}
       >
+        {/* Announcement bar */}
+        <div
+          className={`overflow-hidden bg-red text-white transition-[max-height] duration-500 ease-out-expo ${solid || mobile ? "max-h-0" : "max-h-10"}`}
+        >
+          <div className="wrap flex h-9 items-center justify-center gap-3 text-[0.82rem] font-medium md:justify-between">
+            <p className="hidden md:block">Custom web, mobile and SaaS development</p>
+            <Link href="/contact" className="inline-flex items-center gap-2 hover:underline">
+              Book a free 30-minute call with an engineer
+              <span className="tri bg-white text-[0.55rem]" />
+            </Link>
+          </div>
+        </div>
+
         <div
           className={`${theme} transition-[background-color,border-color,color] duration-500 ${
             solid || open ? "border-b border-line" : "border-b border-transparent !bg-transparent"
-          } ${mobile ? "!bg-transparent border-transparent" : ""}`}
+          } ${mobile ? "border-transparent !bg-transparent" : ""}`}
         >
           <div className="wrap flex h-[4.5rem] items-center justify-between gap-8">
             <Link href="/" aria-label={`${site.name} home`} className="relative z-10 shrink-0">
-              <Image src={onDark ? "/logo.png" : "/logo-dark.png"} alt={site.name} width={257} height={58} priority className="h-8 w-auto md:h-9" />
+              <Image src={onDark ? "/logo.png" : "/logo-dark.png"} alt={site.name} width={257} height={58} priority className="h-9 w-auto md:h-10" />
             </Link>
 
             <nav aria-label="Primary" className="hidden lg:block">
-              <ul className="flex items-center gap-8">
-                {links.map((l) => (
-                  <li key={l.label} onMouseEnter={() => enter(l.key)}>
-                    <Link
-                      href={l.href}
-                      onFocus={() => enter(l.key)}
-                      aria-expanded={l.key ? open === l.key : undefined}
-                      className={`relative py-2 text-[0.95rem] font-medium transition-opacity hover:opacity-100 ${active(l.href) || (l.key && open === l.key) ? "opacity-100" : "opacity-70"}`}
-                    >
-                      {l.label}
-                      <span
-                        className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-current transition-transform duration-500 ease-out-expo ${
-                          active(l.href) || (l.key && open === l.key) ? "scale-x-100" : "scale-x-0"
-                        }`}
-                      />
-                    </Link>
-                  </li>
-                ))}
+              <ul className="flex items-center gap-1">
+                {links.map((l) => {
+                  const on = active(l.href) || (l.key && open === l.key);
+                  return (
+                    <li key={l.label} onMouseEnter={() => enter(l.key)}>
+                      <Link
+                        href={l.href}
+                        onFocus={() => enter(l.key)}
+                        aria-expanded={l.key ? open === l.key : undefined}
+                        className={`relative flex items-center gap-1.5 px-3.5 py-2 text-[0.95rem] font-medium transition-colors ${on ? "text-red" : "hover:text-red"}`}
+                      >
+                        {l.label}
+                        {l.key && (
+                          <svg viewBox="0 0 10 10" className={`h-2 w-2 transition-transform duration-300 ${open === l.key ? "rotate-180" : ""}`} aria-hidden>
+                            <path d="M1 3.5 5 7l4-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+                          </svg>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
+              <a href={site.phones[0].href} className="hidden text-sm font-medium transition-colors hover:text-red xl:block">
+                {site.phones[0].display}
+              </a>
               <Magnetic strength={0.25} className="hidden sm:inline-block">
                 <Link
                   href="/contact"
@@ -151,10 +178,10 @@ export default function Header() {
                 onClick={() => setMobile((m) => !m)}
                 aria-label={mobile ? "Close menu" : "Open menu"}
                 aria-expanded={mobile}
-                className="relative z-10 grid h-11 w-11 place-items-center rounded-full border border-line lg:hidden"
+                className="relative z-10 grid h-11 w-11 place-items-center bg-fg text-bg lg:hidden"
               >
-                <span className={`absolute h-px w-4.5 bg-current transition-transform duration-500 ${mobile ? "rotate-45" : "-translate-y-[3px]"}`} />
-                <span className={`absolute h-px w-4.5 bg-current transition-transform duration-500 ${mobile ? "-rotate-45" : "translate-y-[3px]"}`} />
+                <span className={`absolute h-[1.5px] w-5 bg-current transition-transform duration-500 ${mobile ? "rotate-45" : "-translate-y-[4px]"}`} />
+                <span className={`absolute h-[1.5px] w-5 bg-current transition-transform duration-500 ${mobile ? "-rotate-45" : "translate-y-[4px]"}`} />
               </button>
             </div>
           </div>
@@ -162,61 +189,65 @@ export default function Header() {
           {/* Mega menu */}
           <div
             onMouseEnter={() => open && enter(open)}
-            className={`hidden overflow-hidden transition-[max-height] duration-700 ease-out-expo lg:block ${open ? "max-h-[520px]" : "max-h-0"}`}
+            className={`hidden overflow-hidden transition-[max-height] duration-700 ease-out-expo lg:block ${open ? "max-h-[560px]" : "max-h-0"}`}
           >
-            <div className={`wrap grid grid-cols-12 gap-8 pb-12 pt-6 transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}>
+            <div className={`wrap grid grid-cols-12 gap-10 pb-10 pt-6 transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}>
               {open === "services" && (
                 <>
-                  <MenuIntro title="Services" text="Strategy, design and engineering for web, mobile and SaaS products." href="/services" />
-                  <ul className="col-span-9 grid grid-cols-3 gap-x-8">
+                  <ul className="col-span-7 grid grid-cols-2 gap-x-8">
                     {navServices.map((s) => (
-                      <li key={s.slug} className="border-t border-line">
-                        <Link href={`/services/${s.slug}`} className="group flex items-baseline justify-between gap-4 py-3.5">
-                          <span>
-                            <span className="block text-[0.95rem] font-medium">{s.name}</span>
-                            <span className="block text-sm text-muted">{s.desc}</span>
-                          </span>
-                          <span className="tri text-[0.8rem] opacity-0 transition-opacity group-hover:opacity-100" />
+                      <li key={s.slug}>
+                        <Link
+                          href={`/services/${s.slug}`}
+                          onMouseEnter={() => setPreview(s.slug)}
+                          onFocus={() => setPreview(s.slug)}
+                          className={`group flex items-center justify-between gap-4 border-b border-line py-3 transition-colors ${preview === s.slug ? "text-red" : ""}`}
+                        >
+                          <span className="text-[1.02rem] font-semibold">{s.name}</span>
+                          <span className={`tri text-[0.6rem] transition-opacity ${preview === s.slug ? "opacity-100" : "opacity-0"}`} />
                         </Link>
                       </li>
                     ))}
                   </ul>
+                  <MenuPreview name={preview} text={previewText} href={`/services/${preview}`} />
                 </>
               )}
               {open === "technologies" && (
-                <>
-                  <MenuIntro title="Technologies" text="The frameworks, languages and platforms our engineers use every day." href="/technologies" />
-                  <div className="col-span-9 grid grid-cols-6 gap-6">
-                    {navTechGroups.map((g) => (
-                      <div key={g.label}>
-                        <p className="mb-3 border-b border-line pb-3 text-sm text-muted">{g.label}</p>
-                        <ul className="space-y-1.5">
-                          {g.items.map(([slug, name]) => (
-                            <li key={slug}>
-                              <Link href={`/technologies/${slug}`} className="link-line text-[0.92rem]">
-                                {name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </>
+                <div className="col-span-12 grid grid-cols-6 gap-8">
+                  {navTechGroups.map((g) => (
+                    <div key={g.label}>
+                      <p className="mb-4 border-b-2 border-fg pb-3 font-display text-lg font-bold">{g.label}</p>
+                      <ul className="space-y-2">
+                        {g.items.map(([slug, name]) => (
+                          <li key={slug}>
+                            <Link href={`/technologies/${slug}`} className="text-[0.95rem] text-muted transition-colors hover:text-red">
+                              {name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               )}
               {open === "industries" && (
                 <>
-                  <MenuIntro title="Industries" text="Domain experience that shortens the path from idea to launch." href="/industries" />
-                  <ul className="col-span-9 grid grid-cols-2 gap-x-8">
+                  <ul className="col-span-7 grid grid-cols-2 gap-x-8">
                     {navIndustries.map(([slug, name]) => (
-                      <li key={slug} className="border-t border-line">
-                        <Link href={`/industries/${slug}`} className="group flex items-center justify-between py-3.5 text-lg">
-                          {name}
-                          <span className="tri text-[0.8rem] opacity-0 transition-opacity group-hover:opacity-100" />
+                      <li key={slug}>
+                        <Link
+                          href={`/industries/${slug}`}
+                          onMouseEnter={() => setPreview(slug)}
+                          onFocus={() => setPreview(slug)}
+                          className={`flex items-center justify-between border-b border-line py-3.5 transition-colors ${preview === slug ? "text-red" : ""}`}
+                        >
+                          <span className="text-[1.05rem] font-semibold">{name}</span>
+                          <span className={`tri text-[0.6rem] transition-opacity ${preview === slug ? "opacity-100" : "opacity-0"}`} />
                         </Link>
                       </li>
                     ))}
                   </ul>
+                  <MenuPreview name={preview} text={previewText} href={`/industries/${preview}`} />
                 </>
               )}
             </div>
@@ -235,36 +266,48 @@ export default function Header() {
       >
         <div className="wrap flex min-h-full flex-col justify-between pb-10 pt-28">
           <ul>
-            {[...links.map((l) => [l.href, l.label] as const), ["/process", "Process"] as const, ["/contact", "Contact"] as const].map(([href, label]) => (
+            {[...links.map((l) => [l.href, l.label] as const), ["/process", "Process"] as const, ["/contact", "Contact"] as const].map(([href, label], i) => (
               <li key={href} className="overflow-hidden border-b border-line">
-                <Link data-m href={href} className="block py-3 font-display text-[2.5rem] font-extrabold leading-tight tracking-tight">
-                  {label}
+                <Link data-m href={href} className="flex items-baseline justify-between py-3">
+                  <span className="font-display text-[2.4rem] font-extrabold leading-tight tracking-tight">{label}</span>
+                  <span className="text-sm text-white/40">{String(i + 1).padStart(2, "0")}</span>
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="mt-10 space-y-1 text-muted">
-            <a href={`mailto:${site.email}`} className="block text-fg">
-              {site.email}
-            </a>
-            <a href={site.phones[0].href} className="block">
-              {site.phones[0].display}
-            </a>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            <div>
+              <p className="text-sm text-white/50">Email</p>
+              <a href={`mailto:${site.email}`} className="text-lg">
+                {site.email}
+              </a>
+            </div>
+            <div>
+              <p className="text-sm text-white/50">Call</p>
+              <a href={site.phones[0].href} className="text-lg">
+                {site.phones[0].display}
+              </a>
+            </div>
           </div>
+          <Link href="/contact" className="cut mt-8 flex h-14 items-center justify-center bg-red font-semibold">
+            Start a project
+          </Link>
         </div>
       </div>
     </>
   );
 }
 
-function MenuIntro({ title, text, href }: { title: string; text: string; href: string }) {
+function MenuPreview({ name, text, href }: { name: string; text?: string; href: string }) {
   return (
-    <div className="col-span-3 pr-8">
-      <p className="display-sm">{title}</p>
-      <p className="mt-3 max-w-[16rem] text-sm leading-relaxed text-muted">{text}</p>
-      <Link href={href} className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
-        <span className="underline decoration-red decoration-2 underline-offset-4">View all</span>
-      </Link>
-    </div>
+    <Link href={href} className="cut-tl group col-span-5 flex flex-col bg-card p-6 [--cut:28px]">
+      <div className="relative aspect-[4/3] w-full">
+        <Illustration key={name} name={name} className="absolute inset-0 h-full w-full" />
+      </div>
+      <div className="mt-4 flex items-end justify-between gap-6">
+        <p className="max-w-xs text-sm text-muted">{text}</p>
+        <span className="shrink-0 text-sm font-semibold underline decoration-red decoration-2 underline-offset-4">Learn more</span>
+      </div>
+    </Link>
   );
 }

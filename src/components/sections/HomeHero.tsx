@@ -1,6 +1,7 @@
 import HiveLazy from "@/components/three/HiveLazy";
 import Button from "@/components/ui/Button";
 import { site } from "@/data/site";
+import SpinBadge from "@/components/ui/SpinBadge";
 
 export default function HomeHero() {
   return (
@@ -9,6 +10,10 @@ export default function HomeHero() {
         <HiveLazy className="absolute inset-0" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#00020a_0%,rgba(0,2,10,0.85)_35%,rgba(0,2,10,0.1)_75%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy to-transparent" />
+      </div>
+
+      <div className="pointer-events-auto absolute bottom-24 right-6 z-10 hidden md:right-10 md:block lg:right-14">
+        <SpinBadge />
       </div>
 
       <div className="wrap pointer-events-none relative flex flex-1 flex-col justify-center pb-28 pt-36">

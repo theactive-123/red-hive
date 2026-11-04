@@ -2,6 +2,8 @@ import Link from "next/link";
 import PageHero from "@/components/sections/PageHero";
 import TechIcon from "@/components/ui/TechIcon";
 import Button from "@/components/ui/Button";
+import CodeWindow from "@/components/ui/CodeWindow";
+import { snippets } from "@/data/snippets";
 import { techCategories, technologies } from "@/data/technologies";
 import { pageMetadata } from "@/lib/seo";
 
@@ -20,6 +22,7 @@ export default function TechnologiesPage() {
         label="Technologies"
         title="Technologies"
         text="The languages, frameworks and platforms our team works in every week. Each page explains what we build with it and when we’d pick something else."
+        visual={<CodeWindow file={snippets.nextjs.file} lang={snippets.nextjs.lang} code={snippets.nextjs.code} />}
       >
         <Button href="/contact">Hire developers</Button>
       </PageHero>

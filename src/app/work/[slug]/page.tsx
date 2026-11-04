@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/sections/Breadcrumbs";
-import { NumberedList, Prose, Split, TechRow } from "@/components/sections/Blocks";
+import { Prose, Split, TechRow } from "@/components/sections/Blocks";
+import StickyStory from "@/components/sections/StickyStory";
 import ProjectVisual from "@/components/ui/ProjectVisual";
 import { caseStudies } from "@/data/work";
 import { services } from "@/data/services";
@@ -67,19 +68,17 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
         </div>
       </section>
 
-      <Split index="01" label="Challenge" title="Where they started">
+      <Split title="Where they started">
         <Prose paragraphs={c.challenge} />
       </Split>
-      <Split index="02" label="Solution" title="What we built" className="!pt-0">
+      <Split title="What we built" className="!pt-0">
         <Prose paragraphs={c.solution} />
       </Split>
 
-      <Split index="03" label="Features" title="Inside the product">
-        <NumberedList items={c.features} />
-      </Split>
+      <StickyStory title="Inside the product" items={c.features} dark />
 
 
-      <Split index="05" label="Technology" title="Under the hood">
+      <Split title="Under the hood">
         <TechRow slugs={c.tech} />
       </Split>
 

@@ -2,89 +2,105 @@ import Image from "next/image";
 import Link from "next/link";
 import { navCompany, navIndustries, navServices, navTechGroups } from "@/data/nav";
 import { site } from "@/data/site";
+import TechIcon from "@/components/ui/TechIcon";
+import VelocityMarquee from "@/components/motion/VelocityMarquee";
+import { BackToTop, Wordmark } from "./FooterBits";
+
+const socials: { key: keyof typeof site.social; label: string; icon?: string }[] = [
+  { key: "facebook", label: "Facebook", icon: "siFacebook" },
+  { key: "instagram", label: "Instagram", icon: "siInstagram" },
+  { key: "linkedin", label: "LinkedIn" },
+];
 
 export default function Footer() {
-  const tech = navTechGroups.flatMap((g) => g.items).slice(0, 12);
+  const tech = navTechGroups.flatMap((g) => g.items).slice(0, 10);
   return (
     <footer className="theme-dark relative overflow-hidden">
-      <section className="wrap pb-20 pt-28 md:pt-36">
-        <div className="grid gap-12 md:grid-cols-12 md:items-end">
-          <h2 data-split className="display-xl md:col-span-8">
-            Have a project in mind?
-          </h2>
-          <div data-reveal className="md:col-span-4">
-            <p className="text-lg text-white/70">
-              Send us a few lines about what you want to build. We reply within one business day, usually sooner.
-            </p>
-            <Link
-              href="/contact"
-              data-cursor="Go"
-              className="cut group relative mt-8 flex h-20 items-center justify-between overflow-hidden bg-red px-7 text-xl font-semibold text-white [--cut:20px]"
-            >
-              <span className="absolute inset-0 -translate-x-[101%] bg-white transition-transform duration-500 ease-out-expo group-hover:translate-x-0" />
-              <span className="relative transition-colors duration-300 group-hover:text-navy">Start a project</span>
-              <span className="tri relative text-base transition-colors group-hover:bg-navy" style={{ background: "currentColor" }} />
-            </Link>
-          </div>
-        </div>
-        <div className="mt-20 grid gap-8 border-t border-line pt-10 md:grid-cols-3">
-          <ContactLine label="Email" value={site.email} href={`mailto:${site.email}`} />
-          {site.phones.map((p) => (
-            <ContactLine key={p.href} label={p.label} value={p.display} href={p.href} />
+      {/* CTA marquee */}
+      <Link href="/contact" data-cursor="Let’s talk" className="group block border-b border-line py-10 md:py-14" aria-label="Start a project">
+        <VelocityMarquee speed={70}>
+          {["Start a project", "Get an estimate", "Book a call"].map((t) => (
+            <span key={t} className="flex items-center whitespace-nowrap font-display text-[clamp(3rem,9vw,8.5rem)] font-extrabold leading-none tracking-[-0.035em] transition-colors duration-300 group-hover:text-red">
+              {t}
+              <span className="tri mx-[0.45em] text-[0.42em]" />
+            </span>
           ))}
-        </div>
-      </section>
+        </VelocityMarquee>
+      </Link>
 
-      <div className="wrap grid grid-cols-2 gap-x-8 gap-y-12 border-t border-line py-16 md:grid-cols-12">
-        <div className="col-span-2 md:col-span-4">
-          <Image src="/logo.png" alt={site.name} width={257} height={58} className="h-10 w-auto" />
-          <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/60">Custom web apps, mobile apps and SaaS products for startups and growing companies.</p>
+      <div className="wrap grid gap-14 py-20 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <Image src="/logo.png" alt={site.name} width={257} height={58} className="h-11 w-auto" />
+          <p className="mt-6 max-w-sm text-lg text-white/70">
+            We design and build web apps, mobile apps and SaaS products for startups and growing companies.
+          </p>
+          <div className="mt-10 space-y-5">
+            <FooterContact label="Email us" value={site.email} href={`mailto:${site.email}`} />
+            {site.phones.map((p) => (
+              <FooterContact key={p.href} label={p.label} value={p.display} href={p.href} />
+            ))}
+          </div>
+          <ul className="mt-10 flex gap-2">
+            {socials.map((s) => (
+              <li key={s.key}>
+                <a
+                  href={site.social[s.key]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="grid h-11 w-11 place-items-center bg-white/[0.07] transition-colors hover:bg-red"
+                >
+                  {s.icon ? (
+                    <TechIcon icon={s.icon} name={s.label} className="h-4 w-4" color="#fff" />
+                  ) : (
+                    <span className="text-sm font-bold">in</span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-        <Col className="md:col-span-2" title="Services" links={navServices.slice(0, 8).map((s) => [`/services/${s.slug}`, s.name])} />
-        <Col className="md:col-span-2" title="Technologies" links={tech.map(([s, n]) => [`/technologies/${s}`, n] as const)} />
-        <Col className="md:col-span-2" title="Industries" links={navIndustries.map(([s, n]) => [`/industries/${s}`, n])} />
-        <Col className="md:col-span-2" title="Company" links={[...navCompany]} />
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-4 md:col-span-7">
+          <Col title="Services" links={navServices.slice(0, 8).map((s) => [`/services/${s.slug}`, s.name])} />
+          <Col title="Technologies" links={[...tech.map(([s, n]) => [`/technologies/${s}`, n] as const), ["/technologies", "View all"] as const]} />
+          <Col title="Industries" links={navIndustries.map(([s, n]) => [`/industries/${s}`, n])} />
+          <Col title="Company" links={[...navCompany]} />
+        </div>
       </div>
 
-      <div className="wrap flex flex-col gap-4 border-t border-line py-7 text-sm text-white/55 md:flex-row md:items-center md:justify-between">
+      <div className="wrap">
+        <Wordmark />
+      </div>
+
+      <div className="wrap flex flex-col gap-5 border-t border-line py-7 text-sm text-white/55 md:flex-row md:items-center md:justify-between">
         <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
-        <ul className="flex flex-wrap gap-x-6 gap-y-2">
-          {Object.entries(site.social).map(([k, href]) => (
-            <li key={k}>
-              <a href={href} target="_blank" rel="noopener noreferrer" className="capitalize hover:text-white">
-                {k}
-              </a>
-            </li>
-          ))}
-          <li>
-            <Link href="/privacy-policy" className="hover:text-white">
-              Privacy
-            </Link>
-          </li>
-          <li>
-            <Link href="/terms-conditions" className="hover:text-white">
-              Terms
-            </Link>
-          </li>
-        </ul>
+        <div className="flex flex-wrap items-center gap-6">
+          <Link href="/privacy-policy" className="hover:text-white">
+            Privacy policy
+          </Link>
+          <Link href="/terms-conditions" className="hover:text-white">
+            Terms
+          </Link>
+          <BackToTop />
+        </div>
       </div>
     </footer>
   );
 }
 
-function ContactLine({ label, value, href }: { label: string; value: string; href: string }) {
+function FooterContact({ label, value, href }: { label: string; value: string; href: string }) {
   return (
-    <a href={href} className="group block">
-      <span className="block text-sm text-white/55">{label}</span>
-      <span className="mt-1.5 block text-xl font-medium transition-colors group-hover:text-red md:text-2xl">{value}</span>
+    <a href={href} className="group flex items-baseline gap-4">
+      <span className="w-20 shrink-0 text-sm text-white/50">{label}</span>
+      <span className="text-xl font-semibold transition-colors group-hover:text-red">{value}</span>
     </a>
   );
 }
 
-function Col({ title, links, className = "" }: { title: string; links: readonly (readonly [string, string])[]; className?: string }) {
+function Col({ title, links }: { title: string; links: readonly (readonly [string, string])[] }) {
   return (
-    <div className={className}>
-      <p className="mb-5 text-sm font-semibold">{title}</p>
+    <div>
+      <p className="mb-5 border-b border-line pb-3 font-display text-lg font-bold">{title}</p>
       <ul className="space-y-2.5">
         {links.map(([href, name]) => (
           <li key={href}>

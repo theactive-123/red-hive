@@ -1,6 +1,8 @@
+import Link from "next/link";
 import PageHero from "@/components/sections/PageHero";
-import IndustriesList from "@/components/sections/IndustriesList";
+import Illustration from "@/components/illustrations/Illustration";
 import Button from "@/components/ui/Button";
+import { industries } from "@/data/industries";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -15,14 +17,33 @@ export default function IndustriesPage() {
     <>
       <PageHero
         crumbs={[{ name: "Industries", path: "/industries" }]}
-        label="Industries"
         title="Software for the industry you’re in"
         text="Healthcare has HIPAA, fintech has PCI and audits, logistics has drivers on bad mobile signal. We’ve built for these constraints before, so you don’t pay for us to learn them."
+        visual={<Illustration name="logistics" className="h-auto w-full" />}
       >
-        <Button href="/contact">Talk to us</Button>
+        <Button href="/contact" variant="red">
+          Talk to us
+        </Button>
       </PageHero>
       <section className="wrap pb-28">
-        <IndustriesList />
+        <ul className="grid gap-x-8 gap-y-16 md:grid-cols-2">
+          {industries.map((ind, i) => (
+            <li key={ind.slug} data-reveal className={i % 2 ? "md:mt-24" : ""}>
+              <Link href={`/industries/${ind.slug}`} data-cursor="Explore" className="group block">
+                <div className="cut-tl bg-card p-6 transition-colors duration-500 [--cut:36px] group-hover:bg-[#ebebef] md:p-10">
+                  <Illustration name={ind.slug} className="h-auto w-full" />
+                </div>
+                <div className="mt-6 flex items-start justify-between gap-6">
+                  <div>
+                    <h2 className="display-sm transition-colors group-hover:text-red">{ind.name}</h2>
+                    <p className="mt-2 max-w-md text-muted">{ind.tagline}</p>
+                  </div>
+                  {ind.compliance[0] && <span className="shrink-0 bg-navy px-3 py-1.5 text-xs font-semibold text-white">{ind.compliance[0]}</span>}
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );

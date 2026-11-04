@@ -1,8 +1,8 @@
 import PageHero from "@/components/sections/PageHero";
-import { NumberedList, Split } from "@/components/sections/Blocks";
+import { Split, VisualCards } from "@/components/sections/Blocks";
+import StickyStory from "@/components/sections/StickyStory";
+import ProcessScroller from "@/components/sections/ProcessScroller";
 import Testimonials from "@/components/sections/Testimonials";
-import TechIndex from "@/components/sections/TechIndex";
-import SectionHead from "@/components/ui/SectionHead";
 import Button from "@/components/ui/Button";
 import HiveLazy from "@/components/three/HiveLazy";
 import { whyUs } from "@/data/process";
@@ -47,7 +47,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Split index="01" label="Our story" title="Why “Red Hive”?">
+      <Split title="Why “Red Hive”?">
         <div className="space-y-6 text-lg leading-relaxed text-muted">
           <p data-reveal className="lead text-fg">
             A hive is one of nature’s most efficient structures: every cell has a job, every member knows its role, and the whole is far stronger than
@@ -63,20 +63,22 @@ export default function AboutPage() {
         </div>
       </Split>
 
-      <section className="theme-dark py-24 md:py-32">
-        <div className="wrap">
-          <SectionHead index="02" label="Values" title="What we hold ourselves to" className="mb-14" />
-          <NumberedList items={values} />
-        </div>
-      </section>
+      <StickyStory title="What we hold ourselves to" items={values} dark />
 
-      <Split index="03" label="Why us" title="What you can count on">
-        <NumberedList items={whyUs} />
-      </Split>
+      <StickyStory title="What you can count on" items={whyUs} />
+      <ProcessScroller />
 
-      <section className="wrap py-20">
-        <SectionHead index="04" label="Technology" title="Our stack" className="mb-14" />
-        <TechIndex />
+      <section className="wrap py-24">
+        <h2 data-split className="display-md mb-12">
+          What we do
+        </h2>
+        <VisualCards
+          items={[
+            { href: "/services/web-application-development", title: "Web apps", text: "Portals, dashboards and internal tools.", illus: "web-application-development" },
+            { href: "/services/mobile-app-development", title: "Mobile apps", text: "iOS and Android, cross-platform or native.", illus: "mobile-app-development" },
+            { href: "/services/saas-development", title: "SaaS products", text: "Multi-tenant platforms with billing built in.", illus: "saas-development" },
+          ]}
+        />
       </section>
 
       <section className="wrap py-28">

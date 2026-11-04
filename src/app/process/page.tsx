@@ -1,8 +1,9 @@
 import PageHero from "@/components/sections/PageHero";
-import ProcessSteps from "@/components/sections/ProcessSteps";
+import ProcessScroller from "@/components/sections/ProcessScroller";
+import StickyStory from "@/components/sections/StickyStory";
+import Illustration from "@/components/illustrations/Illustration";
 import Engagement from "@/components/sections/Engagement";
 import FAQ from "@/components/sections/FAQ";
-import { NumberedList, Split } from "@/components/sections/Blocks";
 import Button from "@/components/ui/Button";
 import { pageMetadata } from "@/lib/seo";
 
@@ -36,17 +37,12 @@ export default function ProcessPage() {
         label="Process"
         title="How we work"
         text="Two-week sprints, a demo at the end of each one and a staging link you can click through any time. Here’s what that looks like week to week."
+        visual={<Illustration name="mvp-development" className="h-auto w-full" />}
       >
         <Button href="/contact">Start with discovery</Button>
       </PageHero>
-      <section className="theme-light bg-card py-24 md:py-32">
-        <div className="wrap">
-          <ProcessSteps />
-        </div>
-      </section>
-      <Split index="01" label="Practices" title="How quality is built in">
-        <NumberedList items={practices} />
-      </Split>
+      <ProcessScroller title="The five stages" />
+      <StickyStory title="How quality is built in" items={practices} dark />
       <Engagement />
       <FAQ faqs={faqs} />
     </>

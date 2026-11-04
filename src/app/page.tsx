@@ -2,7 +2,8 @@ import HomeHero from "@/components/sections/HomeHero";
 import ServiceShowcase from "@/components/sections/ServiceShowcase";
 import ProjectCard from "@/components/sections/ProjectCard";
 import TechIndex from "@/components/sections/TechIndex";
-import ProcessSteps from "@/components/sections/ProcessSteps";
+import ProcessScroller from "@/components/sections/ProcessScroller";
+import Showreel from "@/components/sections/Showreel";
 import IndustriesList from "@/components/sections/IndustriesList";
 import Testimonials from "@/components/sections/Testimonials";
 import InsightsList from "@/components/sections/InsightsList";
@@ -11,6 +12,7 @@ import SectionHead from "@/components/ui/SectionHead";
 import Button from "@/components/ui/Button";
 import VelocityMarquee from "@/components/motion/VelocityMarquee";
 import { services } from "@/data/services";
+import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/work";
 import { site } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
@@ -40,6 +42,7 @@ export default function Home() {
   return (
     <>
       <HomeHero />
+      <Showreel shots={caseStudies} />
 
       <section className="wrap py-28 md:py-40">
         <SectionHead
@@ -90,12 +93,7 @@ export default function Home() {
         </VelocityMarquee>
       </section>
 
-      <section className="theme-light bg-card py-28 md:py-36">
-        <div className="wrap">
-          <SectionHead title="How a project runs" text="Five stages, two-week sprints and a demo at the end of every one." link={{ href: "/process", label: "Read about our process" }} className="mb-16" />
-          <ProcessSteps />
-        </div>
-      </section>
+      <ProcessScroller />
 
       <section className="wrap py-28 md:py-36">
         <SectionHead title="Our stack" text="We pick tools for the product in front of us. These are the ones we use most." link={{ href: "/technologies", label: "All technologies" }} className="mb-14" />
@@ -105,7 +103,7 @@ export default function Home() {
       <section className="theme-dark py-28 md:py-36">
         <div className="wrap">
           <SectionHead title="Industries we know well" link={{ href: "/industries", label: "All industries" }} className="mb-14" />
-          <IndustriesList />
+          <IndustriesList items={industries.map((i) => ({ slug: i.slug, name: i.name, tagline: i.tagline }))} />
         </div>
       </section>
 

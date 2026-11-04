@@ -1,8 +1,8 @@
+import Link from "next/link";
 import PageHero from "@/components/sections/PageHero";
-import ServicesList from "@/components/sections/ServicesList";
-import ProcessSteps from "@/components/sections/ProcessSteps";
+import ProcessScroller from "@/components/sections/ProcessScroller";
 import Engagement from "@/components/sections/Engagement";
-import SectionHead from "@/components/ui/SectionHead";
+import Illustration from "@/components/illustrations/Illustration";
 import Button from "@/components/ui/Button";
 import JsonLd from "@/components/seo/JsonLd";
 import { services } from "@/data/services";
@@ -17,6 +17,7 @@ export const metadata = pageMetadata({
 });
 
 export default function ServicesPage() {
+  const [a, b, c, ...rest] = services;
   return (
     <>
       <JsonLd
@@ -28,21 +29,73 @@ export default function ServicesPage() {
       />
       <PageHero
         crumbs={[{ name: "Services", path: "/services" }]}
-        label="Services"
         title="Services"
         text="Design, engineering and hosting for web and mobile products. Hire us for one piece, like a mobile app or a design refresh, or for the whole thing."
+        visual={<Illustration name="saas-development" className="h-auto w-full" />}
       >
-        <Button href="/contact">Discuss your project</Button>
+        <Button href="/contact" variant="red">
+          Discuss your project
+        </Button>
       </PageHero>
-      <section className="wrap pb-28">
-        <ServicesList items={services.map((s) => ({ slug: s.slug, name: s.name, tagline: s.tagline, icon: s.icon, tags: s.capabilities.map((c) => c.title) }))} />
+
+      {/* The three core services, alternating */}
+      <section className="wrap space-y-24 py-16 md:space-y-32 md:py-24">
+        {[a, b, c].map((s, i) => (
+          <Link key={s.slug} href={`/services/${s.slug}`} data-cursor="Open" className="group grid items-center gap-10 md:grid-cols-12">
+            <div className={`md:col-span-6 ${i % 2 ? "md:order-2" : ""}`}>
+              <div data-clip className="cut-tl bg-card p-6 [--cut:40px] md:p-10">
+                <div data-clip-inner>
+                  <Illustration name={s.slug} className="h-auto w-full" />
+                </div>
+              </div>
+            </div>
+            <div className={`md:col-span-5 ${i % 2 ? "md:order-1" : "md:col-start-8"}`}>
+              <p className="text-sm font-semibold text-red">0{i + 1}</p>
+              <h2 data-split className="display-lg mt-3 transition-colors group-hover:text-red">
+                {s.short}
+              </h2>
+              <p data-reveal className="mt-6 text-lg leading-relaxed text-muted">
+                {s.intro[0]}
+              </p>
+              <ul data-reveal className="mt-6 grid grid-cols-2 gap-x-6 gap-y-2">
+                {s.capabilities.slice(0, 4).map((cap) => (
+                  <li key={cap.title} className="flex items-center gap-2.5 text-[0.98rem]">
+                    <span className="tri text-[0.65rem]" />
+                    {cap.title}
+                  </li>
+                ))}
+              </ul>
+              <span data-reveal className="mt-8 inline-block font-semibold underline decoration-red decoration-2 underline-offset-[6px]">
+                Read more
+              </span>
+            </div>
+          </Link>
+        ))}
       </section>
-      <section className="theme-light bg-card py-28 md:py-36">
+
+      {/* Everything else, as a grid of illustrated cards */}
+      <section className="theme-dark py-24 md:py-32">
         <div className="wrap">
-          <SectionHead label="Process" title="How a project runs" link={{ href: "/process", label: "Read more" }} className="mb-16" />
-          <ProcessSteps />
+          <h2 data-split className="display-md max-w-[14ch]">
+            Everything around the build
+          </h2>
+          <ul className="mt-14 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {rest.map((s) => (
+              <li key={s.slug} className="bg-navy">
+                <Link href={`/services/${s.slug}`} className="group flex h-full flex-col p-6 transition-colors duration-500 hover:bg-navy-2">
+                  <div className="bg-white p-4 transition-transform duration-700 ease-out-expo group-hover:scale-[1.02]">
+                    <Illustration name={s.slug} className="h-auto w-full" />
+                  </div>
+                  <h3 className="display-sm mt-6 transition-colors group-hover:text-red">{s.short}</h3>
+                  <p className="mt-2 text-sm text-white/60">{s.tagline}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
+
+      <ProcessScroller />
       <Engagement />
     </>
   );
