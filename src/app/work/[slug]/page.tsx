@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/sections/Breadcrumbs";
 import { Prose, Split, TechRow } from "@/components/sections/Blocks";
 import StickyStory from "@/components/sections/StickyStory";
 import Photo from "@/components/ui/Photo";
-import { caseHeroes, caseImages } from "@/data/images";
+import { caseGallery, caseHeroes, caseImages } from "@/data/images";
 import { caseStudies } from "@/data/work";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
@@ -36,7 +36,8 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
     ["Service", service ? <Link href={`/services/${service.slug}`} className="link-line">{service.short}</Link> : c.service],
     ["Platforms", c.platforms.join(", ")],
     ["Timeline", c.duration],
-  ];
+  ].filter(([, v]) => Boolean(v)) as [string, React.ReactNode][];
+  const gallery = caseGallery[c.slug] ?? [];
 
   return (
     <>
@@ -72,16 +73,33 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
         <Prose paragraphs={c.solution} />
       </Split>
 
-      <section className="wrap py-10">
-        {caseImages[c.slug] && <Photo src={caseImages[c.slug].src} alt={caseImages[c.slug].alt} className="mx-auto aspect-[6/5] max-w-4xl" drift={false} />}
-      </section>
+      {gallery.length > 0 && (
+        <section className="wrap py-16 md:py-24">
+          <h2 data-split className="display-md mb-12">
+            Screens from the product
+          </h2>
+          <div className="grid gap-x-8 gap-y-14 md:grid-cols-2">
+            {gallery.map((g, i) => (
+              <figure key={g.src} data-reveal className={i === 0 ? "md:col-span-2" : ""}>
+                <div className="overflow-hidden bg-card">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- natural aspect ratio, already optimized WebP */}
+                  <img src={g.src} alt={g.alt} loading="lazy" className="block h-auto w-full" />
+                </div>
+                <figcaption className="mt-3 text-sm text-muted">{g.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
 
       <StickyStory title="Inside the product" items={c.features} dark />
 
 
+      {c.tech.length > 0 && (
       <Split title="Under the hood">
         <TechRow slugs={c.tech} />
       </Split>
+      )}
 
       <section className="wrap pb-28">
         <Link href={`/work/${next.slug}`} data-cursor="Next" className="group block border-t border-line pt-10">

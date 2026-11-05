@@ -4,6 +4,7 @@ import ProcessScroller from "@/components/sections/ProcessScroller";
 import Engagement from "@/components/sections/Engagement";
 import LayeredVisual from "@/components/ui/LayeredVisual";
 import Photo from "@/components/ui/Photo";
+import Illustration from "@/components/illustrations/Illustration";
 import { serviceImages, studio } from "@/data/images";
 import Button from "@/components/ui/Button";
 import JsonLd from "@/components/seo/JsonLd";
@@ -82,7 +83,13 @@ export default function ServicesPage() {
             {rest.map((s) => (
               <li key={s.slug} className="bg-navy">
                 <Link href={`/services/${s.slug}`} className="group flex h-full flex-col p-6 transition-colors duration-500 hover:bg-navy-2">
-                  <Photo src={serviceImages[s.slug].src} alt={serviceImages[s.slug].alt} className="aspect-[6/5]" hoverZoom drift={false} sizes="(min-width: 1024px) 25vw, 50vw" />
+                  {serviceImages[s.slug] ? (
+                    <Photo src={serviceImages[s.slug]!.src} alt={serviceImages[s.slug]!.alt} className="aspect-[6/5]" hoverZoom drift={false} sizes="(min-width: 1024px) 25vw, 50vw" />
+                  ) : (
+                    <div className="flex aspect-[6/5] items-center bg-white p-4">
+                      <Illustration name={s.slug} className="h-auto w-full" />
+                    </div>
+                  )}
                   <h3 className="display-sm mt-6 transition-colors group-hover:text-red">{s.short}</h3>
                   <p className="mt-2 text-sm text-white/60">{s.tagline}</p>
                 </Link>

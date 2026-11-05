@@ -1,16 +1,16 @@
-// PLACEHOLDER CASE STUDIES — sample projects that illustrate the kind of work Red Hive Digital does. Replace with real, client-approved case studies before launch.
+// Red Hive Digital case studies. Facts come from the project overviews supplied by the team.
+// Fields left empty (tech, duration) are hidden on the site until filled in.
 
 export type CaseStudy = {
   slug: string;
   name: string;
-  /** Generic descriptor, e.g. "Telehealth startup, USA". No real company names. */
+  /** Who it was built for, as it can be shown publicly. */
   client: string;
   category: "Web App" | "Mobile App" | "SaaS" | "AI";
-  /** Industry slug from industries.ts */
+  /** Industry slug from industries.ts, or a plain label when no industry page fits. */
   industry: string;
   /** Service slug from services.ts */
   service: string;
-  year: string;
   accent: string;
   summary: string;
   seoTitle: string;
@@ -18,314 +18,212 @@ export type CaseStudy = {
   challenge: string[];
   solution: string[];
   features: { title: string; text: string }[];
-  results: { value: string; label: string }[];
-  /** Tech slugs from tech-slugs.ts */
+  /** Tech slugs from tech-slugs.ts. Leave empty if not confirmed. */
   tech: string[];
   platforms: string[];
-  duration: string;
-  /** Text shown on the product's main screen in the drawn mockup. */
-  screen: {
-    title: string;
-    subtitle: string;
-    metric: { label: string; value: string };
-    rows: { name: string; meta: string; value: string }[];
-  };
+  duration?: string;
+  /** Captions for the gallery screens, in the order of public/images/work/<slug>-screen-N.webp */
+  gallery: string[];
 };
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "pulsecare-telehealth-app",
-    name: "Pulsecare",
-    client: "Telehealth startup, USA",
-    category: "Mobile App",
-    industry: "healthcare",
-    service: "mobile-app-development",
-    year: "2025",
-    accent: "#E1013B",
-    summary:
-      "A telehealth app for iOS and Android where patients book a doctor, join the video call and read their visit notes afterwards. One Flutter codebase covers both stores.",
-    seoTitle: "Pulsecare: Flutter Telehealth App Case Study",
-    seoDescription:
-      "How Red Hive Digital built Pulsecare, a Flutter telehealth app for iOS and Android with video visits, secure messaging and appointment scheduling.",
-    challenge: [
-      "The founders had proved demand with a web prototype, but patients kept asking for an app. They wanted to book from their phone, join a call with one tap and get reminders that actually showed up. Two separate native apps would have doubled the budget and slowed every release.",
-      "It's healthcare, so the data rules were strict. Messages, visit notes and attachments had to be encrypted in transit and at rest, every access had to be logged, and video calls had to survive weak mobile signal.",
-    ],
-    solution: [
-      "We built one Flutter app for iOS and Android on a shared design system, so each feature went out to both stores on the same day. BLoC state management kept booking, video and messaging in separate modules that we could test on their own.",
-      "The backend is a Node.js API on AWS that handles scheduling, notifications and role-based access, with PostgreSQL for records and audit logs. Video runs through a WebRTC provider with adaptive bitrate and automatic reconnects. The whole stack was set up to support HIPAA requirements.",
-    ],
-    features: [
-      { title: "One-tap video visits", text: "WebRTC calls that drop quality before they drop the call, plus in-call chat for links and files." },
-      { title: "Scheduling", text: "Live provider availability, slots shown in the patient's time zone, and reminders by push, SMS and email." },
-      { title: "Secure messaging", text: "Encrypted threads between patients and their care team. Attachments are scanned before delivery." },
-      { title: "Visit summaries", text: "Doctors publish notes and care plans that patients can read and download after each visit." },
-      { title: "Provider dashboard", text: "A web view for clinicians to manage their queue, set availability and check patient history." },
-      { title: "Audit trail", text: "Every read of protected data is logged and can be reviewed during a compliance check." },
-    ],
-    results: [
-      { value: "2x", label: "release pace compared with two native codebases" },
-      { value: "4.7★", label: "average app store rating after launch" },
-      { value: "-35%", label: "missed appointments once reminders went live" },
-    ],
-    tech: ["flutter", "firebase", "nodejs", "postgresql", "aws", "docker"],
-    platforms: ["iOS", "Android", "Web"],
-    duration: "18 weeks",
-    screen: {
-      title: "Good morning, Maya",
-      subtitle: "Next visit: Dr. Okafor, 10:30",
-      metric: { label: "Heart rate", value: "72 bpm" },
-      rows: [
-        { name: "Video consult", meta: "Today · 10:30", value: "Join" },
-        { name: "Lab results", meta: "Uploaded Mon", value: "View" },
-        { name: "Refill: Lisinopril", meta: "Ready Thu", value: "Track" },
-      ],
-    },
-  },
-  {
-    slug: "ledgerly-fintech-saas",
-    name: "Ledgerly",
-    client: "B2B fintech company, UK",
-    category: "SaaS",
-    industry: "fintech",
-    service: "saas-development",
-    year: "2025",
-    accent: "#7C5CFF",
-    summary:
-      "A multi-tenant cash-flow and invoicing product. Finance teams see what's owed to them, what they owe and what the bank balance will look like over the next 13 weeks.",
-    seoTitle: "Ledgerly: Fintech SaaS Dashboard Case Study",
-    seoDescription:
-      "How Red Hive Digital built Ledgerly, a multi-tenant fintech SaaS dashboard with Next.js and NestJS for real-time cash-flow forecasting and invoicing.",
-    challenge: [
-      "Finance teams at small and mid-sized companies were answering one question with spreadsheets, bank exports and their accounting software: how much cash will we have next month? The client wanted a product that pulled all of that into one place.",
-      "One platform would hold data for many companies, so tenant data could never leak. It also had to sync reliably with bank and accounting APIs and stay quick with years of transactions loaded into the charts.",
-    ],
-    solution: [
-      "Tenant isolation is enforced in the database with PostgreSQL row-level security, so a bug in the app layer can't show one company another's data. A NestJS API exposes typed, versioned endpoints, and background workers run the bank and accounting syncs with retries and idempotency keys.",
-      "The Next.js front end renders on the server for quick first loads and streams heavier reports in as they're ready. Redis caches the aggregates behind each dashboard. Stripe subscription billing with seat and usage limits was part of the first release.",
-    ],
-    features: [
-      { title: "Cash-flow forecast", text: "A rolling 13-week forecast built from open invoices, recurring bills and past payment patterns." },
-      { title: "Bank and ledger sync", text: "Scheduled imports from bank feeds and accounting platforms that are safe to re-run and flag conflicts." },
-      { title: "Invoice automation", text: "Create, send and chase invoices with reminder templates and payment links." },
-      { title: "Role-based access", text: "Separate permissions for owners, accountants and approvers, with SSO for larger teams." },
-      { title: "Subscription billing", text: "Self-serve plans, trials, seat limits and usage-based upgrades." },
-      { title: "Report exports", text: "PDF and CSV exports of P&L, aged receivables and forecasts for board packs." },
-    ],
-    results: [
-      { value: "<1s", label: "dashboard load for a typical tenant" },
-      { value: "-60%", label: "time spent on month-end reconciliation" },
-      { value: "99.9%", label: "uptime since launch" },
-    ],
-    tech: ["nextjs", "typescript", "nestjs", "postgresql", "redis", "aws", "docker"],
-    platforms: ["Web"],
-    duration: "22 weeks",
-    screen: {
-      title: "Cash position",
-      subtitle: "Forecast · next 13 weeks",
-      metric: { label: "Projected balance", value: "£184,200" },
-      rows: [
-        { name: "INV-2041 Harlow Ltd", meta: "Due in 3 days", value: "£12,400" },
-        { name: "Payroll run", meta: "28 Nov", value: "-£46,900" },
-        { name: "INV-2038 Brightway", meta: "7 days overdue", value: "£3,150" },
-      ],
-    },
-  },
-  {
-    slug: "dashly-delivery-marketplace",
-    name: "Dashly",
-    client: "Local delivery startup, UAE",
-    category: "Mobile App",
-    industry: "on-demand",
-    service: "mobile-app-development",
-    year: "2024",
-    accent: "#FF6B35",
-    summary:
-      "A local delivery marketplace with three apps (customer, courier and merchant) and an operations console that shows every live order on one map.",
-    seoTitle: "Dashly: On-Demand Delivery App Case Study",
-    seoDescription:
-      "How Red Hive Digital built Dashly, an on-demand delivery marketplace with React Native customer and courier apps, a Node.js backend and real-time tracking.",
-    challenge: [
-      "The client was entering a crowded local delivery market. Customers, couriers and merchants each needed their own app, and all three depended on accurate live locations and order status.",
-      "Dispatch had to be quick and fair to couriers. Payments had to split cleanly between merchant, courier and platform. And the system had to hold up during the lunch and dinner rush, when order volume jumps several times over.",
-    ],
-    solution: [
-      "The customer and courier apps are built in React Native and share most of their components and logic. Merchants use a React web portal. A Node.js backend pushes courier locations and order updates over WebSockets.",
-      "The dispatch service ranks nearby couriers by distance, current load and acceptance rate. MongoDB geospatial indexes keep location lookups fast, Redis queues absorb the rush-hour spikes, and payouts are split automatically through marketplace payments.",
-    ],
-    features: [
-      { title: "Live order tracking", text: "The courier's position and an updated ETA on a map, from pickup to the door." },
-      { title: "Dispatch", text: "Couriers are assigned automatically based on distance, how busy they are and how often they accept jobs." },
-      { title: "Courier app", text: "Shifts, navigation handoff to Google Maps or Waze, proof of delivery photos and earnings." },
-      { title: "Merchant portal", text: "Menus, stock levels, the incoming order queue and payout reports." },
-      { title: "Split payments", text: "Card and wallet payments, with merchant and courier payouts calculated per order." },
-      { title: "Ops console", text: "A live map of active orders and couriers, with problems flagged for the support team." },
-    ],
-    results: [
-      { value: "3", label: "apps built on one shared codebase" },
-      { value: "-25%", label: "average delivery time after tuning dispatch" },
-      { value: "10x", label: "normal peak-hour volume handled in load tests" },
-    ],
-    tech: ["react-native", "react", "nodejs", "mongodb", "redis", "google-cloud"],
-    platforms: ["iOS", "Android", "Web"],
-    duration: "20 weeks",
-    screen: {
-      title: "Order on the way",
-      subtitle: "Omar is 4 min away",
-      metric: { label: "Arriving", value: "12:48" },
-      rows: [
-        { name: "Chicken shawarma x2", meta: "Al Reef Grill", value: "AED 46" },
-        { name: "Fresh mint lemonade", meta: "Al Reef Grill", value: "AED 14" },
-        { name: "Delivery fee", meta: "2.1 km", value: "AED 7" },
-      ],
-    },
-  },
-  {
-    slug: "routewise-fleet-platform",
-    name: "Routewise",
-    client: "Regional logistics operator, USA",
+    slug: "sbh-ehr-portal",
+    name: "SBH EHR Portal",
+    client: "SBH, behavioral health",
     category: "Web App",
-    industry: "logistics",
-    service: "web-application-development",
-    year: "2024",
-    accent: "#00C2A8",
+    industry: "healthcare",
+    service: "enterprise-software-development",
+    accent: "#0c9ca8",
     summary:
-      "A fleet management web app that replaced spreadsheets and phone calls with live vehicle tracking, route planning and maintenance alerts.",
-    seoTitle: "Routewise: Fleet Management Platform Case Study",
+      "An electronic health records and operations platform for behavioral health facilities: resident charts, medication records, clinical notes and staff management in one portal.",
+    seoTitle: "SBH EHR Portal: Behavioral Health EHR Case Study",
     seoDescription:
-      "How Red Hive Digital built Routewise, a fleet management web app with React, Go and AWS for live GPS tracking, route planning and maintenance scheduling.",
+      "How Red Hive Digital built the SBH EHR Portal, a behavioral health EHR with resident charts, monthly MAR, therapy notes, staff scheduling and audit logs.",
     challenge: [
-      "The operator ran a growing fleet on spreadsheets, an old GPS portal and a lot of phone calls. Dispatchers couldn't see in one place where trucks were, which loads were running late or which vehicles were due for service.",
-      "Telematics devices send a steady stream of position and sensor readings. The new system had to take in that stream without dropping data, keep the map live for dozens of dispatchers at once, and stay affordable to run.",
+      "Behavioral health facilities run on a mix of paper binders, spreadsheets and general-purpose tools. Medication administration records, progress notes and staff paperwork each lived somewhere different, which made audits slow and handovers between shifts risky.",
+      "The organisation also manages more than one facility, so access had to be scoped per organisation and per facility, with a clear record of who changed what.",
     ],
     solution: [
-      "A Go ingestion service receives telematics events, validates them and writes them to time-partitioned PostgreSQL tables. It runs in autoscaling containers on AWS, with a managed queue between each stage so a slow step never blocks the next.",
-      "Dispatchers work in a React app with a live map, a route planner and a feed of exceptions. Updates arrive over WebSockets instead of polling. Maintenance rules raise alerts from mileage and engine data, and reports export straight into the tools the operator already used.",
+      "We built a single web portal that covers the resident side and the staff side of the operation. Each resident has a profile, chart, vitals, assessments and tracking history, and the medication module shows a full month of scheduled doses with staff initials and administration status.",
+      "On the staff side the portal handles scheduling, timesheets, training, leave requests and employment forms. Administrators manage organisations, facilities and role capabilities from one admin center, and every change is written to an audit log.",
     ],
     features: [
-      { title: "Live fleet map", text: "Position, speed and status for every vehicle on one map, refreshed every few seconds." },
-      { title: "Route planning", text: "Multi-stop routes that respect delivery windows and driver hours rules." },
-      { title: "Exception alerts", text: "Late deliveries, route deviations and long idle times flagged automatically." },
-      { title: "Maintenance scheduling", text: "Service reminders driven by mileage, engine hours and fault codes." },
-      { title: "Driver scorecards", text: "Harsh braking, speeding and on-time performance tracked per driver." },
-      { title: "Data exports", text: "Scheduled CSV and API exports for billing, payroll and BI tools." },
+      { title: "Resident management", text: "Profiles, medical charts, vitals, assessments and tracking for every resident in one place." },
+      { title: "Medication administration records", text: "A monthly MAR with dose schedules, refill counts, staff initials and administration status." },
+      { title: "Clinical documentation", text: "Therapy progress notes, appointments and re-assessments linked to each resident." },
+      { title: "Employee management", text: "Scheduling, timesheets, training records, leave requests and performance tracking for staff." },
+      { title: "Multi-facility administration", text: "Organisations, facilities and role-based access managed from a super-admin center." },
+      { title: "Forms, alerts and audit logs", text: "A custom form builder, notifications, mileage tracking, reporting and a full audit trail." },
     ],
-    results: [
-      { value: "-18%", label: "fuel cost after route optimization" },
-      { value: "2.5x", label: "vehicles managed per dispatcher" },
-      { value: "-40%", label: "unplanned vehicle downtime" },
-    ],
-    tech: ["react", "typescript", "golang", "postgresql", "aws", "docker", "kubernetes"],
+    tech: [],
     platforms: ["Web"],
-    duration: "24 weeks",
-    screen: {
-      title: "Fleet overview",
-      subtitle: "Dallas depot · 64 vehicles",
-      metric: { label: "On time today", value: "93%" },
-      rows: [
-        { name: "Truck 218", meta: "I-35 N · 58 mph", value: "On time" },
-        { name: "Truck 104", meta: "Idle 22 min", value: "Check" },
-        { name: "Van 37", meta: "Service due", value: "4 days" },
-      ],
-    },
+    gallery: [
+      "Resident care dashboard with census, appointments and form activity",
+      "Monthly medication administration record (sample resident data)",
+      "Super-admin center for organisations, facilities and roles",
+      "Employee information and onboarding forms",
+      "Staff training modules",
+      "Booking an appointment for a resident",
+    ],
   },
   {
-    slug: "learnloop-elearning-saas",
-    name: "LearnLoop",
-    client: "EdTech company, Canada",
+    slug: "stockflow-pro",
+    name: "StockFlow Pro",
+    client: "Multi-company retail and wholesale",
     category: "SaaS",
-    industry: "education",
+    industry: "ecommerce-retail",
     service: "saas-development",
-    year: "2025",
-    accent: "#F5B700",
+    accent: "#483ce4",
     summary:
-      "A white-label e-learning platform. Training companies use it to run their own branded academy with courses, live cohorts, quizzes and certificates.",
-    seoTitle: "LearnLoop: E-learning SaaS Platform Case Study",
+      "A multi-tenant inventory and point-of-sale platform that runs products, warehouses, purchasing, sales and analytics for several companies from one account.",
+    seoTitle: "StockFlow Pro: Inventory & POS SaaS Case Study",
     seoDescription:
-      "How Red Hive Digital built LearnLoop, a white-label e-learning SaaS with Next.js and Django for courses, live cohorts, assessments and certificates.",
+      "StockFlow Pro is a multi-company inventory and POS SaaS built with Next.js, TypeScript, Supabase and PostgreSQL: warehouses, purchase orders, sales and roles.",
     challenge: [
-      "The client works with training providers who were selling courses through a patchwork of video hosting, form builders and payment links. They wanted one platform that each provider could brand as its own academy.",
-      "Each academy needed its own domain, branding and pricing, while the client wanted a single codebase to maintain. Learners expected it to work well on a phone and to pick up where they left off on any device.",
+      "Businesses that run more than one company or store usually end up with a separate system for each, plus spreadsheets for stock transfers between warehouses. Owners couldn't see sales, stock and purchasing together, and staff had more access than they needed.",
+      "The product had to keep each company's data fully separate while letting one owner switch between them without logging in again.",
     ],
     solution: [
-      "The backend is a multi-tenant Django app with a REST API and an admin area designed for course creators. Requests are matched to a tenant by custom domain, and each academy sets its own theme, catalog and prices.",
-      "Learners use a Next.js app. Public course pages are statically generated so they load fast and rank in search, while lessons, quizzes and discussions sit behind login. Video streams through a CDN with signed URLs so it can't be hotlinked.",
+      "We built StockFlow Pro as a multi-tenant SaaS on Next.js and Supabase, with PostgreSQL row-level security keeping every company's data isolated. An owner creates a workspace, adds companies and switches between them from the header.",
+      "Inside each company the platform covers the full stock cycle: product catalog and categories, warehouses and transfers, purchase orders from suppliers, a point-of-sale checkout, invoices and returns. Custom roles decide exactly which screens each team member can use, and analytics and activity logs show what is happening across the business.",
     ],
     features: [
-      { title: "White-label academies", text: "Custom domain, logo, colors and email templates for each tenant." },
-      { title: "Course builder", text: "Drag-and-drop modules with video, text, downloads and embedded quizzes." },
-      { title: "Live cohorts", text: "Scheduled sessions with calendar invites and recordings attached afterwards." },
-      { title: "Assessments", text: "Quizzes, assignments and auto-graded tests with a pass mark set per course." },
-      { title: "Certificates", text: "Issued automatically on completion, with a public link anyone can verify." },
-      { title: "Payments and coupons", text: "One-off purchases, subscriptions, bundles and discount codes." },
+      { title: "Multi-company workspaces", text: "Separate inventories and teams per company, with one-click switching for owners." },
+      { title: "Inventory and warehouses", text: "Product catalog, categories, stock adjustments, multiple warehouses and stock transfers." },
+      { title: "Point of sale", text: "A fast checkout screen with cart, totals and printable invoices, plus sales returns." },
+      { title: "Purchasing", text: "Purchase orders, supplier access and invoice reviews tied to incoming stock." },
+      { title: "Custom roles", text: "Build roles from granular permissions such as products:read or sales:write and assign them per company." },
+      { title: "Analytics and audit logs", text: "Sales trends, inventory insights and an activity log of every change." },
     ],
-    results: [
-      { value: "<2 days", label: "to launch a new branded academy" },
-      { value: "+30%", label: "course completion with cohort reminders" },
-      { value: "95+", label: "Lighthouse score on public course pages" },
+    tech: ["nextjs", "react", "typescript", "supabase", "postgresql"],
+    platforms: ["Web"],
+    gallery: [
+      "Company overview with quick links to products, inventory, sales and logs",
+      "Point-of-sale checkout",
+      "Sales analytics",
+      "Custom role manager with granular permissions",
+      "Creating a purchase order",
+      "Adding a product with pricing and stock levels",
     ],
-    tech: ["nextjs", "typescript", "django", "python", "postgresql", "aws"],
-    platforms: ["Web", "Mobile web"],
-    duration: "20 weeks",
-    screen: {
-      title: "Welcome back, Priya",
-      subtitle: "Project Management Basics",
-      metric: { label: "Course progress", value: "68%" },
-      rows: [
-        { name: "Module 4: Risk logs", meta: "12 min video", value: "Resume" },
-        { name: "Quiz: Scheduling", meta: "10 questions", value: "Start" },
-        { name: "Live cohort call", meta: "Thu · 6:00 PM", value: "Join" },
-      ],
-    },
   },
   {
-    slug: "nestmind-ai-real-estate-assistant",
-    name: "Nestmind",
-    client: "Real estate brokerage, Australia",
+    slug: "chat-portal-ai",
+    name: "Chat Portal AI",
+    client: "Conversation intelligence SaaS",
     category: "AI",
-    industry: "real-estate",
+    industry: "Customer communication",
     service: "ai-development",
-    year: "2025",
-    accent: "#3DA9FC",
+    accent: "#6c48f0",
     summary:
-      "An AI assistant on a brokerage's website that answers buyer questions about listings, suggests homes that fit and books inspections, at any hour.",
-    seoTitle: "Nestmind: AI Real Estate Assistant Case Study",
+      "A real-time messaging platform that uses Claude to analyse finished conversations and turn them into structured reports with key points and recommended actions.",
+    seoTitle: "Chat Portal AI: Claude-Powered Chat Analysis Case Study",
     seoDescription:
-      "How Red Hive Digital built Nestmind, an AI real estate assistant using OpenAI, LangChain and Next.js to search listings, answer questions and book viewings.",
+      "Chat Portal AI combines real-time messaging with Claude AI analysis: automatic conversation reports, key points and next actions, secured with Supabase RLS.",
     challenge: [
-      "Agents at the brokerage spent hours a day answering the same questions about listings, suburbs and inspection times, often in the evening. Buyers who waited too long for a reply moved on to another agency.",
-      "A generic chatbot wouldn't do. Answers had to come from the brokerage's own listings and documents, it could never make up details about a property, and it had to hand the conversation to a real agent at the right point.",
+      "Teams that talk to customers or users all day have the information they need buried in chat history. Someone has to read every thread to pull out decisions, problems and follow-ups, and most of the time nobody does.",
+      "Conversations can contain sensitive details, so the platform needed proper authentication and strict per-user data access from the first version.",
     ],
     solution: [
-      "We built a retrieval-augmented assistant with LangChain and OpenAI models. Listings, strata reports and suburb guides are stored as embeddings in PostgreSQL with pgvector, and every answer cites the listing or document it came from.",
-      "Tool calls let the assistant filter listings by budget, suburb and features, check agent calendars and book inspections in the chat. The Next.js widget sits on the brokerage's website, and qualified leads go into the CRM with a short summary of the conversation.",
+      "We built a real-time chat workspace where admins and users message each other and share files. When a conversation is finished, an admin generates an analysis report with one click: Claude reads the thread and returns a structured summary of the main points, important details and recommended actions.",
+      "Authentication and data access run on Supabase with row-level security, so each user only ever sees their own conversations. Admins get a dashboard with users, active chats, message counts and the latest AI analyses.",
     ],
     features: [
-      { title: "Plain-language search", text: "Buyers describe what they want and get matching listings, each with a reason it fits." },
-      { title: "Sourced answers", text: "Replies come from listings and documents, and the source is shown under each answer." },
-      { title: "Inspection bookings", text: "The assistant checks agent availability and books inspections inside the chat." },
-      { title: "Lead qualification", text: "Budget, timeline and finance status are captured and scored automatically." },
-      { title: "CRM handoff", text: "Qualified leads arrive in the CRM with a chat summary for the agent." },
-      { title: "Guardrails and analytics", text: "Topic limits, personal data redaction and a report of the questions it couldn't answer." },
+      { title: "Real-time messaging", text: "Instant conversations with file attachments and organised chat history." },
+      { title: "Claude AI analysis", text: "One-click reports that summarise a conversation and list key points and next actions." },
+      { title: "Admin dashboard", text: "Users, active chats, messages and recent analyses at a glance." },
+      { title: "Conversation management", text: "Search and filter every conversation from a central list." },
+      { title: "Secure by default", text: "Supabase authentication with row-level security on every table." },
+      { title: "Responsive interface", text: "Works on desktop and mobile for both admins and users." },
     ],
-    results: [
-      { value: "24/7", label: "replies to buyer questions" },
-      { value: "-50%", label: "repeat questions reaching agents" },
-      { value: "+20%", label: "enquiries that became booked inspections" },
-    ],
-    tech: ["openai", "langchain", "nextjs", "python", "fastapi", "postgresql", "azure"],
+    tech: ["openai", "supabase"],
     platforms: ["Web"],
-    duration: "12 weeks",
-    screen: {
-      title: "Ask Nestmind",
-      subtitle: "3-bed near good schools, under $1.2M",
-      metric: { label: "Matches found", value: "14" },
-      rows: [
-        { name: "12 Wattle St, Ryde", meta: "3 bed · 2 bath", value: "$1.15M" },
-        { name: "4/88 Pittwater Rd", meta: "3 bed · 1 bath", value: "$985K" },
-        { name: "Inspection booked", meta: "Sat · 11:15 AM", value: "Done" },
-      ],
-    },
+    gallery: [
+      "Admin dashboard with recent conversations and analyses",
+      "Sign-in screen",
+      "Conversation list",
+      "A live conversation",
+      "Generating a Claude analysis report",
+    ],
+  },
+  {
+    slug: "raheel-tech-pm",
+    name: "Raheel Tech PM",
+    client: "Raheel Tech",
+    category: "SaaS",
+    industry: "Professional services",
+    service: "saas-development",
+    accent: "#7860e4",
+    summary:
+      "A project management and team productivity platform with workspaces, tasks, time tracking, employee analytics, subscriptions and an apps center.",
+    seoTitle: "Raheel Tech PM: Project Management SaaS Case Study",
+    seoDescription:
+      "Raheel Tech PM is a project management SaaS with workspaces, tasks and subtasks, time tracking, employee analytics, Stripe subscriptions and an add-ons center.",
+    challenge: [
+      "Growing teams tend to track projects in one tool, hours in another and team performance in spreadsheets, so managers can't see workload or progress without asking people directly. The brief was to bring all of that into one place.",
+      "The platform also had to work as a product other companies could subscribe to, which meant plans, billing and white-label branding from the first release.",
+    ],
+    solution: [
+      "We built a workspace-based platform where each project space holds tasks and subtasks with priorities, assignees, deadlines and several views. A built-in timer logs hours against each space, and dashboards show task status and time allocation in real time.",
+      "For running it as a business, the platform has tiered subscription plans with Stripe checkout, an apps center where workspaces switch extra modules on and off, and an admin area for roles, permissions and company branding.",
+    ],
+    features: [
+      { title: "Workspaces and tasks", text: "Projects, spaces, tasks and subtasks with priorities, assignments and deadlines." },
+      { title: "Time tracking", text: "A built-in timer and timesheets with time logged per space." },
+      { title: "Employee analytics", text: "Productivity and task completion per person and per team." },
+      { title: "Subscriptions and billing", text: "Free, Unlimited, Business Pro and Enterprise plans with Stripe checkout." },
+      { title: "Apps center", text: "Add-on modules that each workspace can enable or disable." },
+      { title: "Admin and branding", text: "Role-based permissions, employee directory and white-label colours and logo." },
+    ],
+    tech: [],
+    platforms: ["Web"],
+    gallery: [
+      "Workspace overview with task status and time allocation",
+      "Subscription plans",
+      "Apps center",
+      "Admin, roles and white-label branding",
+      "Time tracking and timesheets",
+      "Subscription checkout",
+    ],
+  },
+  {
+    slug: "spendshift",
+    name: "SpendShift",
+    client: "Personal finance startup, Australia",
+    category: "Web App",
+    industry: "fintech",
+    service: "web-application-development",
+    accent: "#009024",
+    summary:
+      "A two-minute spending audit for Australians that finds likely money leaks from a short questionnaire, with no bank connection required.",
+    seoTitle: "SpendShift: Personal Finance Audit Web App Case Study",
+    seoDescription:
+      "SpendShift is a personal finance web app that finds your biggest money leaks in about two minutes from a short quiz, without linking a bank account.",
+    challenge: [
+      "Most budgeting apps ask people to connect their bank on the first screen. Plenty of people won't, so they never find out where their money is going.",
+      "SpendShift wanted the opposite: a quick, private way to estimate savings that works without any account or banking data, and then a clear next step for people who want more help.",
+    ],
+    solution: [
+      "We designed and built a short, mobile-friendly audit. People answer simple questions about habits like takeaway, subscriptions and unplanned purchases, watch a short analysis step, and get an estimated yearly savings range with their top three money leaks.",
+      "The free result leads into a paid full report with a personalised action plan. Everything runs without a bank connection, and the landing page explains the privacy approach up front.",
+    ],
+    features: [
+      { title: "Two-minute audit", text: "A guided questionnaire with progress tracking that works well on phones." },
+      { title: "Money-leak estimate", text: "A yearly savings range and the top three categories where money is likely leaking." },
+      { title: "Analysis step", text: "A short, transparent analysis screen that shows what is being checked." },
+      { title: "Paid full report", text: "A personalised action plan unlocked after the free result." },
+      { title: "Private by design", text: "No sign-up, bank connection or payment details needed to get a result." },
+      { title: "Built for Australians", text: "Copy, categories and estimates based on Australian spending habits." },
+    ],
+    tech: [],
+    platforms: ["Web", "Mobile web"],
+    gallery: [
+      "Landing page",
+      "Free result with estimated yearly savings",
+      "Audit question",
+      "Analysing the answers",
+      "Upgrade to the full report",
+    ],
   },
 ];
 

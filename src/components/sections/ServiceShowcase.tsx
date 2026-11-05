@@ -10,21 +10,21 @@ const rows = [
     href: "/services/web-application-development",
     text: "Customer portals, internal tools, dashboards and marketplaces. Usually React and Next.js on the front, Node.js or Python behind it, Postgres underneath.",
     points: ["Discovery and UX", "Frontend and backend", "Admin panels", "Hosting and monitoring"],
-    shot: "routewise-fleet-platform",
+    shot: "sbh-ehr-portal",
   },
   {
     title: "Mobile apps",
     href: "/services/mobile-app-development",
     text: "iOS and Android apps from one Flutter or React Native codebase, or fully native in Swift and Kotlin when the product needs it. We handle store releases as well.",
     points: ["Cross-platform or native", "Offline and push", "Payments and maps", "App Store and Play Store"],
-    shot: "pulsecare-telehealth-app",
+    shot: "spendshift",
   },
   {
     title: "SaaS products",
     href: "/services/saas-development",
     text: "Multi-tenant platforms with sign-up, billing, roles and an admin panel, set up so you can take your first paying customers without a rewrite later.",
     points: ["Accounts and teams", "Stripe billing", "Usage analytics", "Security reviews"],
-    shot: "ledgerly-fintech-saas",
+    shot: "stockflow-pro",
   },
 ];
 

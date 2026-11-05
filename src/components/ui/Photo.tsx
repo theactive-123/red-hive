@@ -7,7 +7,7 @@ export default function Photo({
   className = "aspect-[4/3]",
   priority = false,
   sizes = "(min-width: 1024px) 50vw, 100vw",
-  drift = true,
+  drift = false,
   hoverZoom = false,
 }: {
   src: string;
@@ -21,7 +21,7 @@ export default function Photo({
   return (
     <div data-clip className={`relative overflow-hidden bg-card ${className}`}>
       <div data-clip-inner className="absolute inset-0">
-        <div data-parallax={drift ? "0.06" : undefined} className="absolute -inset-y-[8%] inset-x-0">
+        <div data-parallax={drift ? "0.06" : undefined} className={`absolute inset-x-0 ${drift ? "-inset-y-[8%]" : "inset-y-0"}`}>
           <Image
             src={src}
             alt={alt}

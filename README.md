@@ -30,10 +30,10 @@ Copy `.env.example` to `.env` (or set the variables in your hosting panel):
 | Services (11 pages) | `src/data/services.ts` |
 | Technologies (35 pages) | `src/data/technologies-1/2/3.ts` |
 | Industries (8 pages) | `src/data/industries.ts` |
-| Case studies (**placeholders** — replace with real projects) | `src/data/work.ts` |
+| Case studies (real projects) | `src/data/work.ts` |
 | Blog articles | `src/data/posts.ts` |
 | Testimonials | `src/data/testimonials.ts` |
-| Product mockups (**placeholders** for sample projects) | `public/images/work/` + `src/data/images.ts` |
+| Portfolio images: `<slug>-cover` (6:5), `<slug>-hero` (2:1), `<slug>-screen-N` gallery | `public/images/work/` + `src/data/images.ts` |
 | Process, engagement models, "why us" | `src/data/process.ts` |
 | Menus | `src/data/nav.ts` |
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PageHero from "@/components/sections/PageHero";
 import Photo from "@/components/ui/Photo";
+import Illustration from "@/components/illustrations/Illustration";
 import LayeredVisual from "@/components/ui/LayeredVisual";
 import { industryImages } from "@/data/images";
 import Button from "@/components/ui/Button";
@@ -33,7 +34,13 @@ export default function IndustriesPage() {
           {industries.map((ind, i) => (
             <li key={ind.slug} data-reveal className={i % 2 ? "md:mt-24" : ""}>
               <Link href={`/industries/${ind.slug}`} data-cursor="Explore" className="group block">
-                <Photo src={industryImages[ind.slug].src} alt={industryImages[ind.slug].alt} className="cut-tl aspect-[6/5] [--cut:36px]" hoverZoom />
+                {industryImages[ind.slug] ? (
+                  <Photo src={industryImages[ind.slug]!.src} alt={industryImages[ind.slug]!.alt} className="cut-tl aspect-[6/5] [--cut:36px]" hoverZoom />
+                ) : (
+                  <div className="cut-tl flex aspect-[6/5] items-center bg-card p-6 [--cut:36px] md:p-10">
+                    <Illustration name={ind.slug} className="h-auto w-full" />
+                  </div>
+                )}
                 <div className="mt-6 flex items-start justify-between gap-6">
                   <div>
                     <h2 className="display-sm transition-colors group-hover:text-red">{ind.name}</h2>

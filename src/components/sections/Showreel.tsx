@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { covers, studio } from "@/data/images";
+import { caseGallery, covers, studio } from "@/data/images";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
 /** A montage of product screens that grows to full width while you scroll past it. */
@@ -29,9 +29,9 @@ export default function Showreel() {
   }, []);
 
   const cols = [
-    [covers.pulsecare, studio.design, covers.routewise],
-    [covers.ledgerly, covers.wayfarer, studio.code],
-    [covers.dashly, studio.board, covers.nestmind],
+    [covers.sbh, caseGallery["stockflow-pro"][1], covers.chat],
+    [covers.stockflow, studio.design, covers.raheel],
+    [covers.spendshift, caseGallery["sbh-ehr-portal"][1], caseGallery["chat-portal-ai"][1]],
   ];
 
   return (
@@ -52,7 +52,7 @@ export default function Showreel() {
         <div data-reel-caption className="absolute bottom-8 left-0 right-0">
           <div className="wrap flex flex-wrap items-end justify-between gap-6">
             <p className="display-lg max-w-[14ch]">Screens from projects we’ve shipped.</p>
-            <p className="max-w-xs text-white/70">Telehealth, fintech, delivery, logistics, education and real estate. Designed and built in-house.</p>
+            <p className="max-w-xs text-white/70">Healthcare, retail, AI, project management and personal finance. Designed and built in-house.</p>
           </div>
         </div>
       </div>
