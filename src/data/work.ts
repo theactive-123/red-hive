@@ -6,7 +6,7 @@ export type CaseStudy = {
   name: string;
   /** Who it was built for, as it can be shown publicly. */
   client: string;
-  category: "Web App" | "Mobile App" | "SaaS" | "AI";
+  category: "Web App" | "SaaS" | "Mobile App";
   /** Industry slug from industries.ts, or a plain label when no industry page fits. */
   industry: string;
   /** Service slug from services.ts */
@@ -111,7 +111,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "chat-portal-ai",
     name: "Chat Portal AI",
     client: "Conversation intelligence SaaS",
-    category: "AI",
+    category: "SaaS",
     industry: "Customer communication",
     service: "ai-development",
     accent: "#6c48f0",

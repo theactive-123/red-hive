@@ -1,5 +1,6 @@
 import PageHero from "@/components/sections/PageHero";
 import ProjectCard from "@/components/sections/ProjectCard";
+import WorkFilter from "@/components/sections/WorkFilter";
 import { caseStudies } from "@/data/work";
 import { pageMetadata } from "@/lib/seo";
 
@@ -12,15 +13,13 @@ export const metadata = pageMetadata({
 export default function WorkPage() {
   return (
     <>
-      <PageHero crumbs={[{ name: "Work", path: "/work" }]} title="Our work" text="A selection of web apps, mobile apps and SaaS platforms we’ve designed and built, from telehealth to fleet management." />
+      <PageHero crumbs={[{ name: "Work", path: "/work" }]} title="Our work" text="Web applications and SaaS platforms we’ve designed and built, from a behavioural health EHR to inventory, AI chat and personal finance." />
       <section className="wrap pb-32">
-        <div className="grid gap-x-10 gap-y-20 md:grid-cols-2">
-          {caseStudies.map((p, i) => (
-            <div key={p.slug} className={i % 2 ? "md:mt-32" : ""}>
-              <ProjectCard p={p} aspect="aspect-[6/5]" />
-            </div>
+        <WorkFilter categories={caseStudies.map((c) => c.category)}>
+          {caseStudies.map((p) => (
+            <ProjectCard key={p.slug} p={p} aspect="aspect-[6/5]" />
           ))}
-        </div>
+        </WorkFilter>
       </section>
     </>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Photo from "@/components/ui/Photo";
+import Illustration from "@/components/illustrations/Illustration";
 import { caseImages } from "@/data/images";
 import { ArrowLink } from "@/components/ui/Button";
 import { getCase } from "@/data/work";
@@ -17,7 +18,7 @@ const rows = [
     href: "/services/mobile-app-development",
     text: "iOS and Android apps from one Flutter or React Native codebase, or fully native in Swift and Kotlin when the product needs it. We handle store releases as well.",
     points: ["Cross-platform or native", "Offline and push", "Payments and maps", "App Store and Play Store"],
-    shot: "spendshift",
+    shot: "",
   },
   {
     title: "SaaS products",
@@ -55,7 +56,13 @@ export default function ServiceShowcase() {
               </p>
             </div>
             <Link href={shot ? `/work/${shot.slug}` : r.href} data-cursor="View" className={`group block md:col-span-7 ${i % 2 ? "md:order-1" : ""}`}>
-              {shot && <Photo src={caseImages[shot.slug].src} alt={caseImages[shot.slug].alt} className="cut-tl aspect-[6/5] [--cut:40px]" hoverZoom drift={false} sizes="(min-width: 768px) 58vw, 100vw" />}
+              {shot ? (
+                <Photo src={caseImages[shot.slug].src} alt={caseImages[shot.slug].alt} className="cut-tl aspect-[6/5] [--cut:40px]" hoverZoom drift={false} sizes="(min-width: 768px) 58vw, 100vw" />
+              ) : (
+                <div className="cut-tl flex aspect-[6/5] items-center bg-card p-8 [--cut:40px] md:p-12">
+                  <Illustration name="mobile-app-development" className="h-auto w-full" />
+                </div>
+              )}
               {shot && <p className="mt-3 text-sm text-muted">{shot.name}, {shot.client}</p>}
             </Link>
           </div>
