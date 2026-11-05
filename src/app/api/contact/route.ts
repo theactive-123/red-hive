@@ -21,6 +21,14 @@ export async function POST(req: Request) {
   const company = clean(body.company, 160);
   const budget = clean(body.budget, 60);
   const message = clean(body.message, 5000);
+  const extra: [string, string][] =
+    body.extra && typeof body.extra === "object"
+      ? Object.entries(body.extra as Record<string, unknown>)
+          .slice(0, 12)
+          .map(([k, v]) => [clean(k, 40), clean(v, 300)] as [string, string])
+          .filter(([k, v]) => k && v)
+      : [];
+  const source = clean(body.source, 40);
   const services = Array.isArray(body.services) ? body.services.map((s) => clean(s, 80)).filter(Boolean).slice(0, 12) : [];
 
   if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -43,6 +51,7 @@ export async function POST(req: Request) {
     ["Company", company],
     ["Services", services.join(", ")],
     ["Budget", budget],
+    ...extra,
   ];
   const text = rows.map(([k, v]) => `${k}: ${v || "-"}`).join("\n") + `\n\n${message}`;
   const html =
@@ -54,7 +63,7 @@ export async function POST(req: Request) {
       from: `"${site.name} Website" <${SMTP_USER}>`,
       to: CONTACT_TO || site.email,
       replyTo: `"${name.replace(/"/g, "")}" <${email}>`,
-      subject: `New project inquiry — ${name}${company ? ` (${company})` : ""}`,
+      subject: `${source === "government" ? "Government inquiry" : "New project inquiry"} — ${name}${company ? ` (${company})` : ""}`,
       text,
       html,
     });

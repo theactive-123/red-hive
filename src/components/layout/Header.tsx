@@ -20,6 +20,7 @@ const links = [
   { key: null, label: "Work", href: "/work" },
   { key: null, label: "About", href: "/about" },
   { key: null, label: "Insights", href: "/insights" },
+  { key: null, label: "Government", href: "/government-contracts" },
 ];
 
 export default function Header() {
@@ -135,8 +136,8 @@ export default function Header() {
               <Image src={onDark ? "/logo.png" : "/logo-dark.png"} alt={site.name} width={257} height={58} priority className="h-9 w-auto md:h-10" />
             </Link>
 
-            <nav aria-label="Primary" className="hidden lg:block">
-              <ul className="flex items-center gap-1">
+            <nav aria-label="Primary" className="hidden xl:block">
+              <ul className="flex items-center gap-0 xl:gap-1">
                 {links.map((l) => {
                   const on = active(l.href) || (l.key && open === l.key);
                   return (
@@ -145,8 +146,9 @@ export default function Header() {
                         href={l.href}
                         onFocus={() => enter(l.key)}
                         aria-expanded={l.key ? open === l.key : undefined}
-                        className={`relative flex items-center gap-1.5 px-3.5 py-2 text-[0.95rem] font-medium transition-colors ${on ? "text-red" : "hover:text-red"}`}
+                        className={`relative flex items-center gap-1.5 px-2.5 py-2 text-[0.93rem] xl:px-3.5 xl:text-[0.95rem] font-medium transition-colors ${on ? "text-red" : "hover:text-red"}`}
                       >
+                        {l.label === "Government" && <span className="mr-0.5 inline-block h-1.5 w-1.5 rounded-full bg-red" aria-hidden />}
                         {l.label}
                         {l.key && (
                           <svg viewBox="0 0 10 10" className={`h-2 w-2 transition-transform duration-300 ${open === l.key ? "rotate-180" : ""}`} aria-hidden>
@@ -161,13 +163,13 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-4">
-              <a href={site.phones[0].href} className="hidden text-sm font-medium transition-colors hover:text-red xl:block">
+              <a href={site.phones[0].href} className="hidden text-sm font-medium transition-colors hover:text-red 2xl:block">
                 {site.phones[0].display}
               </a>
               <Magnetic strength={0.25} className="hidden sm:inline-block">
                 <Link
                   href="/contact"
-                  className="cut group relative inline-flex h-11 items-center overflow-hidden bg-red px-5 text-sm font-semibold text-white [--cut:10px]"
+                  className="cut group relative inline-flex h-11 items-center overflow-hidden whitespace-nowrap bg-red px-5 text-sm font-semibold text-white [--cut:10px]"
                 >
                   <span className="absolute inset-0 -translate-x-[101%] bg-fg transition-transform duration-500 ease-out-expo group-hover:translate-x-0" />
                   <span className="relative transition-colors duration-300 group-hover:text-bg">Start a project</span>
@@ -178,7 +180,7 @@ export default function Header() {
                 onClick={() => setMobile((m) => !m)}
                 aria-label={mobile ? "Close menu" : "Open menu"}
                 aria-expanded={mobile}
-                className="relative z-10 grid h-11 w-11 place-items-center bg-fg text-bg lg:hidden"
+                className="relative z-10 grid h-11 w-11 place-items-center bg-fg text-bg xl:hidden"
               >
                 <span className={`absolute h-[1.5px] w-5 bg-current transition-transform duration-500 ${mobile ? "rotate-45" : "-translate-y-[4px]"}`} />
                 <span className={`absolute h-[1.5px] w-5 bg-current transition-transform duration-500 ${mobile ? "-rotate-45" : "translate-y-[4px]"}`} />
@@ -189,7 +191,7 @@ export default function Header() {
           {/* Mega menu */}
           <div
             onMouseEnter={() => open && enter(open)}
-            className={`hidden overflow-hidden transition-[max-height] duration-700 ease-out-expo lg:block ${open ? "max-h-[560px]" : "max-h-0"}`}
+            className={`hidden overflow-hidden transition-[max-height] duration-700 ease-out-expo xl:block ${open ? "max-h-[560px]" : "max-h-0"}`}
           >
             <div className={`wrap grid grid-cols-12 gap-10 pb-10 pt-6 transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}>
               {open === "services" && (
@@ -260,7 +262,7 @@ export default function Header() {
         ref={mobileRef}
         data-lenis-prevent
         aria-hidden={!mobile}
-        className={`theme-dark fixed inset-0 z-40 overflow-y-auto transition-[clip-path] duration-[900ms] ease-in-out-quart lg:hidden ${
+        className={`theme-dark fixed inset-0 z-40 overflow-y-auto transition-[clip-path] duration-[900ms] ease-in-out-quart xl:hidden ${
           mobile ? "[clip-path:inset(0_0_0_0)]" : "pointer-events-none [clip-path:inset(0_0_100%_0)]"
         }`}
       >

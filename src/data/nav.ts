@@ -39,6 +39,7 @@ export const navCompany = [
   ["/process", "How we work"],
   ["/work", "Case studies"],
   ["/work/mobile-apps", "Mobile app portfolio"],
+  ["/government-contracts", "Government contracts"],
   ["/insights", "Insights"],
   ["/careers", "Careers"],
   ["/contact", "Contact"],

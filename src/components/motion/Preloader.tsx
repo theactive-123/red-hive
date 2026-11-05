@@ -69,26 +69,20 @@ export default function Preloader() {
     let cancelled = false;
     ready.then(async () => {
       if (cancelled) return;
-      await tl.to(p, { v: 100, duration: 0.55, ease: "power2.out", onUpdate: render });
-      await gsap.delayedCall(0.25, () => {});
+      await tl.to(p, { v: 100, duration: 0.6, ease: "power2.out", onUpdate: render });
       if (cancelled) return;
-      gsap.to("[data-pl-in]", { yPercent: -110, duration: 0.6, ease: "expo.in", stagger: 0.03 });
-      gsap.to("[data-pl-bar]", { opacity: 0, duration: 0.3 });
-      const dive = api.current ? api.current.exit() : Promise.resolve();
-      gsap.to("[data-pl-flood]", { opacity: 1, duration: 0.45, ease: "power2.in", delay: api.current ? 0.65 : 0.1 });
-      await Promise.all([dive, new Promise((r) => setTimeout(r, 1100))]);
-      if (cancelled) return;
-      gsap.set("[data-pl-stage]", { display: "none" });
-      finish();
-      gsap.to("[data-pl-flood]", {
-        clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)",
-        duration: 1.05,
-        ease: "expo.inOut",
-        onComplete: () => {
+      // One clean exit: content eases out, the hive recedes, the panel lifts along the logo angle.
+      const out = gsap.timeline({ delay: 0.2 });
+      out
+        .to("[data-pl-in]", { yPercent: -110, duration: 0.6, ease: "power3.in", stagger: 0.03 })
+        .to("[data-pl-scene]", { scale: 0.85, opacity: 0, duration: 0.7, ease: "power2.in" }, 0)
+        .to("[data-pl-bar]", { opacity: 0, duration: 0.3 }, 0)
+        .add(finish, 0.55)
+        .to(el, { clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)", duration: 1, ease: "expo.inOut" }, 0.5)
+        .add(() => {
           gsap.set(el, { display: "none" });
           setShowScene(false); // unmount three.js so nothing keeps rendering
-        },
-      });
+        });
     });
 
     // Never leave the page covered.
@@ -108,9 +102,11 @@ export default function Preloader() {
   }, []);
 
   return (
-    <div ref={root} className="rh-preloader fixed inset-0 z-[400]" aria-hidden>
-      <div data-pl-stage className="absolute inset-0 bg-navy text-white">
-        {showScene && <PreloaderScene progress={progress} apiRef={api} className="absolute inset-0" />}
+    <div ref={root} className="rh-preloader fixed inset-0 z-[400] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)]" aria-hidden>
+      <div className="absolute inset-0 bg-navy text-white">
+        <div data-pl-scene className="absolute inset-0">
+          {showScene && <PreloaderScene progress={progress} apiRef={api} className="absolute inset-0" />}
+        </div>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,2,10,0.75)_100%)]" />
 
         <div className="wrap relative flex h-full flex-col justify-between py-8 md:py-10">
@@ -150,11 +146,7 @@ export default function Preloader() {
         </div>
       </div>
 
-      {/* Red flood that the camera dives into, then lifts away along the logo's angle */}
-      <div
-        data-pl-flood
-        className="absolute inset-0 bg-red opacity-0 [clip-path:polygon(0_0,100%_0,100%_100%,0_calc(100%-8vw))]"
-      />
+
     </div>
   );
 }

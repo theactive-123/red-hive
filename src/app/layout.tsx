@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import Motion from "@/components/motion/Motion";
 import Cursor from "@/components/motion/Cursor";
 import Preloader from "@/components/motion/Preloader";
+import PageShell from "@/components/motion/PageShell";
 import JsonLd from "@/components/seo/JsonLd";
 import { organizationLd, websiteLd } from "@/lib/seo";
 import { site } from "@/data/site";
@@ -62,7 +63,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <JsonLd data={[organizationLd(), websiteLd()]} />
         <SmoothScroll>
           <Header />
-          <main id="main">{children}</main>
+          <main id="main">
+            <PageShell>{children}</PageShell>
+          </main>
           <Footer />
         </SmoothScroll>
         <Motion />

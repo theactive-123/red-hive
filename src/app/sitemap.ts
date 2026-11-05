@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/process", 0.6),
     entry("/careers", 0.5),
     entry("/contact", 0.8),
+    entry("/government-contracts", 0.9, "weekly"),
     ...services.map((s) => entry(`/services/${s.slug}`, 0.9)),
     ...technologies.map((t) => entry(`/technologies/${t.slug}`, 0.8)),
     ...industries.map((i) => entry(`/industries/${i.slug}`, 0.7)),
