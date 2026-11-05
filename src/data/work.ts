@@ -28,6 +28,46 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "videeo",
+    name: "Videeo",
+    client: "Video streaming startup",
+    category: "Mobile App",
+    industry: "Media & entertainment",
+    service: "mobile-app-development",
+    accent: "#70e000",
+    summary:
+      "A streaming and pay-per-view platform: an Android app for viewers, a web portal where creators upload and earn, and an admin panel that runs it all.",
+    seoTitle: "Videeo: Streaming & Pay-Per-View App Case Study",
+    seoDescription:
+      "Videeo is a streaming and pay-per-view platform with an Android viewer app, a content creator portal for uploads and earnings, and a full admin panel.",
+    challenge: [
+      "Independent creators and event organisers want to sell their videos and live events directly, without handing most of the revenue to a large platform. Viewers, on the other hand, expect the polish of the big streaming apps.",
+      "That meant three products in one: a viewer app people enjoy using, a portal where creators can publish and get paid, and an admin side that keeps content, payments and users under control.",
+    ],
+    solution: [
+      "We designed an Android app around a dark, cinematic interface with neon green accents. Viewers browse TV shows, movies and channels, continue where they left off, rent or buy titles, and join live pay-per-view events such as sports, online classes and live shopping. Subscriptions, downloads and a friends list round it out.",
+      "Creators get a web portal to submit titles, set prices, follow views and track earnings by region. The admin panel covers users, creators, channels, categories, video moderation and approval, coupons, packages, payment reports and push notifications.",
+    ],
+    features: [
+      { title: "Streaming and rentals", text: "TV shows, movies and channels with trailers, episodes, ratings and rent-or-buy options." },
+      { title: "Live pay-per-view", text: "Ticketed live events for sports, education, live shopping and online classes." },
+      { title: "Subscriptions", text: "Monthly plans with device and quality limits, plus one-off purchases." },
+      { title: "Social and sign-in", text: "Friends, requests and sharing, with sign-in by email, OTP, Google, Facebook or Apple." },
+      { title: "Creator portal", text: "Uploads, pricing, analytics and earnings by region for content creators." },
+      { title: "Admin panel", text: "Content approval, user and creator management, coupons, packages, payments and push notifications." },
+    ],
+    tech: [],
+    platforms: ["Android", "Web"],
+    gallery: [
+      "Home, title page and live pay-per-view events",
+      "Movies, theater and subscription plans",
+      "Sign in, friends and creator content",
+      "Creator portal: earnings dashboard",
+      "Admin panel: video management",
+      "Admin panel: content approval",
+    ],
+  },
+  {
     slug: "sbh-ehr-portal",
     name: "SBH EHR Portal",
     client: "SBH, behavioral health",
@@ -68,6 +108,47 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
   {
+    slug: "printgraphi",
+    name: "Printgraphi",
+    client: "Online printing marketplace",
+    category: "Mobile App",
+    industry: "ecommerce-retail",
+    service: "mobile-app-development",
+    accent: "#1e8ccb",
+    summary:
+      "A custom-printing marketplace: customers order and design prints on the web, and print shops pick up, manage and deliver those jobs from a seller mobile app.",
+    seoTitle: "Printgraphi: Print Marketplace App Case Study",
+    seoDescription:
+      "Printgraphi is a printing marketplace with a customer web store and template editor, and an Android seller app where print shops accept and manage orders.",
+    challenge: [
+      "Ordering custom printing online usually means a long form, a file upload and a lot of back and forth. On the other side, independent print shops have no simple way to find work and manage it from the shop floor.",
+      "The marketplace had to make ordering easy for customers and give sellers a fast, phone-first tool for taking jobs, without either side needing training.",
+    ],
+    solution: [
+      "Customers shop by product (business cards, banners, clothing, booklets and more), choose options like paper stock, finish and corners, then upload their own design or customise a template in the built-in editor before checkout. Their account keeps a dashboard, order history with one-click re-order and saved payment methods.",
+      "Print shops use an Android app. New jobs arrive in an order pool where sellers see the specification and accept or reject in one tap, then move them through ongoing and completed. The app also covers earnings, reviews, notifications, supply requests for boxes and tape, and subscriptions.",
+    ],
+    features: [
+      { title: "Order pool", text: "Sellers see nearby jobs with full print specs and accept or reject them in one tap." },
+      { title: "Order management", text: "Ongoing and completed orders with status, details and shipping information." },
+      { title: "Seller dashboard", text: "Earnings, live orders, a performance chart and the latest reviews at a glance." },
+      { title: "Template editor", text: "Customers pick a template by industry and texture, then customise it in the browser." },
+      { title: "Customer accounts", text: "Dashboard, order history with re-order, and saved payment methods." },
+      { title: "Supplies and reviews", text: "Request packaging supplies and track feedback stats from customers." },
+    ],
+    tech: [],
+    platforms: ["Android", "Web"],
+    gallery: [
+      "Seller app: dashboard, order pool and order details",
+      "Seller app: ongoing orders, review stats and notifications",
+      "Seller app: supplies, profile and sign in",
+      "Customer dashboard",
+      "Template editor",
+      "Order history",
+      "Cart",
+    ],
+  },
+  {
     slug: "stockflow-pro",
     name: "StockFlow Pro",
     client: "Multi-company retail and wholesale",
@@ -105,6 +186,47 @@ export const caseStudies: CaseStudy[] = [
       "Custom role manager with granular permissions",
       "Creating a purchase order",
       "Adding a product with pricing and stock levels",
+    ],
+  },
+  {
+    slug: "flubr",
+    name: "Flubr",
+    client: "Influencer marketing startup, Pakistan",
+    category: "Web App",
+    industry: "Marketing",
+    service: "web-application-development",
+    accent: "#6c33ff",
+    summary:
+      "An influencer marketing platform where brands post campaigns, micro-influencers bid on them, and both sides manage the work, chat and payments in one place.",
+    seoTitle: "Flubr: Influencer Marketing Platform Case Study",
+    seoDescription:
+      "Flubr is an influencer marketing web app: brands launch campaigns, influencers bid and build profiles, and admins manage escrow, payouts and disputes.",
+    challenge: [
+      "Brands want to work with smaller, local influencers, but finding them, agreeing a price and getting paid safely is mostly done over DMs and spreadsheets.",
+      "The platform needed two clear experiences, one for brands and one for influencers, plus an admin side that can hold payments in escrow and step in when something goes wrong.",
+    ],
+    solution: [
+      "Brands create campaigns, review bids and proposals, hire influencers and chat with them, with spending and campaign analytics on their dashboard. Influencers build a profile with their social accounts, skills and portfolio, browse campaigns and brands, place bids and track earnings and jobs.",
+      "Admins manage users, oversee campaigns, handle finances (escrow, payouts and refunds) and resolve disputes, with moderation and settings in the same panel.",
+    ],
+    features: [
+      { title: "Campaign marketplace", text: "Brands post campaigns with budget, category and type; influencers filter and bid." },
+      { title: "Bid management", text: "Brands compare proposals and hire the right influencer for each campaign." },
+      { title: "Brand dashboard", text: "Campaign analytics, spending and hiring in one view." },
+      { title: "Influencer profiles", text: "Social accounts, skills, experience and portfolio, set up in guided steps." },
+      { title: "Chat", text: "Built-in messaging between brands and influencers for each job." },
+      { title: "Admin and escrow", text: "Payouts, refunds, disputes and moderation managed by the platform team." },
+    ],
+    tech: [],
+    platforms: ["Web"],
+    gallery: [
+      "Brand dashboard",
+      "Campaign marketplace",
+      "Influencer dashboard",
+      "Bid management",
+      "Chat",
+      "Admin dashboard",
+      "Admin finances",
     ],
   },
   {

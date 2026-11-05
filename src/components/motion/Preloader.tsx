@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import type { PreloaderSceneApi } from "@/components/three/PreloaderScene";
 
@@ -20,10 +20,14 @@ export default function Preloader() {
   const bar = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
   const api = useRef<PreloaderSceneApi | null>(null);
+  const [showScene, setShowScene] = useState(true);
 
   useEffect(() => {
     const el = root.current;
-    if (!el || window.__rhIntroDone !== false) return;
+    if (!el || window.__rhIntroDone !== false) {
+      requestAnimationFrame(() => setShowScene(false)); // repeat visit: never start the 3D scene
+      return;
+    }
     const html = document.documentElement;
     const finish = () => {
       html.classList.remove("is-loading");
@@ -36,6 +40,7 @@ export default function Preloader() {
     };
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
       finish();
+      requestAnimationFrame(() => setShowScene(false));
       return;
     }
 
@@ -79,7 +84,10 @@ export default function Preloader() {
         clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)",
         duration: 1.05,
         ease: "expo.inOut",
-        onComplete: () => void gsap.set(el, { display: "none" }),
+        onComplete: () => {
+          gsap.set(el, { display: "none" });
+          setShowScene(false); // unmount three.js so nothing keeps rendering
+        },
       });
     });
 
@@ -88,6 +96,7 @@ export default function Preloader() {
       if (window.__rhIntroDone === false) {
         finish();
         el.style.display = "none";
+        setShowScene(false);
       }
     }, 9000);
 
@@ -101,7 +110,7 @@ export default function Preloader() {
   return (
     <div ref={root} className="rh-preloader fixed inset-0 z-[400]" aria-hidden>
       <div data-pl-stage className="absolute inset-0 bg-navy text-white">
-        <PreloaderScene progress={progress} apiRef={api} className="absolute inset-0" />
+        {showScene && <PreloaderScene progress={progress} apiRef={api} className="absolute inset-0" />}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,2,10,0.75)_100%)]" />
 
         <div className="wrap relative flex h-full flex-col justify-between py-8 md:py-10">

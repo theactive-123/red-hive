@@ -18,7 +18,7 @@ const rows = [
     href: "/services/mobile-app-development",
     text: "iOS and Android apps from one Flutter or React Native codebase, or fully native in Swift and Kotlin when the product needs it. We handle store releases as well.",
     points: ["Cross-platform or native", "Offline and push", "Payments and maps", "App Store and Play Store"],
-    shot: "",
+    shot: "videeo",
   },
   {
     title: "SaaS products",

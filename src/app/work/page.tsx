@@ -13,7 +13,7 @@ export const metadata = pageMetadata({
 export default function WorkPage() {
   return (
     <>
-      <PageHero crumbs={[{ name: "Work", path: "/work" }]} title="Our work" text="Web applications and SaaS platforms we’ve designed and built, from a behavioural health EHR to inventory, AI chat and personal finance." />
+      <PageHero crumbs={[{ name: "Work", path: "/work" }]} title="Our work" text="Mobile apps, web applications and SaaS platforms we’ve designed and built, from a streaming app and a print marketplace to a behavioural health EHR." />
       <section className="wrap pb-32">
         <WorkFilter categories={caseStudies.map((c) => c.category)}>
           {caseStudies.map((p) => (

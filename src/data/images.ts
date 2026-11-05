@@ -17,6 +17,9 @@ export const covers = {
   chat: caseImages["chat-portal-ai"],
   raheel: caseImages["raheel-tech-pm"],
   spendshift: caseImages["spendshift"],
+  videeo: caseImages["videeo"],
+  printgraphi: caseImages["printgraphi"],
+  flubr: caseImages["flubr"],
 };
 
 export const studio = {
@@ -29,13 +32,15 @@ export const studio = {
 export const industryImages: Partial<Record<string, Img>> = {
   healthcare: covers.sbh,
   fintech: covers.spendshift,
-  "ecommerce-retail": covers.stockflow,
+  "ecommerce-retail": covers.printgraphi,
+  "on-demand": covers.printgraphi,
   logistics: covers.stockflow,
 };
 
 /** Services without a matching project fall back to their illustration. */
 export const serviceImages: Partial<Record<string, Img>> = {
-  "web-application-development": covers.sbh,
+  "web-application-development": covers.flubr,
+  "mobile-app-development": covers.videeo,
   "saas-development": covers.stockflow,
   "ui-ux-design": studio.design,
   "mvp-development": covers.spendshift,
@@ -51,5 +56,5 @@ export const postImages: Partial<Record<string, Img>> = {
   "adding-ai-to-your-app": covers.chat,
   "nextjs-for-saas": covers.stockflow,
   "saas-mvp-cost": covers.raheel,
-  "flutter-vs-react-native": studio.design,
+  "flutter-vs-react-native": covers.videeo,
 };

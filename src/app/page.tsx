@@ -72,7 +72,7 @@ export default function Home() {
 
       <section className="theme-dark py-28 md:py-40">
         <div className="wrap">
-          <SectionHead title="Recent work" text="Products we’ve designed and built for healthcare, retail, AI and finance teams." link={{ href: "/work", label: "All case studies" }} className="mb-16" />
+          <SectionHead title="Recent work" text="Mobile apps, web apps and SaaS we’ve designed and built for media, retail, healthcare and finance teams." link={{ href: "/work", label: "All case studies" }} className="mb-16" />
           <ProjectCard p={lead} aspect="aspect-[6/5] md:aspect-[2/1]" large />
           <div className="mt-20 grid gap-x-10 gap-y-20 md:grid-cols-12">
             <div className="md:col-span-7">
