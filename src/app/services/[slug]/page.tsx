@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import PageHero from "@/components/sections/PageHero";
 import { Checklist, Intro, TechRow, VisualCards } from "@/components/sections/Blocks";
 import StickyStory from "@/components/sections/StickyStory";
+import MobileShowcase from "@/components/sections/MobileShowcase";
 import ProcessScroller from "@/components/sections/ProcessScroller";
 import ProjectCard from "@/components/sections/ProjectCard";
 import FAQ from "@/components/sections/FAQ";
@@ -98,6 +99,8 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           )}
         </div>
       </section>
+
+      {s.slug === "mobile-app-development" && <MobileShowcase title="Apps we’ve shipped" />}
 
       <ProcessScroller />
 

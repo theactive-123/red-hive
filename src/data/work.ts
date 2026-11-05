@@ -24,6 +24,8 @@ export type CaseStudy = {
   duration?: string;
   /** Captions for the gallery screens, in the order of public/images/work/<slug>-screen-N.webp */
   gallery: string[];
+  /** Mobile apps only: captions for public/images/work/screens/<slug>-N.webp (single phone screens). */
+  phones?: string[];
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -66,6 +68,7 @@ export const caseStudies: CaseStudy[] = [
       "Admin panel: video management",
       "Admin panel: content approval",
     ],
+    phones: ["Home", "Title page", "Live pay-per-view", "Movies", "Theater", "Subscription plan", "Friends", "Sign in"],
   },
   {
     slug: "sbh-ehr-portal",
@@ -147,6 +150,7 @@ export const caseStudies: CaseStudy[] = [
       "Order history",
       "Cart",
     ],
+    phones: ["Seller dashboard", "Order pool", "Order details", "Ongoing orders", "Review stats", "Notifications", "Request supplies", "Seller profile"],
   },
   {
     slug: "stockflow-pro",

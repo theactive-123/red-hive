@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/sections/Breadcrumbs";
 import { Prose, Split, TechRow } from "@/components/sections/Blocks";
+import { PhoneGallery } from "@/components/sections/WorkCategory";
 import StickyStory from "@/components/sections/StickyStory";
 import Photo from "@/components/ui/Photo";
 import { caseGallery, caseHeroes, caseImages } from "@/data/images";
@@ -72,6 +73,17 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
       <Split title="What we built" className="!pt-0">
         <Prose paragraphs={c.solution} />
       </Split>
+
+      {c.phones?.length ? (
+        <section className="theme-light bg-card py-20 md:py-28">
+          <div className="wrap">
+            <h2 data-split className="display-md mb-16">
+              The app, screen by screen
+            </h2>
+            <PhoneGallery c={c} />
+          </div>
+        </section>
+      ) : null}
 
       {gallery.length > 0 && (
         <section className="wrap py-16 md:py-24">

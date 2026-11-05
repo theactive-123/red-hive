@@ -1,6 +1,8 @@
 import PageHero from "@/components/sections/PageHero";
 import ProjectCard from "@/components/sections/ProjectCard";
 import WorkFilter from "@/components/sections/WorkFilter";
+import MobileShowcase from "@/components/sections/MobileShowcase";
+import { CategoryTabs } from "@/components/sections/WorkCategory";
 import { caseStudies } from "@/data/work";
 import { pageMetadata } from "@/lib/seo";
 
@@ -14,7 +16,11 @@ export default function WorkPage() {
   return (
     <>
       <PageHero crumbs={[{ name: "Work", path: "/work" }]} title="Our work" text="Mobile apps, web applications and SaaS platforms we’ve designed and built, from a streaming app and a print marketplace to a behavioural health EHR." />
-      <section className="wrap pb-32">
+      <div className="wrap -mt-8 mb-16">
+        <CategoryTabs active="/work" />
+      </div>
+      <MobileShowcase />
+      <section className="wrap pb-32 pt-24">
         <WorkFilter categories={caseStudies.map((c) => c.category)}>
           {caseStudies.map((p) => (
             <ProjectCard key={p.slug} p={p} aspect="aspect-[6/5]" />

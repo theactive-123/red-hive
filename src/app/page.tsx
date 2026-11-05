@@ -2,6 +2,7 @@ import HomeHero from "@/components/sections/HomeHero";
 import ServiceShowcase from "@/components/sections/ServiceShowcase";
 import ProjectCard from "@/components/sections/ProjectCard";
 import TechIndex from "@/components/sections/TechIndex";
+import MobileShowcase from "@/components/sections/MobileShowcase";
 import ProcessScroller from "@/components/sections/ProcessScroller";
 import Showreel from "@/components/sections/Showreel";
 import IndustriesList from "@/components/sections/IndustriesList";
@@ -84,6 +85,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <MobileShowcase />
 
       <section className="wrap py-28 md:py-36">
         <div className="grid gap-10 md:grid-cols-12">
