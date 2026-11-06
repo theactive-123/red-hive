@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/sections/Breadcrumbs";
 import InsightsList from "@/components/sections/InsightsList";
 import TechIcon from "@/components/ui/TechIcon";
 import JsonLd from "@/components/seo/JsonLd";
-import { posts, type Block } from "@/data/posts";
+import { authors, posts, type Block } from "@/data/posts";
 import { getTechs } from "@/data/technologies";
 import { services } from "@/data/services";
 import { pageMetadata } from "@/lib/seo";
@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/insights/[slug]">
   return { ...base, openGraph: { ...base.openGraph, type: "article", publishedTime: p.date } };
 }
 
+const authorOf = (k?: string) => (k ? authors[k] : undefined);
 const fmt = (d: string) => new Date(d + "T00:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
 
 function renderBlock(b: Block, i: number) {
@@ -92,7 +93,9 @@ export default async function PostPage({ params }: PageProps<"/insights/[slug]">
           dateModified: p.date,
           mainEntityOfPage: `${site.url}/insights/${p.slug}`,
           image: `${site.url}/og.png`,
-          author: { "@type": "Organization", name: site.name, url: site.url },
+          author: authorOf(p.author)
+            ? { "@type": "Person", name: authorOf(p.author)!.name, jobTitle: authorOf(p.author)!.role, ...(authorOf(p.author)!.url ? { url: authorOf(p.author)!.url } : {}) }
+            : { "@type": "Organization", name: site.name, url: site.url },
           publisher: { "@type": "Organization", name: site.name, logo: { "@type": "ImageObject", url: `${site.url}/logo.png` } },
           keywords: p.tags.join(", "),
         }}
@@ -108,6 +111,10 @@ export default async function PostPage({ params }: PageProps<"/insights/[slug]">
           </h1>
           <p data-reveal className="lead mt-10 max-w-3xl text-fg/80">
             {p.excerpt}
+          </p>
+          <p data-reveal className="mt-6 text-sm text-muted">
+            By <span className="font-semibold text-fg">{authorOf(p.author)?.name ?? `the ${site.name} team`}</span>
+            {authorOf(p.author) && <> · {authorOf(p.author)!.role}</>}
           </p>
         </header>
         <div className="wrap mt-16 grid gap-14 border-t border-line pt-14 pb-24 md:grid-cols-12">

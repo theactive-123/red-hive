@@ -41,7 +41,7 @@ export default function Footer() {
             ))}
           </div>
           <ul className="mt-10 flex gap-2">
-            {socials.map((s) => (
+            {socials.filter((s) => site.social[s.key]).map((s) => (
               <li key={s.key}>
                 <a
                   href={site.social[s.key]}

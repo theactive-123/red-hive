@@ -9,9 +9,9 @@ import { industries } from "@/data/industries";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Industries We Work In: Healthcare, Fintech, E-commerce & More",
+  title: "Industries: Healthcare, Fintech, E-commerce & More",
   description:
-    "Custom software for healthcare, fintech, e-commerce, education, logistics, real estate, on-demand and travel companies, built with compliance and growth in mind.",
+    "Custom software for healthcare, fintech, e-commerce, education, logistics, real estate, on-demand and travel companies, built for compliance.",
   path: "/industries",
 });
 

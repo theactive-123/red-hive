@@ -2,7 +2,7 @@ import LegalPage from "@/components/sections/LegalPage";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
 
-export const metadata = pageMetadata({ title: "Terms & Conditions", description: `Terms governing the use of the ${site.name} website and services.`, path: "/terms-conditions" });
+export const metadata = pageMetadata({ title: "Terms & Conditions", description: "The terms that govern use of the Red Hive Digital website and our software design and development services, including payments and IP ownership.", path: "/terms-conditions" });
 
 export default function TermsPage() {
   return (

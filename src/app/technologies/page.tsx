@@ -8,9 +8,9 @@ import { techCategories, technologies } from "@/data/technologies";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Technologies We Use: React, Next.js, Flutter, React Native, Node.js & More",
+  title: "Technologies: React, Next.js, Flutter, Node.js & More",
   description:
-    "The stack behind our web, mobile and SaaS products: React, Next.js, Flutter, React Native, Swift, Kotlin, Node.js, Python, Laravel, PostgreSQL, AWS, AI and more.",
+    "The stack behind our web, mobile and SaaS products: React, Next.js, Flutter, React Native, Swift, Kotlin, Node.js, Python, Laravel, AWS and AI.",
   path: "/technologies",
 });
 

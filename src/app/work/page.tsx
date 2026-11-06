@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Our Work: Web App, Mobile App & SaaS Case Studies",
-  description: "Web applications, mobile apps, SaaS platforms and AI products designed and engineered by Red Hive Digital.",
+  description: "Case studies of mobile apps, web applications and SaaS platforms designed and built by Red Hive Digital, from streaming apps to healthcare EHRs.",
   path: "/work",
 });
 

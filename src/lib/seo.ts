@@ -16,9 +16,12 @@ export function pageMetadata({
   absoluteTitle?: boolean;
 }): Metadata {
   const url = `${site.url}${path}`;
-  const fullTitle = absoluteTitle ? title : `${title} | ${site.name}`;
+  // Keep titles within ~60 characters: drop the brand suffix when it would push past that.
+  const suffixed = `${title} | ${site.name}`;
+  const useAbsolute = absoluteTitle || suffixed.length > 60;
+  const fullTitle = useAbsolute ? title : suffixed;
   return {
-    title: absoluteTitle ? { absolute: title } : title,
+    title: useAbsolute ? { absolute: title } : title,
     description,
     keywords,
     alternates: { canonical: path },
@@ -83,7 +86,20 @@ export const organizationLd = () => ({
     contactType: p.label === "Sales" ? "sales" : "customer support",
     availableLanguage: ["English"],
   })),
-  sameAs: Object.values(site.social),
+  ...(Object.values(site.social).some(Boolean) ? { sameAs: Object.values(site.social).filter(Boolean) } : {}),
+  ...(site.foundingDate ? { foundingDate: site.foundingDate } : {}),
+  ...(site.address.street
+    ? {
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: site.address.street,
+          addressLocality: site.address.city,
+          addressRegion: site.address.region,
+          postalCode: site.address.postalCode,
+          addressCountry: site.address.country,
+        },
+      }
+    : {}),
 });
 
 export const websiteLd = () => ({

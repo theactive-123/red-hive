@@ -6,7 +6,13 @@ export type Block =
   | { type: "quote"; text: string }
   | { type: "table"; head: string[]; rows: string[][] };
 
+/** Named authors. Add real team members here (name, role, short bio, optional LinkedIn URL). */
+export type Author = { name: string; role: string; bio: string; url?: string };
+export const authors: Record<string, Author> = {};
+
 export type Post = {
+  /** Key into `authors`; posts without one are credited to the company. */
+  author?: string;
   slug: string;
   title: string;
   seoTitle: string;
@@ -174,7 +180,7 @@ export const posts: Post[] = [
     title: "Why We Build SaaS Products on Next.js",
     seoTitle: "Why We Build SaaS Products on Next.js (Architecture Guide)",
     seoDescription:
-      "The architecture we use for SaaS products on Next.js: multi-tenancy, authentication, Stripe billing, PostgreSQL, caching and deployment, plus when we'd pick something else.",
+      "How we build SaaS products on Next.js: multi-tenancy, authentication, Stripe billing, PostgreSQL, caching and deployment, and when we'd pick something else.",
     excerpt:
       "Next.js lets a small SaaS team run the marketing site, the app and the API from one codebase. Here's our setup for multi-tenancy, auth, billing and data, and the trade-offs we accept.",
     date: "2026-10-07",
@@ -408,7 +414,7 @@ export const posts: Post[] = [
     title: "Flutter vs React Native in 2026: Which Should You Choose?",
     seoTitle: "Flutter vs React Native in 2026: An Honest Comparison",
     seoDescription:
-      "Flutter vs React Native compared on performance, UI, developer experience, ecosystem, hiring and cost, with clear guidance on which one to pick for your mobile app.",
+      "Flutter vs React Native compared on performance, UI, developer experience, ecosystem, hiring and cost, with clear advice on which to pick for your app.",
     excerpt:
       "Both frameworks can ship excellent iOS and Android apps from one codebase. Which one fits depends on your team, how custom your UI is and what else you're building. Here's how we decide.",
     date: "2026-09-09",

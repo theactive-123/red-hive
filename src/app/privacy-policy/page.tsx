@@ -2,7 +2,7 @@ import LegalPage from "@/components/sections/LegalPage";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
 
-export const metadata = pageMetadata({ title: "Privacy Policy", description: `How ${site.name} collects, uses and protects your personal information.`, path: "/privacy-policy" });
+export const metadata = pageMetadata({ title: "Privacy Policy", description: "How Red Hive Digital collects, uses, stores and protects personal information shared through our website, contact forms and client projects.", path: "/privacy-policy" });
 
 export default function PrivacyPage() {
   return (

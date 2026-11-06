@@ -11,7 +11,7 @@ import { site } from "@/data/site";
 import { pageMetadata, serviceLd } from "@/lib/seo";
 
 const DESC =
-  "Custom software, web portals and mobile apps for state, county and city government. Section 508 and WCAG 2.1 AA accessible, secure, U.S.-hosted. Request a proposal for your RFP.";
+  "Software, web portals and mobile apps for state, county and city government. Section 508 and WCAG 2.1 AA accessible, U.S.-hosted. Request a proposal.";
 
 export const metadata = pageMetadata({
   title: "Government Software Development for State & Local Agencies",

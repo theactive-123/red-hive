@@ -23,10 +23,10 @@ import { studio } from "@/data/images";
 import { ArrowLink } from "@/components/ui/Button";
 
 export const metadata = pageMetadata({
-  title: `${site.name} | Web App, Mobile App & SaaS Development Company`,
+  title: `Web, Mobile & SaaS Development Company | ${site.name}`,
   absoluteTitle: true,
   description:
-    "Red Hive Digital designs and builds custom web applications, iOS and Android apps and SaaS products, using React, Next.js, Flutter, React Native, Node.js and AI.",
+    "Red Hive Digital designs and builds custom web apps, iOS and Android apps and SaaS products with React, Next.js, Flutter, React Native and Node.js.",
   path: "/",
   keywords: ["custom software development company", "web application development", "mobile app development company", "SaaS development services", "Flutter app development", "React Native development"],
 });

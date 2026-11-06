@@ -68,16 +68,16 @@ export default function WorkCategory({ href, title, text }: { href: string; titl
             </div>
           </div>
           {mobile && hero?.phones && (
-            <div className="relative flex h-[460px] items-center justify-center md:h-[620px] lg:col-span-6" aria-hidden>
+            <div className="relative flex h-[460px] items-center justify-center md:h-[620px] lg:col-span-6">
               <div className="absolute inset-[15%] rounded-full blur-[90px]" style={{ background: hero.accent, opacity: 0.25 }} />
               <div className="absolute -translate-x-[62%] -rotate-[8deg] translate-y-6">
-                <Phone src={`/images/work/screens/${hero.slug}-2.webp`} alt="" className="w-[170px] md:w-[230px]" />
+                <Phone src={`/images/work/screens/${hero.slug}-2.webp`} alt={`${hero.name} app: ${hero.phones[1] ?? "screen"}`} className="w-[170px] md:w-[230px]" />
               </div>
               <div className="absolute translate-x-[62%] rotate-[8deg] translate-y-6">
-                <Phone src={`/images/work/screens/${list[1]?.slug ?? hero.slug}-1.webp`} alt="" className="w-[170px] md:w-[230px]" />
+                <Phone src={`/images/work/screens/${list[1]?.slug ?? hero.slug}-1.webp`} alt={`${list[1]?.name ?? hero.name} app: ${list[1]?.phones?.[0] ?? "home screen"}`} className="w-[170px] md:w-[230px]" />
               </div>
               <div className="relative z-10">
-                <Phone src={`/images/work/screens/${hero.slug}-1.webp`} alt="" priority className="w-[200px] md:w-[270px]" />
+                <Phone src={`/images/work/screens/${hero.slug}-1.webp`} alt={`${hero.name} app: ${hero.phones[0]}`} priority className="w-[200px] md:w-[270px]" />
               </div>
             </div>
           )}

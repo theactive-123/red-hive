@@ -11,11 +11,16 @@ export const site = {
     { label: "Sales", display: "(713) 581-8459", href: "tel:+17135818459" },
     { label: "Support", display: "(713) 837-7684", href: "tel:+17138377684" },
   ],
+  // Your company profile URLs (e.g. https://www.linkedin.com/company/red-hive-digital).
+  // Empty ones are hidden in the footer and left out of the schema.
   social: {
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/",
-    linkedin: "https://www.linkedin.com/",
-  },
+    facebook: "",
+    instagram: "",
+    linkedin: "",
+  } as Record<"facebook" | "instagram" | "linkedin", string>,
+  // Optional company facts for the Organization schema. Leave empty until confirmed.
+  foundingDate: "", // e.g. "2016"
+  address: { street: "", city: "", region: "", postalCode: "", country: "US" },
   // PLACEHOLDER figures (not shown on the site yet): replace with your real numbers before launch.
   stats: [
     { value: 150, suffix: "+", label: "Products shipped" },
