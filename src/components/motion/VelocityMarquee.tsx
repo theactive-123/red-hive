@@ -23,7 +23,11 @@ export default function VelocityMarquee({ children, speed = 60, className = "" }
         boost = Math.min(Math.abs(self.getVelocity()) / 40, 25);
       },
     });
+    let visible = false;
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting), { rootMargin: "100px" });
+    io.observe(el);
     const tick = (_t: number, dt: number) => {
+      if (!visible) return; // don't animate while off screen
       boost *= 0.92;
       x -= ((speed + boost * 20) * dt * dir) / 1000;
       const w = half();
@@ -33,6 +37,7 @@ export default function VelocityMarquee({ children, speed = 60, className = "" }
     gsap.ticker.add(tick);
     return () => {
       gsap.ticker.remove(tick);
+      io.disconnect();
       st.kill();
     };
   }, [speed]);

@@ -104,7 +104,7 @@ export default function CodeWindow({ file, lang, code, className = "" }: { file:
         <span className="ml-auto truncate pl-4 text-xs text-white/70">{file}</span>
         <span className="shrink-0 rounded bg-white/10 px-2 py-0.5 text-[11px] text-white/70">{lang}</span>
       </div>
-      <div data-lenis-prevent className="overflow-x-auto py-4">
+      <div className="overflow-x-auto py-4">
         <pre className="min-w-max leading-[1.7]" style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
           <code>
             {lines.map((tokens, li) => (

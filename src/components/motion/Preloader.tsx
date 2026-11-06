@@ -1,33 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import type { PreloaderSceneApi } from "@/components/three/PreloaderScene";
-
-const PreloaderScene = dynamic(() => import("@/components/three/PreloaderScene"), { ssr: false });
 
 /**
- * First-visit intro: a 3D honeycomb assembles while the site loads, then the camera
- * flies into the red centre cell and the red lifts away along the logo's angle.
- * Server-rendered so nothing flashes underneath; an inline script in <head> hides it
- * on repeat visits (sessionStorage), for reduced motion and without JavaScript.
+ * Lightweight first-visit intro: logo, a counter and a thin progress line, then the
+ * panel slides up. No WebGL, only transforms and opacity, so it stays smooth on any device.
+ * Server-rendered so nothing flashes underneath; the inline script in <head> hides it on
+ * repeat visits (sessionStorage), with reduced motion and without JavaScript.
  */
 export default function Preloader() {
   const root = useRef<HTMLDivElement>(null);
   const count = useRef<HTMLSpanElement>(null);
   const bar = useRef<HTMLDivElement>(null);
-  const progress = useRef(0);
-  const api = useRef<PreloaderSceneApi | null>(null);
-  const [showScene, setShowScene] = useState(true);
 
   useEffect(() => {
     const el = root.current;
-    if (!el || window.__rhIntroDone !== false) {
-      requestAnimationFrame(() => setShowScene(false)); // repeat visit: never start the 3D scene
-      return;
-    }
+    if (!el || window.__rhIntroDone !== false) return;
     const html = document.documentElement;
     const finish = () => {
       html.classList.remove("is-loading");
@@ -40,7 +30,6 @@ export default function Preloader() {
     };
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
       finish();
-      requestAnimationFrame(() => setShowScene(false));
       return;
     }
 
@@ -49,40 +38,33 @@ export default function Preloader() {
         document.fonts?.ready ?? Promise.resolve(),
         document.readyState === "complete" ? Promise.resolve() : new Promise((r) => addEventListener("load", r, { once: true })),
       ]),
-      new Promise((r) => setTimeout(r, 4000)),
+      new Promise((r) => setTimeout(r, 2500)),
     ]);
 
     const p = { v: 0 };
     const render = () => {
-      progress.current = p.v / 100;
-      if (count.current) count.current.textContent = String(Math.round(p.v)).padStart(3, "0");
+      if (count.current) count.current.textContent = String(Math.round(p.v));
       if (bar.current) bar.current.style.transform = `scaleX(${p.v / 100})`;
     };
 
     const tl = gsap.timeline();
-    tl.from("[data-pl-in]", { yPercent: 110, duration: 1, ease: "expo.out", stagger: 0.06 }).to(
+    tl.from("[data-pl-in]", { yPercent: 100, duration: 0.8, ease: "power3.out", stagger: 0.06 }).to(
       p,
-      { v: 74, duration: 1.6, ease: "power2.inOut", onUpdate: render },
-      0.15,
+      { v: 80, duration: 1, ease: "power2.inOut", onUpdate: render },
+      0.1,
     );
 
     let cancelled = false;
     ready.then(async () => {
       if (cancelled) return;
-      await tl.to(p, { v: 100, duration: 0.6, ease: "power2.out", onUpdate: render });
+      await tl.to(p, { v: 100, duration: 0.35, ease: "power1.out", onUpdate: render });
       if (cancelled) return;
-      // One clean exit: content eases out, the hive recedes, the panel lifts along the logo angle.
-      const out = gsap.timeline({ delay: 0.2 });
-      out
-        .to("[data-pl-in]", { yPercent: -110, duration: 0.6, ease: "power3.in", stagger: 0.03 })
-        .to("[data-pl-scene]", { scale: 0.85, opacity: 0, duration: 0.7, ease: "power2.in" }, 0)
-        .to("[data-pl-bar]", { opacity: 0, duration: 0.3 }, 0)
-        .add(finish, 0.55)
-        .to(el, { clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)", duration: 1, ease: "expo.inOut" }, 0.5)
-        .add(() => {
-          gsap.set(el, { display: "none" });
-          setShowScene(false); // unmount three.js so nothing keeps rendering
-        });
+      gsap
+        .timeline({ delay: 0.15 })
+        .to("[data-pl-in]", { yPercent: -100, duration: 0.45, ease: "power2.in", stagger: 0.03 })
+        .add(finish, 0.35)
+        .to(el, { yPercent: -100, duration: 0.8, ease: "power3.inOut" }, 0.3)
+        .set(el, { display: "none" });
     });
 
     // Never leave the page covered.
@@ -90,9 +72,8 @@ export default function Preloader() {
       if (window.__rhIntroDone === false) {
         finish();
         el.style.display = "none";
-        setShowScene(false);
       }
-    }, 9000);
+    }, 6000);
 
     return () => {
       cancelled = true;
@@ -102,51 +83,25 @@ export default function Preloader() {
   }, []);
 
   return (
-    <div ref={root} className="rh-preloader fixed inset-0 z-[400] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)]" aria-hidden>
-      <div className="absolute inset-0 bg-navy text-white">
-        <div data-pl-scene className="absolute inset-0">
-          {showScene && <PreloaderScene progress={progress} apiRef={api} className="absolute inset-0" />}
+    <div ref={root} className="rh-preloader fixed inset-0 z-[400] bg-navy text-white will-change-transform" aria-hidden>
+      <div className="flex h-full flex-col items-center justify-center gap-8">
+        <div className="overflow-hidden">
+          <span data-pl-in className="flex items-center gap-4">
+            <Image src="/mark.png" alt="" width={128} height={128} priority className="h-12 w-12" />
+            <span className="font-display text-2xl font-bold leading-tight">Red Hive Digital</span>
+          </span>
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,2,10,0.75)_100%)]" />
-
-        <div className="wrap relative flex h-full flex-col justify-between py-8 md:py-10">
-          <div className="flex items-center gap-4 overflow-hidden">
-            <span data-pl-in className="block">
-              <Image src="/mark.png" alt="" width={128} height={128} priority className="h-11 w-11 md:h-12 md:w-12" />
-            </span>
-            <span className="overflow-hidden font-display text-lg font-bold leading-tight md:text-xl">
-              <span data-pl-in className="block">
-                Red Hive
-              </span>
-              <span data-pl-in className="block">
-                Digital
-              </span>
+        <div className="w-48 overflow-hidden">
+          <div data-pl-in className="flex items-center gap-4">
+            <div className="h-[2px] flex-1 bg-white/15">
+              <div ref={bar} className="h-full origin-left scale-x-0 bg-red" />
+            </div>
+            <span className="w-9 text-right text-sm tabular-nums text-white/60">
+              <span ref={count}>0</span>%
             </span>
           </div>
-
-          <div className="flex items-end justify-between gap-6">
-            <div className="max-w-[17rem] overflow-hidden text-sm leading-snug text-white/60">
-              <span data-pl-in className="block">
-                Web apps, mobile apps
-              </span>
-              <span data-pl-in className="block">
-                and SaaS products.
-              </span>
-            </div>
-            <div className="overflow-hidden">
-              <span data-pl-in className="block font-display text-[clamp(4rem,12vw,11rem)] font-extrabold leading-[0.8] tracking-[-0.04em] tabular-nums">
-                <span ref={count}>000</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div data-pl-bar className="absolute inset-x-0 bottom-0 h-[3px] bg-white/10">
-          <div ref={bar} className="h-full origin-left scale-x-0 bg-red" />
         </div>
       </div>
-
-
     </div>
   );
 }

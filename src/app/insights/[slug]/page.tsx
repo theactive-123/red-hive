@@ -50,7 +50,7 @@ function renderBlock(b: Block, i: number) {
       );
     case "table":
       return (
-        <div key={i} className="overflow-x-auto" data-lenis-prevent>
+        <div key={i} className="overflow-x-auto">
           <table>
             <thead>
               <tr>

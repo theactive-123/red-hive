@@ -111,7 +111,7 @@ export default function GovForm({ email, compact = false }: { email: string; com
       )}
       <div className="sm:col-span-2">
         <label htmlFor="g-msg" className={label}>What do you need?</label>
-        <textarea id="g-msg" name="message" rows={compact ? 3 : 4} data-lenis-prevent className="w-full resize-none border border-line bg-bg p-4 text-[0.95rem] outline-none focus:border-red" placeholder="Scope, timeline, current system, link to the solicitation…" />
+        <textarea id="g-msg" name="message" rows={compact ? 3 : 4} className="w-full resize-none border border-line bg-bg p-4 text-[0.95rem] outline-none focus:border-red" placeholder="Scope, timeline, current system, link to the solicitation…" />
       </div>
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
       {state === "error" && (

@@ -8,6 +8,8 @@ import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin);
   gsap.defaults({ ease: "expo.out", duration: 1 });
+  // Don't recalculate every trigger when mobile browser bars show/hide (causes jumps).
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
 export const prefersReducedMotion = () =>
