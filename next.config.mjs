@@ -26,12 +26,24 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
 ];
 
+// Payment portal that serves this brand's invoice pages. Customers see
+// https://www.redhivedigital.com/pay/... while the portal handles payment.
+const PAYMENT_PORTAL_URL = (process.env.PAYMENT_PORTAL_URL || "https://payment-portal-pi.vercel.app").replace(/\/+$/, "");
+
 const nextConfig = {
   // Hostinger's shared Node hosting can't run sharp's native binary,
   // so serve images as-is (they are already optimized WebP).
   images: { unoptimized: true },
   poweredByHeader: false,
   trailingSlash: false,
+  async rewrites() {
+    return {
+      // Forward /pay/* (invoice pages, checkout, verification) to the portal.
+      beforeFiles: [{ source: "/pay/:path*", destination: `${PAYMENT_PORTAL_URL}/pay/:path*` }],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
   async redirects() {
     return legacy.flatMap(([from, to]) => [
       { source: from, destination: to, permanent: true },
