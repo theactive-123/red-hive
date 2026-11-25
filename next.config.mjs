@@ -42,15 +42,6 @@ const nextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
-      // HTML must never be served stale from a CDN: an old page points at JS chunks a newer
-      // deploy has deleted, which leaves the site half-loaded until a hard refresh.
-      {
-        source: "/((?!_next/static|_next/image|images|fonts|favicon|mark).*)",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=0, s-maxage=0, must-revalidate" },
-          { key: "CDN-Cache-Control", value: "no-store" },
-        ],
-      },
     ];
   },
 };
