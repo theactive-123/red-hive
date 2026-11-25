@@ -15,7 +15,7 @@ export const covers = {
   sbh: caseImages["sbh-ehr-portal"],
   stockflow: caseImages["stockflow-pro"],
   chat: caseImages["chat-portal-ai"],
-  raheel: caseImages["raheel-tech-pm"],
+  pmTool: caseImages["project-management-tool"],
   spendshift: caseImages["spendshift"],
   videeo: caseImages["videeo"],
   printgraphi: caseImages["printgraphi"],
@@ -49,12 +49,12 @@ export const serviceImages: Partial<Record<string, Img>> = {
   "cloud-devops": studio.code,
   "ai-development": covers.chat,
   "api-integration": covers.chat,
-  "maintenance-support": covers.raheel,
+  "maintenance-support": covers.pmTool,
 };
 
 export const postImages: Partial<Record<string, Img>> = {
   "adding-ai-to-your-app": covers.chat,
   "nextjs-for-saas": covers.stockflow,
-  "saas-mvp-cost": covers.raheel,
+  "saas-mvp-cost": covers.pmTool,
   "flutter-vs-react-native": covers.videeo,
 };

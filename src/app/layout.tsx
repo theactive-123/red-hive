@@ -48,11 +48,17 @@ export const viewport: Viewport = {
 // Also decides whether the first-visit preloader plays (once per session).
 const motionFlag = `(function(){var d=document.documentElement;try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(!r)d.classList.add('js-motion');var seen=sessionStorage.getItem('rh-intro');if(seen||r){d.classList.add('intro-done');window.__rhIntroDone=true}else{d.classList.add('is-loading');window.__rhIntroDone=false}}catch(e){d.classList.add('intro-done');window.__rhIntroDone=true}})()`;
 
+// Recovery for stale pages: if a JS chunk fails to load (the HTML came from a cache and points at
+// files a newer deploy removed), reload once to fetch fresh HTML. Also never leave the intro
+// panel covering the page if the app bundle fails to start.
+const recover = `(function(){var K='rh-reload';function again(){try{var t=+sessionStorage.getItem(K)||0;if(Date.now()-t<30000)return;sessionStorage.setItem(K,Date.now())}catch(e){return}location.reload()}addEventListener('error',function(e){var t=e.target;if(t&&(t.tagName==='SCRIPT'||t.tagName==='LINK')&&/\\/_next\\/static\\//.test(t.src||t.href||''))again()},true);addEventListener('unhandledrejection',function(e){var r=e.reason;if(r&&/ChunkLoadError|Loading (CSS )?chunk|Failed to fetch dynamically imported/i.test((r.name||'')+' '+(r.message||'')))again()});setTimeout(function(){var d=document.documentElement;if(d.classList.contains('is-loading')){d.classList.remove('is-loading');d.classList.add('intro-done');window.__rhIntroDone=true}},8000)})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionFlag }} />
+        <script dangerouslySetInnerHTML={{ __html: recover }} />
         <style>{`html.intro-done .rh-preloader{display:none}`}</style>
         <noscript>
           <style>{`.rh-preloader{display:none}`}</style>

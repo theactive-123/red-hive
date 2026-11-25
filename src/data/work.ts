@@ -195,7 +195,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "flubr",
     name: "Flubr",
-    client: "Influencer marketing startup, Pakistan",
+    client: "Influencer marketing startup",
     category: "Web App",
     industry: "Marketing",
     service: "web-application-development",
@@ -273,18 +273,18 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    slug: "raheel-tech-pm",
-    name: "Raheel Tech PM",
-    client: "Raheel Tech",
+    slug: "project-management-tool",
+    name: "Project Management Tool",
+    client: "Project management SaaS company",
     category: "SaaS",
     industry: "Professional services",
     service: "saas-development",
     accent: "#7860e4",
     summary:
       "A project management and team productivity platform with workspaces, tasks, time tracking, employee analytics, subscriptions and an apps center.",
-    seoTitle: "Raheel Tech PM: Project Management SaaS Case Study",
+    seoTitle: "Project Management Tool: SaaS Case Study",
     seoDescription:
-      "Raheel Tech PM is a project management SaaS with workspaces, tasks and subtasks, time tracking, employee analytics, Stripe subscriptions and an add-ons center.",
+      "A project management SaaS with workspaces, tasks and subtasks, time tracking, employee analytics, Stripe subscriptions and an add-ons center.",
     challenge: [
       "Growing teams tend to track projects in one tool, hours in another and team performance in spreadsheets, so managers can't see workload or progress without asking people directly. The brief was to bring all of that into one place.",
       "The platform also had to work as a product other companies could subscribe to, which meant plans, billing and white-label branding from the first release.",
