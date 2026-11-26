@@ -53,18 +53,26 @@ const motionFlag = `(function(){var d=document.documentElement;try{var r=matchMe
 // panel covering the page if the app bundle fails to start.
 const recover = `(function(){var K='rh-reload';function again(){try{var t=+sessionStorage.getItem(K)||0;if(Date.now()-t<30000)return;sessionStorage.setItem(K,Date.now())}catch(e){return}location.reload()}addEventListener('error',function(e){var t=e.target;if(t&&(t.tagName==='SCRIPT'||t.tagName==='LINK')&&/\\/_next\\/static\\//.test(t.src||t.href||''))again()},true);addEventListener('unhandledrejection',function(e){var r=e.reason;if(r&&/ChunkLoadError|Loading (CSS )?chunk|Failed to fetch dynamically imported/i.test((r.name||'')+' '+(r.message||'')))again()});setTimeout(function(){var d=document.documentElement;if(d.classList.contains('is-loading')){d.classList.remove('is-loading');d.classList.add('intro-done');window.__rhIntroDone=true}},8000)})()`;
 
+// Google Tag Manager (standard loader: fires the gtm.js "All Pages" event, plus a gtag() helper).
+const GTM_ID = "GTM-5C9S6CHS";
+const gtm = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)})(window,document,'script','dataLayer','${GTM_ID}');`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionFlag }} />
         <script dangerouslySetInnerHTML={{ __html: recover }} />
+        <script dangerouslySetInnerHTML={{ __html: gtm }} />
         <style>{`html.intro-done .rh-preloader{display:none}`}</style>
         <noscript>
           <style>{`.rh-preloader{display:none}`}</style>
         </noscript>
       </head>
       <body className="theme-light min-h-screen">
+        <noscript>
+          <iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style={{ display: "none", visibility: "hidden" }} title="Google Tag Manager" />
+        </noscript>
         <Preloader />
         <JsonLd data={[organizationLd(), websiteLd()]} />
         <SmoothScroll>
